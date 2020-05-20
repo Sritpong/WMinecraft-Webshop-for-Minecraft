@@ -17,9 +17,11 @@
 						</div>
 						<div class="card-body">
 							<div class="row">
-								<?php
-									include_once 'template/member.php';
-								?>
+								<div class="col-md-4 col-xs-12">
+									<?php
+										include_once 'template/member.php';
+									?>
+								</div>
 							</div>
 						</div>
 					</div>
