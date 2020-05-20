@@ -11,7 +11,7 @@
 		'host' => 'localhost',
 		'user' => 'root',
 		'password' => '',
-		'database' => ''
+		'dbname' => 'warmlight'
 	);
 
 	if(!isset($mysql)){exit;}
