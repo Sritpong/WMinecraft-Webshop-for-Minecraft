@@ -81,7 +81,7 @@
 
 				$check_ip = query("SELECT * FROM authme WHERE ip = :ip",array(':ip' => $_SERVER['REMOTE_ADDR']));
 				$numrow_ip = $check_ip->rowcount();
-				if($numrow_ip > $settings['max_reg'])
+				if($numrow_ip > $config['max_reg'])
 				{
 					echo '4';
 				}

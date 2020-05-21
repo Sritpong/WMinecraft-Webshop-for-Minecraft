@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	$settings = Array (
+	$config = Array (
 		'site' => 'http://localhost/WMinecraft',
 		'server_name' => 'WMinecraft',
 		'max_reg' => 1
