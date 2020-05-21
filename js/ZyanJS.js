@@ -10,8 +10,7 @@ function gotoPage(page)
 
 function Login()
 {
-    $("#alert_login").empty();
-    $("#alert_login").append('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
+    $("#alert_login").html('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
     var elements_form = document.getElementById("login_frm").elements;
     var submit = [];
     for(var i = 0 ; i < elements_form.length; i++)
@@ -25,15 +24,13 @@ function Login()
 
     if(login_username == '')
     {
-        $("#alert_login").empty();
-        $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
+        $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
         $("#username_input").focus();
         return false;
     }
     else if(login_password == '')
     {
-        $("#alert_login").empty();
-        $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
+        $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
         $("#password_input").focus();
         return false;
     }
@@ -52,8 +49,7 @@ function Login()
         {
             if(data == 1)
             {
-                $("#alert_login").empty();
-                $("#alert_login").append('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
+                $("#alert_login").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('เข้าสู่ระบบเรียบร้อยแล้ว !');
 
                 setInterval('gotoPage("'+ submit[2] +'")', 3000);
@@ -61,8 +57,7 @@ function Login()
             }
             else if(data == 2)
             {
-                $("#alert_login").empty();
-                $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ไม่ถูกต้อง</div>');
+                $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ไม่ถูกต้อง</div>');
 
                 document.getElementById("login_btn").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -70,8 +65,7 @@ function Login()
             }
             else if(data == 0)
             {
-                $("#alert_login").empty();
-                $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> ไม่พบ Username นี้</div>');
+                $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> ไม่พบ Username นี้</div>');
 
                 document.getElementById("login_btn").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -99,29 +93,25 @@ function chkRegister()
 
     if(login_username == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
         $("#username_input").focus();
         return false;
     }
     else if(login_password == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
         $("#password_input").focus();
         return false;
     }
     else if(login_confirmpassword == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอกยืนยัน Password</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอกยืนยัน Password</div>');
         $("#confirmpassword_input").focus();
         return false;
     }
     else if(login_email == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Email</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Email</div>');
         $("#email_input").focus();
         return false;
     }
@@ -136,8 +126,7 @@ function Register()
 {
     $('#confirmRegModal').modal('hide');
 
-    $("#alert_register").empty();
-    $("#alert_register").append('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
+    $("#alert_register").html('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
     var elements_form = document.getElementById("register_frm").elements;
     var submit = [];
     for(var i = 0 ; i < elements_form.length; i++)
@@ -153,29 +142,25 @@ function Register()
 
     if(login_username == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
         $("#username_input").focus();
         return false;
     }
     else if(login_password == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
         $("#password_input").focus();
         return false;
     }
     else if(login_confirmpassword == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอกยืนยัน Password</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอกยืนยัน Password</div>');
         $("#confirmpassword_input").focus();
         return false;
     }
     else if(login_email == '')
     {
-        $("#alert_register").empty();
-        $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Email</div>');
+        $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Email</div>');
         $("#email_input").focus();
         return false;
     }
@@ -196,16 +181,14 @@ function Register()
         {
             if(data == 7)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> สมัครสมาชิกเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
+                $("#alert_register").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> สมัครสมาชิกเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('สมัครสมาชิกเรียบร้อยแล้ว !');
 
                 setInterval('gotoPage("'+ submit[4] +'/?page=login")', 3000);
             }
             else if(data == 0)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Username ต้องมีความยาวมากกว่า  4ตัวขึ้นไป</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Username ต้องมีความยาวมากกว่า  4ตัวขึ้นไป</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -215,8 +198,7 @@ function Register()
             }
             else if(data == 1)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ต้องมีความยาวมากกว่า 4 ตัว</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ต้องมีความยาวมากกว่า 4 ตัว</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -226,8 +208,7 @@ function Register()
             }
             else if(data == 2)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณกรอก Password ไม่ตรงกัน</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณกรอก Password ไม่ตรงกัน</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -237,8 +218,7 @@ function Register()
             }
             else if(data == 3)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณกรอก E-Mail ไม่ถูกต้อง</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณกรอก E-Mail ไม่ถูกต้อง</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -248,8 +228,7 @@ function Register()
             }
             else if(data == 4)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณสมัครสมาชิกถึงกำหนดที่ตั้งไว้แล้ว</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณสมัครสมาชิกถึงกำหนดที่ตั้งไว้แล้ว</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -259,8 +238,7 @@ function Register()
             }
             else if(data == 5)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> มี Username นี้ในระบบแล้ว</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> มี Username นี้ในระบบแล้ว</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -270,8 +248,7 @@ function Register()
             }
             else if(data == 6)
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> เกิดข้อผิดพลาดในการเพิ่มลงฐานข้อมูล</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> เกิดข้อผิดพลาดในการเพิ่มลงฐานข้อมูล</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -281,8 +258,7 @@ function Register()
             }
             else
             {
-                $("#alert_register").empty();
-                $("#alert_register").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> เกิดข้อผิดพลาดไม่ทราบสาเหตุ</div>');
+                $("#alert_register").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> เกิดข้อผิดพลาดไม่ทราบสาเหตุ</div>');
 
                 document.getElementById("button_chkregister").disabled = false;
                 document.getElementById("username_input").disabled = false;
@@ -298,7 +274,6 @@ function Register()
 
 function Logout(path)
 {
-
     $.ajax({
         type: "POST",
         url: "application/Controller/member.php?func=logout",
