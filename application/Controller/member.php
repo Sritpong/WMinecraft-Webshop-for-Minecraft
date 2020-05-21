@@ -108,6 +108,12 @@
 				}
 			}
 		}
+		elseif($g == 'logout')
+		{
+			session_destroy();
+
+			echo '1';
+		}
 	}
 	else
 	{

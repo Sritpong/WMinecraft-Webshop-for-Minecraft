@@ -76,7 +76,7 @@ function Login()
                 document.getElementById("username_input").disabled = false;
                 document.getElementById("password_input").disabled = false;
             }
-            $("#login_btn").html('เข้าสู่ระบบ');
+            $("#login_btn").html('<i class="fa fa-sign-in"></i> เข้าสู่ระบบ');
         }
     })
 }
@@ -240,6 +240,35 @@ function Register()
             }
 
             $("#login_btn").html('<i class="fa fa-user-plus"></i> สมัครสมาชิก');
+        }
+    })
+}
+
+function Logout(path)
+{
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=logout",
+        beforeSend: function() {
+            document.getElementById("logout_btn").disabled = true;
+            $("#logout_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                toastr["success"]('ออกจากระบบเรียบร้อยแล้ว...');
+                setInterval('gotoPage("'+ path +'")', 3000);
+                // setTimeout(function(){location.href = login_success},3000);
+            }
+            else
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการออกจากระบบ !');
+                document.getElementById("logout_btn").disabled = false;
+            }
+
+            $("#logout_btn").html('<i class="fa fa-sign-out"></i> ออกจากระบบ');
         }
     })
 }

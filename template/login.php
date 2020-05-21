@@ -27,7 +27,7 @@
 						</div>
 						<hr/>
 						<input name="path" id="path" type="hidden" value="<?php echo $settings['site']; ?>"/>
-						<button type="submit" name="login_btn" id="login_btn" class="btn btn-primary btn-block" onclick="Login()">เข้าสู่ระบบ</button>
+						<button type="submit" name="login_btn" id="login_btn" class="btn btn-primary btn-block" onclick="Login()"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</button>
 					</form>
 				</div>
 			</div>

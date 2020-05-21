@@ -11,6 +11,8 @@
 			<div class="text-center">
 				<img src="https://minotar.net/cube/<?php echo $player['realname']; ?>/100" alt="<?php echo $player['realname']; ?>"/>
 			</div>
+			<hr/>
+			<button id="logout_btn" type="button" class="btn btn-danger btn-block" onclick="Logout('<?php echo $settings['site']; ?>')"><i class="fa fa-sign-out"></i> ออกจากระบบ</button>
 		<?php
 	}
 	else
