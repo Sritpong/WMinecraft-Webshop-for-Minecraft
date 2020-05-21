@@ -1,6 +1,6 @@
 <?php
 	require_once("application/_config.php");
-	require_once("application/getPlayer.php");
+	require_once("application/_getPlayer.php");
 ?>
 <html>
 	<head>
@@ -17,7 +17,7 @@
 						</div>
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-4 col-xs-12">
+								<div class="col-md-4 col-xs-12 mb-3">
 									<?php
 										include_once 'template/member.php';
 									?>
@@ -31,6 +31,10 @@
 											if($p == 'login')
 											{
 												include_once('template/login.php');
+											}
+											elseif($p == 'register')
+											{
+												include_once('template/register.php');
 											}
 										}
 									?>

@@ -38,6 +38,76 @@
 				echo '0';
 			}
 		}
+		elseif($g == 'register')
+		{
+			// echo $_POST['password']." ".$_POST['confirmpassword']." ".$_POST['email'];
+			if(strlen($_POST['username']) < 4)
+			{
+				echo '0';
+			}
+			elseif(strlen($_POST['password']) < 4)
+			{
+				echo '1';
+			}
+			elseif($_POST['password'] != $_POST['confirmpassword'])
+			{
+				echo '2';
+			}
+			elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			{
+				echo '3';
+			}
+			else
+			{
+				function createSalt($length)
+				{
+					srand(date("s")); 
+					$chars = "abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+					$ret_str = ""; 
+					$num = strlen($chars); 
+					for($i=0;$i<$length;$i++)
+					{ 
+						$ret_str.= $chars[rand()%$num];
+					} 
+					return $ret_str;
+				}
+
+				function hashpw($orgPassword)
+				{
+					$salt = createSalt(16);
+					$hashedPassword = "\$SHA\$".$salt."\$".hash('sha256',hash('sha256',$orgPassword).$salt);
+					return $hashedPassword;
+				}
+
+				$check_ip = query("SELECT * FROM authme WHERE ip = :ip",array(':ip' => $_SERVER['REMOTE_ADDR']));
+				$numrow_ip = $check_ip->rowcount();
+				if($numrow_ip > $settings['max_reg'])
+				{
+					echo '4';
+				}
+				else
+				{
+					$check = query("SELECT * FROM authme WHERE username = :username",array(':username' => $_POST['username']));
+					$numrow = $check->rowcount();
+					if($numrow > 0)
+					{
+						echo '5';
+					}
+					else
+					{
+						$insert = query("INSERT INTO authme (username,realname,password,ip,email) VALUES(:username,:realname,:password,:ip,:email)",array(':username'=>strtolower($_POST['username']),':realname'=>$_POST['username'],':password'=>hashpw($_POST['password']),':ip'=>$_SERVER['REMOTE_ADDR'],':email'=>$_POST['email']));
+						if($insert)
+						{
+							echo '7';
+						}
+						else
+						{
+							echo '6';
+						}
+					}
+				}
+			}
+		}
 	}
 	else
 	{

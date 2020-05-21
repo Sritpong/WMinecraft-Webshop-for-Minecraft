@@ -3,7 +3,8 @@
 	
 	$settings = Array (
 		'site' => 'http://localhost/WMinecraft',
-		'server_name' => 'WMinecraft'
+		'server_name' => 'WMinecraft',
+		'max_reg' => 1
 	);
 
 	#MYSQL Config

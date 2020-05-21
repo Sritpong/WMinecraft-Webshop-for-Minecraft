@@ -3,7 +3,7 @@
 	{
 		?>
 			<div class="card">
-				<div class="card-header bg-info text-white">
+				<div class="card-header bg-primary text-white">
 					Login
 				</div>
 				<div class="card-body">
@@ -26,7 +26,8 @@
 							<input name="password_input" id="password_input" type="password" class="form-control" placeholder="รหัสผ่านในเกม"/>
 						</div>
 						<hr/>
-						<button type="submit" name="login_btn" id="login_btn" class="btn btn-info btn-block" onclick="Login()">เข้าสู่ระบบ</button>
+						<input name="path" id="path" type="hidden" value="<?php echo $settings['site']; ?>"/>
+						<button type="submit" name="login_btn" id="login_btn" class="btn btn-primary btn-block" onclick="Login()">เข้าสู่ระบบ</button>
 					</form>
 				</div>
 			</div>
