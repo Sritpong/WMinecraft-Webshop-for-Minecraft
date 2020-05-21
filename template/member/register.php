@@ -39,12 +39,40 @@
 									<i class="fa fa-envelope"></i>
 								</span>
 							</div>
-							<input name="email_input" id="email_input" type="email" class="form-control" placeholder="ที่อยู่อีเมลล์ : [Example: somchai@gmail.com]"/>
+							<input name="email_input" id="email_input" type="email" class="form-control" placeholder="ที่อยู่อีเมลล์ : [Example: somchai@gmail.com]" autocomplete="off" />
 						</div>
 						<hr/>
 						<input name="path" id="path" type="hidden" value="<?php echo $settings['site']; ?>"/>
-						<button type="submit" name="login_btn" id="login_btn" class="btn btn-primary btn-block" onclick="Register()"><i class="fa fa-user-plus"></i> สมัครสมาชิก</button>
+						<button type="submit" id="button_chkregister" class="btn btn-primary btn-block" onclick="chkRegister()"><i class="fa fa-user-plus"></i> สมัครสมาชิก</button>
 					</form>
+				</div>
+			</div>
+
+			<!-- Modal Confirm Register -->
+			<div class="modal fade" id="confirmRegModal" tabindex="-1" role="dialog" aria-labelledby="confirmRegModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								<i class="fa fa-user-plus"></i> ยืนยันการสมัครสมาชิก</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<div class="modal-body">
+						<b>กรุณาตรวจสอบข้อมูลให้ถูกต้องการสมัครสมาชิก</b>
+						<div id="modal_reg_username"></div>
+						<div id="modal_reg_email"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">
+							<i class="fa fa-times"></i> ยกเลิก
+						</button>
+						<button type="button" name="register_btn" id="register_btn" class="btn btn-primary" onclick="Register()">
+							<i class="fa fa-check"></i> ยืนยันการสมัครสมาชิก
+						</button>
+					</div>
+					</div>
 				</div>
 			</div>
 		<?php
