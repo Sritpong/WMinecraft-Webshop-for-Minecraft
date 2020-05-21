@@ -141,7 +141,6 @@ function Register()
         },
         success: function(data)
         {
-            console.log(data);
             if(data == 7)
             {
                 $("#alert_register").empty();
