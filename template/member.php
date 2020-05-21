@@ -5,6 +5,21 @@
 	}
 	else
 	{
-		include_once 'template/login.php';
+		?>
+			<div class="card">
+				<div class="card-header bg-info text-white">
+					<i class="fa fa-user"></i> User
+				</div>
+				<div class="card-body">
+					<div class="alert alert-warning text-center mt-2">
+						กรุณาเข้าสู่ระบบ
+					</div>
+					<center>
+						<a href="<?php echo $settings['site']; ?>?page=login"><button type="button" class="btn btn-primary btn-xs">เข้าสู่ระบบ</button></a>
+						<a href="<?php echo $settings['site']; ?>?page=register"><button type="button" class="btn btn-info btn-xs">สมัครสมาชิก</button></a>
+					</center>
+				</div>
+			</div>
+		<?php
 	}
 ?>

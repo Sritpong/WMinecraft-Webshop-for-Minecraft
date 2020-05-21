@@ -21,14 +21,14 @@ function Login()
     if(login_username == '')
     {
     	$("#alert_login").empty();
-    	$("#alert_login").append('<div class="alert alert-danger" role="alert">กรุณากรอก Username</div>');
+    	$("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
 		$("#username_input").focus();
     	return false;
     }
     else if(login_password == '')
     {
     	$("#alert_login").empty();
-    	$("#alert_login").append('<div class="alert alert-danger" role="alert">กรุณากรอก Password</div>');
+    	$("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
 		$("#password_input").focus();
     	return false;
     }
@@ -49,24 +49,29 @@ function Login()
             if(data == 1)
             {
             	$("#alert_login").empty();
-				$("#alert_login").append('<div class="alert alert-success" role="alert"><i class="fa fa-spinner fa-spin fa-lg"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
+				$("#alert_login").append('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
+
                 setInterval('refreshPage()', 3000);
                 // setTimeout(function(){location.href = login_success},3000);
             }
             else if(data == 2)
             {
             	$("#alert_login").empty();
-                $("#alert_login").append('<div class="alert alert-danger" role="alert">Password ไม่ถูกต้อง</div>');
+                $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ไม่ถูกต้อง</div>');
+
+                document.getElementById("login_btn").disabled = false;
+                document.getElementById("username_input").disabled = false;
+                document.getElementById("password_input").disabled = false;
             }
             else if(data == 0)
             {
             	$("#alert_login").empty();
-                $("#alert_login").append('<div class="alert alert-danger" role="alert">ไม่พบ Username นี้</div>');
-            }
+                $("#alert_login").append('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> ไม่พบ Username นี้</div>');
 
-            document.getElementById("login_btn").disabled = false;
-            document.getElementById("username_input").disabled = false;
-            document.getElementById("password_input").disabled = false;
+                document.getElementById("login_btn").disabled = false;
+                document.getElementById("username_input").disabled = false;
+                document.getElementById("password_input").disabled = false;
+            }
             $("#login_btn").html('เข้าสู่ระบบ');
         }
     })

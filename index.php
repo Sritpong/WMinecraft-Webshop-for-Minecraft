@@ -22,6 +22,19 @@
 										include_once 'template/member.php';
 									?>
 								</div>
+								<div class="col-md-8 col-xs-12">
+									<?php
+										if(isset($_GET['page']))
+										{
+											$p = $_GET['page'];
+
+											if($p == 'login')
+											{
+												include_once('template/login.php');
+											}
+										}
+									?>
+								</div>
 							</div>
 						</div>
 					</div>
