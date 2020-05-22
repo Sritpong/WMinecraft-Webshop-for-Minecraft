@@ -298,3 +298,53 @@ function Logout(path)
         }
     })
 }
+
+function Topup()
+{
+    var wallet_transaction = document.getElementById("transaction_wallet").value;
+    if(wallet_transaction == '')
+    {
+        toastr["error"]('กรุณากรอกหมายเลขอ้างอิง !');
+        return false;
+    }
+    else if(wallet_transaction.length <= 13)
+    {
+        toastr["error"]('กรุณากรอกหมายเลขอ้างอิงให้ถูกต้อง !');
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=topup",
+        data: "transaction_wallet="+ wallet_transaction,
+        beforeSend: function() {
+            document.getElementById("btn_topup").disabled = true;
+            $("#btn_topup").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            var res = data.split("|");
+            
+            if(res[0] == 2)
+            {
+                document.getElementById("transaction_wallet").value = "";
+                toastr["success"]('คุณได้ทำการเติมเงิน ' + res[1] + ' บาท');
+            }
+            else if(res[0] == 0)
+            {
+                toastr["error"]('กรุณาอัพเดท Access Token [TrueWallet]');
+            }
+            else if(res[0] == 1)
+            {
+                toastr["error"]('กรุณากรอกหมายเลขอ้างอิงให้ถูกต้อง !');
+            }
+            else if(res[0] == 3)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดหรือไม่พบหมายเลขอ้างอิงนี้ !');
+            }
+
+            document.getElementById("btn_topup").disabled = false;
+            $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
+        }
+    })
+}

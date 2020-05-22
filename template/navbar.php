@@ -7,7 +7,8 @@
     <div class="navbar-nav">
     <a class="nav-item nav-link active" href="<?php echo $config['site']; ?>">หน้าหลัก <span class="sr-only">(current)</span></a>
     <a class="nav-item nav-link" href="?page=shop">ร้านค้า</a>
-    <a class="nav-item nav-link" href="#">Pricing</a>
+    <a class="nav-item nav-link" href="?page=topup">เติมเงิน</a>
+    <a class="nav-item nav-link" href="?page=rdmcode">เติมโค้ด</a>
     <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
     </div>
   </div>

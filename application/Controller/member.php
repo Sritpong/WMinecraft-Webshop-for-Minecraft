@@ -1,4 +1,5 @@
 <?php
+	use Maythiwat\WalletAPI;
 	require_once("../_config.php");
 
 	if(isset($_GET['func']))
@@ -113,6 +114,88 @@
 			session_destroy();
 
 			echo '1';
+		}
+		elseif($g == 'topup')
+		{
+    		$sql_wallet = 'SELECT email,password,access_token FROM wallet_account WHERE id = 1';
+		    $query_wallet = query($sql_wallet);
+
+		    if($query_wallet->rowcount() == 1)
+		    {
+		    	$f_wallet = $query_wallet->fetch();
+		    	$wallet_email = $f_wallet['email'];
+		    	$wallet_password = $f_wallet['password'];
+		    	$wallet_access_token = $f_wallet['access_token'];
+		    }
+
+		    if($wallet_access_token == null || empty($wallet_access_token))
+		    {
+		    	echo '0';
+		    }
+		    elseif($_POST['transaction_wallet'] == '' || empty($_POST['transaction_wallet']) || $_POST['transaction_wallet'] == null)
+		    {
+		    	echo '1';
+		    }
+		    else
+		    {
+		    	require_once(__DIR__ . '/../Wallet/_truewallet.php');
+
+    			$tw = new WalletAPI();
+
+				/* Time Settings */
+				$now_datetime = date('d/m/Y H:i');
+				$today_day =  date("d");
+				$today_month = date("m");
+				$today_year =  date("Y");
+				$today_year_s = $today_year - 1;
+				$today_use_check_s = $today_year_s."-".$today_month."-".$today_day;
+				$today_year_e = $today_year + 1;
+				$today_use_check_e = $today_year_e."-".$today_month."-".$today_day;
+				/* END Time Settings */
+
+    			$token = $wallet_access_token;
+
+    			/* START GET TRANSACTION */
+    			$activities = $tw->FetchActivities($token, $today_use_check_s, $today_use_check_e);
+				foreach($activities as $arr)
+                {
+                    if($arr['original_action'] == 'creditor')
+                    {
+                        $data = $tw->FetchTxDetail($token, $arr['report_id']);
+                        $flr = $data['data'];
+                        $fti = $flr['section4']['column2']['cell1']['value'];
+                        $ftam = $flr['amount'];
+                        $ftm = $flr['personal_message']['value'];
+                        $ftphone = $flr['ref1'];
+                        $fttime = $flr['section4']['column1']['cell1']['value'];
+
+                        if($fti == $_POST['transaction_wallet'])
+						{
+							$fti_u = $fti; // หมายเลขอ้างอิง
+							$ftam_u = $ftam; // จำนวนเงิน
+							$ftm_u = $ftm; // ข้อความ
+							$ftphone_u = $ftphone; // เบอร์ที่โอนมา
+							$fttime_u = $fttime; // วันที่และเวลาที่ทำรายการ
+							break;
+						}
+						/*
+						echo "<pre>";
+						print_r($flr);
+						echo "</pre>";
+						*/
+                    }
+                }
+				/* END GET TRANSACTION */
+
+				if(isset($fti_u) && $fti_u == $_POST['transaction_wallet'])
+				{
+					echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
+				}
+				else
+				{
+					echo '3';
+				}
+		    }
 		}
 	}
 	else

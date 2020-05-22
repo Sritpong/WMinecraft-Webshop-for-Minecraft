@@ -36,6 +36,10 @@
 											{
 												include_once('template/member/register.php');
 											}
+											elseif($p == 'topup')
+											{
+												include_once('template/member/topup.php');
+											}
 										}
 									?>
 								</div>
