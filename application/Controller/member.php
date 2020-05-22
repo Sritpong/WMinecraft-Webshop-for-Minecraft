@@ -178,11 +178,6 @@
 							$fttime_u = $fttime; // วันที่และเวลาที่ทำรายการ
 							break;
 						}
-						/*
-						echo "<pre>";
-						print_r($flr);
-						echo "</pre>";
-						*/
                     }
                 }
 				/* END GET TRANSACTION */
