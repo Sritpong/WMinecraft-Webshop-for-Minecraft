@@ -12,7 +12,7 @@
 		'host' => 'localhost',
 		'user' => 'root',
 		'password' => '',
-		'dbname' => 'warmlight'
+		'dbname' => 'wminecraft'
 	);
 
 	if(!isset($mysql)){exit;}
