@@ -346,6 +346,10 @@ function Topup()
             {
                 toastr["error"]('เกิดข้อผิดพลาดในการ Update Points !');
             }
+            else if(res[0] == 5)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการโหลดข้อมูลจาก Wallet !');
+            }
 
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
