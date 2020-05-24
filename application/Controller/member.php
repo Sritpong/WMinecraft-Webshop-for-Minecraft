@@ -136,6 +136,10 @@
     		{
     			echo '6';
     		}
+    		elseif(!is_numeric($_POST['transaction_wallet']))
+    		{
+    			echo '7';
+    		}
     		else
     		{
     			$sql_wallet = 'SELECT email,password,access_token FROM wallet_account WHERE id = 1';

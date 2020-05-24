@@ -354,6 +354,10 @@ function Topup()
             {
                 toastr["error"]('เกิดข้อผิดพลาดคุณยังไม่ได้เข้าสู่ระบบ !');
             }
+            else if(res[0] == 7)
+            {
+                toastr["error"]('กรุณากรอกเฉพาะตัวเลขเท่านั้น !');
+            }
 
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
