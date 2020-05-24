@@ -182,8 +182,8 @@
 
 				if(isset($fti_u) && $fti_u == $_POST['transaction_wallet'])
 				{
-					$sql_updatePoints = 'UPDATE authme SET points = points+"'.$ftam_u.'" WHERE id = "'.$_SESSION['uid'].'" LIMIT 1';
-					if(query($sql_updatePoints))
+					$sql_updatePoints = 'UPDATE authme SET points = points+":updatepoints" WHERE id = ":uid_player" LIMIT 1';
+					if(query($sql_updatePoints,array('updatepoints' => $ftam_u, ':uid_player' => $_SESSION['uid'])))
 					{
 						echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
 					}
