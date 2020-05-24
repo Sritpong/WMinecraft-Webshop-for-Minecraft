@@ -342,6 +342,10 @@ function Topup()
             {
                 toastr["error"]('เกิดข้อผิดพลาดหรือไม่พบหมายเลขอ้างอิงนี้ !');
             }
+            else if(res[0] == 4)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการ Update Points !');
+            }
 
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');

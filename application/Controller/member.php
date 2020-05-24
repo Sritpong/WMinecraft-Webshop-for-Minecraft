@@ -41,7 +41,6 @@
 		}
 		elseif($g == 'register')
 		{
-			// echo $_POST['password']." ".$_POST['confirmpassword']." ".$_POST['email'];
 			if(strlen($_POST['username']) < 4)
 			{
 				echo '0';
@@ -184,7 +183,15 @@
 
 				if(isset($fti_u) && $fti_u == $_POST['transaction_wallet'])
 				{
-					echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
+					$sql_updatePoints = 'UPDATE authme SET points = points+"'.$ftam_u.'" WHERE id = "'.$_SESSION['uid'].'" LIMIT 1';
+					if(query($sql_updatePoints))
+					{
+						echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
+					}
+					else
+					{
+						echo '4';
+					}
 				}
 				else
 				{
