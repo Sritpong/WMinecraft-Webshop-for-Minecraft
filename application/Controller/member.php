@@ -79,6 +79,14 @@
 					return $hashedPassword;
 				}
 
+				function slug($str)
+				{
+					//$str = strtolower(trim($str));
+					$str = preg_replace('/[^A-Za-z0-9-]/', '-', $str);
+					$str = preg_replace('/-+/', " ", $str);
+					return $str;
+				}
+
 				$check_ip = query("SELECT * FROM authme WHERE ip = :ip",array(':ip' => $_SERVER['REMOTE_ADDR']));
 				$numrow_ip = $check_ip->rowcount();
 				if($numrow_ip > $config['max_reg'])
@@ -87,7 +95,7 @@
 				}
 				else
 				{
-					$check = query("SELECT * FROM authme WHERE username = :username",array(':username' => $_POST['username']));
+					$check = query("SELECT * FROM authme WHERE username = :username",array(':username' => slug($_POST['username'])));
 					$numrow = $check->rowcount();
 					if($numrow > 0)
 					{
@@ -95,7 +103,7 @@
 					}
 					else
 					{
-						$insert = query("INSERT INTO authme (username,realname,password,ip,email) VALUES(:username,:realname,:password,:ip,:email)",array(':username'=>strtolower($_POST['username']),':realname'=>$_POST['username'],':password'=>hashpw($_POST['password']),':ip'=>$_SERVER['REMOTE_ADDR'],':email'=>$_POST['email']));
+						$insert = query("INSERT INTO authme (username,realname,password,ip,email) VALUES(:username,:realname,:password,:ip,:email)",array(':username'=>strtolower(slug($_POST['username'])),':realname'=>slug($_POST['username']),':password'=>hashpw($_POST['password']),':ip'=>$_SERVER['REMOTE_ADDR'],':email'=>$_POST['email']));
 						if($insert)
 						{
 							echo '7';
