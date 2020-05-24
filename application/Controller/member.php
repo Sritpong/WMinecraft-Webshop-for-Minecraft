@@ -8,9 +8,17 @@
 
 		if($g == 'login')
 		{
+			function slug($str)
+			{
+				//$str = strtolower(trim($str));
+				$str = preg_replace('/[^A-Za-z0-9-]/', '-', $str);
+				$str = preg_replace('/-+/', " ", $str);
+				return $str;
+			}
+
 			$username = $_POST['username'];
 			$sql = "SELECT * FROM authme WHERE username = :username";
-			$a = query($sql,array(':username' => $username));
+			$a = query($sql,array(':username' => slug($username)));
 			$a_num = $a->rowcount();
 			if($a_num == 1)
 			{
@@ -24,8 +32,8 @@
 				{
 					//* SET SESSION
 					$_SESSION['uid'] = $password_info['id'];
-					$_SESSION['username'] = $password_info['username'];
-					$_SESSION['realname'] = $password_info['realname'];
+					$_SESSION['username'] = slug($password_info['username']);
+					$_SESSION['realname'] = slug($password_info['realname']);
 
 					echo '1';
 				}
