@@ -1,6 +1,7 @@
 <?php
 	require_once("application/_config.php");
-	require_once("application/_getPlayer.php");
+	require_once("application/_getPlayer.php");	
+	require_once("application/_getInfoServer.php");
 ?>
 <html>
 	<head>
@@ -19,7 +20,8 @@
 							<div class="row">
 								<div class="col-md-4 col-xs-12 mb-3">
 									<?php
-										include_once 'template/member.php';
+										include_once('template/member.php');
+										include_once('template/status_server.php');
 									?>
 								</div>
 								<div class="col-md-8 col-xs-12">
@@ -40,6 +42,10 @@
 											{
 												include_once('template/member/topup.php');
 											}
+										}
+										else
+										{
+											// include_once('template/status_server.php');
 										}
 									?>
 								</div>
