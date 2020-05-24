@@ -138,7 +138,6 @@
 		    else
 		    {
 		    	require_once(__DIR__ . '/../Wallet/_truewallet.php');
-
     			$tw = new WalletAPI();
 
 				/* Time Settings */
