@@ -350,6 +350,10 @@ function Topup()
             {
                 toastr["error"]('เกิดข้อผิดพลาดในการโหลดข้อมูลจาก Wallet !');
             }
+            else if(res[0] == 6)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดคุณยังไม่ได้เข้าสู่ระบบ !');
+            }
 
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
