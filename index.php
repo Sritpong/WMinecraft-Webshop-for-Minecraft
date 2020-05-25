@@ -42,6 +42,10 @@
 											{
 												include_once('template/member/topup.php');
 											}
+											elseif($p == 'shop')
+											{
+												include_once('template/product.php');
+											}
 										}
 										else
 										{
