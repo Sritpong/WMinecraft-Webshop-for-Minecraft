@@ -1,8 +1,9 @@
 <div class="card mt-3">
-	<div class="card-header bg-info text-white">
-		<i class="fa fa-signal"></i> Server Status
-	</div>
 	<div class="card-body">
+		<h6>
+			<i class="fa fa-signal"></i> Server Status
+		</h6>
+		<hr/>
 		<?php
 			if(isset($status_chk) && $status_chk == true)
 			{

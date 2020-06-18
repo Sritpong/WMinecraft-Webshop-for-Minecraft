@@ -1,13 +1,3 @@
-function refreshPage()
-{ 
-    location.reload(); 
-}
-
-function gotoPage(page)
-{
-    location.replace(page);
-}
-
 function Login()
 {
     $("#alert_login").html('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
@@ -52,8 +42,7 @@ function Login()
                 $("#alert_login").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('เข้าสู่ระบบเรียบร้อยแล้ว !');
 
-                setInterval('gotoPage("'+ submit[2] +'")', 3000);
-                // setTimeout(function(){location.href = login_success},3000);
+                setTimeout(function(){location.href = submit[2]},3000);
             }
             else if(data == 2)
             {
@@ -184,7 +173,7 @@ function Register()
                 $("#alert_register").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> สมัครสมาชิกเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('สมัครสมาชิกเรียบร้อยแล้ว !');
 
-                setInterval('gotoPage("'+ submit[4] +'/?page=login")', 3000);
+                setTimeout(function(){location.href = submit[4] + '/?page=login'}, 3000);
             }
             else if(data == 0)
             {
@@ -286,7 +275,7 @@ function Logout(path)
             if(data == 1)
             {
                 toastr["success"]('ออกจากระบบเรียบร้อยแล้ว...');
-                setInterval('gotoPage("'+ path +'")', 2000);
+                setTimeout(function(){location.href = path},2000);
             }
             else
             {
@@ -328,11 +317,14 @@ function Topup()
             if(res[0] == 2)
             {
                 document.getElementById("transaction_wallet").value = "";
+                var divplayerPoints = $('#player_points')[0].textContent.split(' ');
+                var points = parseFloat(divplayerPoints[1].replace(',','')) + parseFloat(res[1]);
+                $('#player_points').html("Points: <b>" + points.toFixed(2) + "</b>");
                 toastr["success"]('คุณได้ทำการเติมเงิน ' + res[1] + ' บาท');
             }
             else if(res[0] == 0)
             {
-                toastr["error"]('กรุณาอัพเดท Access Token [TrueWallet]');
+                toastr["error"]('กรุณาตั้งค่าระบบเติมเงิน [Admin]');
             }
             else if(res[0] == 1)
             {
@@ -357,6 +349,14 @@ function Topup()
             else if(res[0] == 7)
             {
                 toastr["error"]('กรุณากรอกเฉพาะตัวเลขเท่านั้น !');
+            }
+            else if(res[0] == 8)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดไม่ทราบสาเหตุ !');
+            }
+            else if(res[0] == 9)
+            {
+                toastr["error"]('หมาบเลขอ้างอิงนี้ถูกใช้งานไปแล้ว !');
             }
 
             document.getElementById("btn_topup").disabled = false;

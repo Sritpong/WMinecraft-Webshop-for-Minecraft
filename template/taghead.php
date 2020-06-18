@@ -5,6 +5,7 @@
 <title><?php echo $config['server_name']; ?></title>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo $config['site']; ?>/build/toastr.css">
+<link rel="stylesheet" href="css/lt.css">
 <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
 <style type="text/css">

@@ -3,10 +3,11 @@
 	{
 		?>
 			<div class="card">
-				<div class="card-header bg-primary text-white">
-					Register
-				</div>
 				<div class="card-body">
+					<h6>
+						<i class="fa fa-user-plus"></i> Register
+					</h6>
+					<hr/>
 					<div id="alert_register"></div>
 					<form name="register_frm" id="register_frm" method="POST" action="javascript:void(0);" autocomplete="off">
 						<div class="input-group mb-2">
@@ -43,7 +44,7 @@
 						</div>
 						<hr/>
 						<input name="path" id="path" type="hidden" value="<?php echo $config['site']; ?>"/>
-						<button type="submit" id="button_chkregister" class="btn btn-primary btn-block" onclick="chkRegister()"><i class="fa fa-user-plus"></i> สมัครสมาชิก</button>
+						<button type="submit" id="button_chkregister" class="btn btn-outline-primary btn-block" onclick="chkRegister()"><i class="fa fa-user-plus"></i> สมัครสมาชิก</button>
 					</form>
 				</div>
 			</div>

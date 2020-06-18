@@ -33,7 +33,7 @@ class TrueWallet {
 
 	public function __construct ($username = null, $password = null, $reference_token = null) {
 		if (empty($this->device_id) || empty($this->mobile_tracking)) {
-			$identity_file = dirname(__FILE__)."/".basename(__FILE__, ".php").".identity";
+			$identity_file = dirname(__FILE__)."/".$username.".identity";
 			if (file_exists($identity_file)) {
 				list($this->device_id, $this->mobile_tracking) = explode("|", file_get_contents($identity_file));
 			} else {
