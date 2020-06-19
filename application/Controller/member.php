@@ -1,6 +1,7 @@
 <?php
 	use Maythiwat\WalletAPI;
 	require_once("../_config.php");
+	require_once("../_getDetailDevice.php");
 
 	if(isset($_GET['func']))
 	{
@@ -30,6 +31,8 @@
 
 				if(strcasecmp(trim($sha_info[3]),hash('sha256', $sha256_password)) == 0)
 				{
+					$status_id = '1';
+
 					//* SET SESSION
 					$_SESSION['uid'] = $password_info['id'];
 					$_SESSION['username'] = slug($password_info['username']);
@@ -39,8 +42,18 @@
 				}
 				else
 				{
+					$status_id = '2';
 					echo '2';
 				}
+
+				$sql_insertLoginLogs = "INSERT INTO login_logs (login_logs_browser,login_logs_os,user_id,login_logs_status_id) VALUES ".
+				"(:browser,:os,:uid,:status_id)";
+				query($sql_insertLoginLogs, array(
+					':browser' => $user_browser,
+					':os' => $user_os,
+					':uid' => $password_info['id'],
+					':status_id' => $status_id
+				));
 			}
 			else
 			{
