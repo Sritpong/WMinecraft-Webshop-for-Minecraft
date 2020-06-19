@@ -126,7 +126,9 @@
 		}
 		elseif($g == 'logout')
 		{
-			session_destroy();
+			unset($_SESSION['uid']);
+			unset($_SESSION['username']);
+			unset($_SESSION['realname']);
 
 			echo '1';
 		}

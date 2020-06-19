@@ -60,6 +60,7 @@ function Login()
                 document.getElementById("username_input").disabled = false;
                 document.getElementById("password_input").disabled = false;
             }
+            
             $("#login_btn").html('<i class="fa fa-sign-in"></i> เข้าสู่ระบบ');
         }
     })
@@ -320,6 +321,29 @@ function Topup()
                 var divplayerPoints = $('#player_points')[0].textContent.split(' ');
                 var points = parseFloat(divplayerPoints[1].replace(',','')) + parseFloat(res[1]);
                 $('#player_points').html("Points: <b>" + points.toFixed(2) + "</b>");
+
+                var today = new Date();
+                var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+                var htmlTbody = "";
+                htmlTbody += "<td>";
+                htmlTbody += "New..";
+                htmlTbody += "</td>";
+                htmlTbody += "<td>";
+                htmlTbody += "TrueWallet";
+                htmlTbody += "</td>";
+                htmlTbody += "<td>";
+                htmlTbody += wallet_transaction;
+                htmlTbody += "</td>";
+                htmlTbody += "<td>";
+                htmlTbody += date;
+                htmlTbody += "</td>";
+                htmlTbody += "<td>";
+                htmlTbody += time;
+                htmlTbody += "</td>";
+                $("#tbody_history_topup").append("<tr>" + htmlTbody + "</tr>");
+
                 toastr["success"]('คุณได้ทำการเติมเงิน ' + res[1] + ' บาท');
             }
             else if(res[0] == 0)
@@ -361,6 +385,109 @@ function Topup()
 
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
+        }
+    })
+}
+
+function LoginBackend()
+{
+    $("#alert_login").html('<div class="alert alert-warning" role="alert"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> กรุณารอสักครู่...</div>');
+    var elements_form = document.getElementById("login_frm").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var login_username = submit[0];
+    var login_password = submit[1];
+
+    if(login_username == '')
+    {
+        $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Username</div>');
+        $("#username_input").focus();
+        return false;
+    }
+    else if(login_password == '')
+    {
+        $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> กรุณากรอก Password</div>');
+        $("#password_input").focus();
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=login",
+        data: "username="+ submit[0] +"&password="+ submit[1],
+        beforeSend: function() {
+            document.getElementById("login_btn").disabled = true;
+            document.getElementById("username_input").disabled = true;
+            document.getElementById("password_input").disabled = true;
+            $("#login_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> เข้าสู่ระบบ');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                $("#alert_login").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
+                toastr["success"]('เข้าสู่ระบบเรียบร้อยแล้ว !');
+
+                setTimeout(function(){location.href = submit[2]},3000);
+            }
+            else if(data == 2)
+            {
+                $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> Password ไม่ถูกต้อง</div>');
+
+                document.getElementById("login_btn").disabled = false;
+                document.getElementById("username_input").disabled = false;
+                document.getElementById("password_input").disabled = false;
+            }
+            else if(data == 0)
+            {
+                $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> ไม่พบ Username นี้</div>');
+
+                document.getElementById("login_btn").disabled = false;
+                document.getElementById("username_input").disabled = false;
+                document.getElementById("password_input").disabled = false;
+            }
+            else if(data == 3)
+            {
+                $("#alert_login").html('<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle"></i> คุณไม่ได้รับสิทธิ์ในการเข้าใช้งานระบบหลังร้าน</div>');
+
+                document.getElementById("login_btn").disabled = false;
+                document.getElementById("username_input").disabled = false;
+                document.getElementById("password_input").disabled = false;
+            }
+
+            $("#login_btn").html('<i class="fa fa-sign-in"></i> เข้าสู่ระบบ');
+        }
+    })
+}
+
+function LogoutBackend(path)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=logout",
+        beforeSend: function() {
+            document.getElementById("logout_btn").disabled = true;
+            $("#logout_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                toastr["success"]('ออกจากระบบเรียบร้อยแล้ว...');
+                setTimeout(function(){location.href = path + "/backend"},2000);
+            }
+            else
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการออกจากระบบ !');
+                document.getElementById("logout_btn").disabled = false;
+            }
+
+            $("#logout_btn").html('<i class="fa fa-sign-out"></i> ออกจากระบบ');
         }
     })
 }

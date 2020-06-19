@@ -36,5 +36,4 @@
 		$q->execute($array);
 		return $q;
 	}
-
 ?>

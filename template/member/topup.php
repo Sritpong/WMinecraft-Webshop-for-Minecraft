@@ -28,5 +28,6 @@
 				</div>
 			</div>
 		<?php
+		include_once('template/member/history_topup.php');
 	}
 ?>
