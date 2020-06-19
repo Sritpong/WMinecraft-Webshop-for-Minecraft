@@ -2,7 +2,6 @@
 	require_once("../application/_config.php");
 	require_once("../application/_getPlayer.php");	
 	require_once("../application/_getInfoServer.php");
-	require_once("../application/_getDetailDevice.php");
 ?>
 <html>
 	<head>
@@ -59,7 +58,7 @@
 									</div>
 									<div class="col-sm-6">
 										<ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
-											<li class="breadcrumb-item"><a href="#" class="default-color">Home</a></li>
+											<li class="breadcrumb-item"><a href="<?php echo $config['site']."/Backend"; ?>" class="default-color">Home</a></li>
 											<li class="breadcrumb-item active"><?php echo $title; ?></li>
 										</ol>
 									</div>
@@ -70,6 +69,10 @@
 									<div class="card card-statistics h-100"> 
 										<div class="card-body">   
 											<?php
+												$lastDateOfThisMonth = strtotime('last day of this month');
+												$lastDay = date('d', $lastDateOfThisMonth) + 1;
+												$date = date('Y-m-', $lastDateOfThisMonth).$lastDay;
+												
 												include_once($file.".php");
 											?>
 										</div>
@@ -85,9 +88,30 @@
 					</div>
 				<?php
 			}
-		?>
-		<?php
 			include_once("template/footer.php");
+			if(isset($_GET['page']))
+			{
+				$p = $_GET['page'];
+
+				if($p == 'dashboard')
+				{
+					?>
+						<script type="text/javascript" src="<?php echo $config['site'] ?>/backend/js/DashboardZyanJS.js"></script>
+					<?php
+				}
+				else
+				{
+					?>
+						<script type="text/javascript" src="<?php echo $config['site'] ?>/backend/js/DashboardZyanJS.js"></script>
+					<?php
+				}
+			}
+			else
+			{
+				?>
+					<script type="text/javascript" src="<?php echo $config['site'] ?>/backend/js/DashboardZyanJS.js"></script>
+				<?php
+			}
 		?>
 	</body>
 </html>

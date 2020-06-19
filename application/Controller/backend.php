@@ -85,6 +85,35 @@
 
 			echo '1';
 		}
+		elseif($g == 'getDetailDashboard')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$thisday = date('Y-m-d');
+
+				$sql_countPlayer = "SELECT COUNT(id) AS count FROM authme";
+				$query_countPlayer = query($sql_countPlayer);
+				$countPlayer = $query_countPlayer->fetch();
+
+				$sql_countPlayerLogin = "SELECT *, COUNT(login_logs_id) AS count FROM login_logs WHERE DATE(time_reg) = :thisday GROUP BY user_id";
+				$query_countPlayerLogin = query($sql_countPlayerLogin, array(
+					':thisday' => $thisday
+				));
+				$countPlayerLogin = $query_countPlayerLogin->rowcount();
+
+				$sql_getTopup = "SELECT IFNULL(SUM(refill_logs_amount), 0) AS sum FROM refill_logs WHERE DATE(time_reg) = :thisday";
+				$query_getTopup = query($sql_getTopup, array(
+					':thisday' => $thisday
+				));
+				$getTopup = $query_getTopup->fetch();
+
+				echo number_format($countPlayer['count'])."|".number_format($countPlayerLogin)."|".number_format($getTopup['sum'],2);
+			}
+			else
+			{
+				echo '0';
+			}
+		}
 	}
 	else
 	{
