@@ -1,5 +1,6 @@
 <?php
 	require_once("../application/_config.php");
+	require_once("../application/_pdo.php");
 	require_once("../application/_getPlayer.php");	
 	require_once("../application/_getInfoServer.php");
 ?>

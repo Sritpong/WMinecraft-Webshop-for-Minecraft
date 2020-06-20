@@ -28,12 +28,10 @@
             </div>
             <div class="float-right text-right">
               <p class="card-text text-dark">จำนวนการซื้อสินค้าวันนี้</p>
-              <h4>656</h4>
+              <h4 id="shopLogsToday"></h4>
             </div>
           </div>
-          <p class="text-muted pt-3 mb-0 mt-2 border-top">
-            <i class="fa fa-bookmark-o mr-1" aria-hidden="true"></i> สินค้ามีทั้งหมด 10,000 ชิ้น
-          </p>
+          <p id="shopAll" class="text-muted pt-3 mb-0 mt-2 border-top"></p>
         </div>
       </div>
     </div>

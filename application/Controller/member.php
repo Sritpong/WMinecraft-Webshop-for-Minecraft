@@ -1,6 +1,7 @@
 <?php
 	use Maythiwat\WalletAPI;
 	require_once("../_config.php");
+	require_once("../_pdo.php");
 	require_once("../_getDetailDevice.php");
 
 	if(isset($_GET['func']))

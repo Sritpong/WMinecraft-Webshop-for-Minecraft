@@ -1,5 +1,6 @@
 <?php
 	require_once("../_config.php");
+	require_once("../_pdo.php");
 	require_once("../_getDetailDevice.php");
 
 	if(isset($_GET['func']))
@@ -107,7 +108,18 @@
 				));
 				$getTopup = $query_getTopup->fetch();
 
-				echo number_format($countPlayer['count'])."|".number_format($countPlayerLogin)."|".number_format($getTopup['sum'],2);
+				$sql_getAllShop = "SELECT COUNT(shop_id) AS count FROM shop";
+				$query_getAllShop = query($sql_getAllShop);
+				$getAllShop = $query_getAllShop->fetch();
+
+				$sql_getShopLogsToday = "SELECT COUNT(shop_logs_id) AS count FROM shop_logs WHERE DATE(time_reg) = :thisday";
+				$query_getShopLogsToday = query($sql_getShopLogsToday, array(
+					':thisday' => $thisday
+				));
+				$getShopLogsToday = $query_getShopLogsToday->fetch();
+
+				echo number_format($countPlayer['count'])."|".number_format($countPlayerLogin)."|".number_format($getTopup['sum'],2).
+				"|".number_format($getAllShop['count'])."|".number_format($getShopLogsToday['count']);
 			}
 			else
 			{

@@ -49,6 +49,11 @@
 							<button type="submit" name="login_btn" id="login_btn" class="button" onclick="LoginBackend()">
 								<i class="fa fa-sign-in"></i> เข้าสู่ระบบ
 							</button>
+							<p class="mt-20 mb-0">
+								<a href="<?php echo $config['site']; ?>">
+									<i class="fa fa-long-arrow-left"></i> กลับไปหน้า Webshop
+								</a>
+							</p>
 						</form>
 					</div>
 				</div>

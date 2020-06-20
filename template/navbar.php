@@ -9,7 +9,7 @@
     <div class="navbar-nav">
       <ul class="navbar-nav mr-auto pt-3 pt-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="?page=home"><img src="menu/main.png" style="width:20px;height:20px;">
+          <a class="nav-link" href="<?php echo $config['site']; ?>"><img src="menu/main.png" style="width:20px;height:20px;">
             <span class="pull-right">
               <span id="xnav-upp">&nbsp;&nbsp;<b>หน้าหลัก</b></span>
             </span>
@@ -17,9 +17,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="?page=topup"><img src="menu/topup.png" style="width:20px;height:20px;">
+          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=topup"><img src="menu/topup.png" style="width:20px;height:20px;">
             <span class="pull-right">
               <span id="xnav-upp">&nbsp;&nbsp;<b>เติมเงิน</b></span>
+            </span>
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=shop"><img src="menu/shop.png" style="width:20px;height:20px;">
+            <span class="pull-right">
+              <span id="xnav-upp">&nbsp;&nbsp;<b>ร้านค้า</b></span>
             </span>
             <span class="sr-only">(current)</span>
           </a>

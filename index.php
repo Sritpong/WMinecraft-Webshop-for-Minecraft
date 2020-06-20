@@ -1,5 +1,6 @@
 <?php
 	require_once("application/_config.php");
+	require_once("application/_pdo.php");
 	require_once("application/_getPlayer.php");	
 	require_once("application/_getInfoServer.php");
 ?>
@@ -49,34 +50,22 @@
 											}
 											elseif($p == 'shop')
 											{
-												include_once('template/product.php');
+												include_once('template/member/shop.php');
 											}
 											elseif($p == 'code')
 											{
 												include_once('template/member/code.php');
 											}
+											else
+											{
+												include_once('template/member/shop.php');
+											}
 										}
 										else
 										{
-											// include_once('template/status_server.php');
+											include_once('template/member/shop.php');
 										}
 									?>
-									<!-- <div class="col-lg-4 col-md-6 col-xs-6">
-            <div class="item mb-2" style="border-radius: 5px 5px 5px 5px;">
-              <div class="item-image">
-              <a class="item-image-price">50.00 บาท</a>
-              <center><img src="http://103.91.205.83/item/1169.png"></center>
-              <a class="item-image-bottom text-center">ยศ Diamond</a>
-            </div>
-              <div class="item-info">
-                <div class="item-text">
-				  <a>ชื่อ</a>
-                  <a href="?page=confirm&id=0" class="btn btn-success w-100 mb-1 border-0">ซื้อสินค้า</a>
-                  <a href="?page=confirm&id=0" class="btn btn-danger btn-sm"><i class="fa fa-gift"></i> ส่งของขวัญ</a>
-                </div>
-              </div>
-            </div>
-              </div>  -->
 								</div>
 							</div>
 						</div>
@@ -85,7 +74,7 @@
 			</div>
 			<div class="row my-3">
 				<div class="col-12 text-center">
-					&copy; Design & System by WMinecraft
+					&copy; Design & System by WMinecraft | <a href="<?php echo $config['site']."/Backend"; ?>">Backend</a>
 				</div>
 			</div>
 		</div>

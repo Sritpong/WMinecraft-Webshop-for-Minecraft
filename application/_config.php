@@ -3,37 +3,27 @@
 	ini_set('display_errors', 1);
     date_default_timezone_set("Asia/Bangkok");
 	
-	$config = Array (
+	$config = array(
 		'site' => 'http://localhost/WMinecraft',
 		'server_name' => 'WMinecraft',
 		'max_reg' => 1
 	);
 
 	#MYSQL Config
-	$mysql = Array (
+	$mysql = array(
 		'host' => 'localhost',
 		'user' => 'root',
 		'password' => '',
 		'dbname' => 'wminecraft'
 	);
 
-	if(!isset($mysql)){exit;}
-	try
-	{
-		$engine = new PDO("mysql:host=".$mysql['host']."; dbname=".$mysql['dbname'].";charset=utf8", $mysql['user'], $mysql['password']);
-		$engine->exec("set names utf8");
-	}
-	catch (PDOException $e)
-	{
-		echo '<b>DB Err-> </b>'.$e->getMessage();
-		exit;
-	}
-
-	function query($sql,$array=array())
-	{
-		global $engine;
-		$q = $engine->prepare($sql);
-		$q->execute($array);
-		return $q;
-	}
+	# ป้องกัน sql injection จาก $_GET
+    foreach($_GET as $key => $value){
+        $_GET[$key]=addslashes(strip_tags(trim($value)));
+    }
+    if(isset($_GET['id']) && $_GET['id'] !='')
+    { 
+        $_GET['id']=(int) $_GET['id'];
+    }
+    extract($_GET);
 ?>
