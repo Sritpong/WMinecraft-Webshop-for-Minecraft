@@ -1,7 +1,21 @@
+<?php
+  if(isset($_GET['page']) && $_GET['page'] != 'shop')
+  {
+    $title_shop = '<i class="fa fa-shopping-cart"></i> Shop - สินค้าใหม่ 6 รายการ';
+  }
+  elseif(!isset($_GET['page']))
+  {
+    $title_shop = '<i class="fa fa-shopping-cart"></i> Shop - สินค้าใหม่ 6 รายการ';
+  }
+  else
+  {
+    $title_shop = '<i class="fa fa-shopping-cart"></i> Shop';
+  }
+?>
 <div class="card">
     <div class="card-body">
         <h6>
-            <i class="fa fa-shopping-cart"></i> Shop
+            <?php echo $title_shop; ?>
         </h6>
         <hr/>
         <div class="row">
@@ -10,9 +24,13 @@
               {
                 $sql_product = 'SELECT * FROM shop ORDER BY shop_id DESC';
               }
+              elseif(!isset($_GET['page']))
+              {
+                $sql_product = 'SELECT * FROM shop ORDER BY shop_id DESC';
+              }
               else
               {
-                $sql_product = 'SELECT * FROM shop';
+                $sql_product = 'SELECT * FROM shop ';
               }
 
               if(isset($_GET['server']) && is_numeric($_GET['server']))
@@ -34,11 +52,11 @@
 
               if(isset($_GET['page']) && $_GET['page'] != 'shop')
               {
-                $sql_product .= ' LIMIT 12';
+                $sql_product .= ' LIMIT 6';
               }
               elseif(!isset($_GET['page']))
               {
-                $sql_product .= ' LIMIT 12';
+                $sql_product .= ' LIMIT 6';
               }
 
               $query_product = query($sql_product);
@@ -64,7 +82,7 @@
                             <div class="item-info">
                                 <div class="item-text">
                                     <a><?php echo $product['shop_name']; ?></a>
-                                    <button id="buy_item_<?php echo $product['shop_id']; ?>" class="btn btn-success w-100 mb-1 border-0">
+                                    <button id="buy_item_<?php echo $product['shop_id']; ?>" onclick="BuyShop(<?php echo $product['shop_id'] ?>)" class="btn btn-success w-100 mb-1 border-0">
                                         <i class="fa fa-cart-arrow-down"></i> ซื้อ
                                     </a>
                                 </div>

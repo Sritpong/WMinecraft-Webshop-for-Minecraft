@@ -74,7 +74,8 @@
 			</div>
 			<div class="row my-3">
 				<div class="col-12 text-center">
-					&copy; Design & System by WMinecraft | <a href="<?php echo $config['site']."/Backend"; ?>">Backend</a>
+					<b><small>Copyright &copy; <?php echo date('Y'); ?> WMinecraft. All Rights Reserved</small></b><br/>
+					Design & System by WMinecraft | <a href="<?php echo $config['site']."/Backend"; ?>">Backend</a>
 				</div>
 			</div>
 		</div>

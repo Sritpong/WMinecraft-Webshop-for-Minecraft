@@ -2,6 +2,7 @@
 	use Maythiwat\WalletAPI;
 	require_once("../_config.php");
 	require_once("../_pdo.php");
+	require_once("../_getPlayer.php");	
 	require_once("../_getDetailDevice.php");
 
 	if(isset($_GET['func']))
@@ -273,6 +274,158 @@
 			    	}
 			    }
     		}
+		}
+		elseif($g == 'getDetailShop')
+		{
+			if(isset($_POST['item_id']))
+			{
+				$sql_getDetailShop = "SELECT\n".
+				"	shop.shop_id,\n".
+				"	shop.shop_name,\n".
+				"	shop.shop_img,\n".
+				"	shop.shop_price,\n".
+				"	category.category_name,\n".
+				"	server.server_name\n".
+				"FROM\n".
+				"(\n".
+				"	SELECT * FROM `shop` WHERE shop_id = :shop_id\n".
+				") AS shop\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM `category`\n".
+				") AS category ON (category.category_id = shop.category_id)\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM `server`\n".
+				") AS server ON (server.server_id = shop.server_id)";
+				$query_getDetailShop = query($sql_getDetailShop, array(
+					':shop_id' => $_POST['item_id']
+				));
+				
+				if($query_getDetailShop->rowcount() > 0)
+				{
+					$getDetailShop = $query_getDetailShop->fetch();
+
+					echo $getDetailShop['shop_id']."|".$getDetailShop['shop_name']."|".
+					number_format($getDetailShop['shop_price'],2)."|".$getDetailShop['category_name'].
+					"|".$getDetailShop['server_name'];
+				}
+				else
+				{
+					echo '2';
+				}
+			}
+			else
+			{
+				echo '0';
+			}
+		}
+		elseif($g == 'buyItemShop')
+		{
+			if(!isset($_SESSION['uid']))
+			{
+				echo '500';
+			}
+			else
+			{
+				if(isset($_POST['item_id']))
+				{
+					$sql_getDetailShop = "SELECT\n".
+					"	shop.shop_id,\n".
+					"	shop.shop_name,\n".
+					"	shop.shop_price,\n".
+					"	shop.shop_command,\n".
+					"	server.server_name,\n".
+					"	server.server_ip,\n".
+					"	server.server_port,\n".
+					"	server.server_password\n".
+					"FROM\n".
+					"(\n".
+					"	SELECT * FROM `shop` WHERE shop_id = :shop_id\n".
+					") AS shop\n".
+					"LEFT JOIN\n".
+					"(\n".
+					"	SELECT * FROM `category`\n".
+					") AS category ON (category.category_id = shop.category_id)\n".
+					"LEFT JOIN\n".
+					"(\n".
+					"	SELECT * FROM `server`\n".
+					") AS server ON (server.server_id = shop.server_id)";
+					$query_getDetailShop = query($sql_getDetailShop, array(
+						':shop_id' => $_POST['item_id']
+					));
+
+					if($query_getDetailShop->rowcount() > 0)
+					{
+						$shop = $query_getDetailShop->fetch();
+
+						if($player['points'] >= $shop['shop_price'])
+						{
+							$rcon_ip = $shop['server_ip'];
+							$rcon_port = $shop['server_port'];
+							$rcon_password = $shop['server_password'];
+
+							require_once('../_rcon.php');
+							$rcon = new Rcon($rcon_ip, $rcon_port, $rcon_password, '3');
+							if($rcon->connect())
+							{
+								$sql_updatePointsPlayer = "UPDATE authme SET points = points-'".$shop['shop_price']."' WHERE id = :uid";
+								$query_updatePointsPlayer = query($sql_updatePointsPlayer, array(
+									':uid' => $_SESSION['uid']
+								));
+
+								if($query_updatePointsPlayer)
+								{
+									$sql_insertShopLogs = "INSERT INTO shop_logs (shop_id,user_id) VALUES (".
+									":shop_id,:uid".
+									")";
+									$query_insertShopLogs = query($sql_insertShopLogs, array(
+										':shop_id' => $shop['shop_id'],
+										':uid' => $_SESSION['uid']
+									));
+
+									if($query_insertShopLogs)
+									{
+										$command = str_replace("<player>", $player['username'], $shop['shop_command']);
+								        $exp = explode('<and>',$command);
+
+								        foreach($exp as &$val)
+		                                {
+		                                    $rcon->sendCommand($val);
+		                                }
+
+		                                echo '1';
+									}
+									else
+									{
+										echo '5';
+									}
+								}
+								else
+								{
+									echo '4';
+								}
+							}
+							else
+							{
+								echo '3';
+							}
+						}
+						else
+						{
+							echo '6';
+						}
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+				else
+				{
+					echo '0';
+				}
+			}
 		}
 	}
 	else

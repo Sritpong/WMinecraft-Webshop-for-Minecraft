@@ -368,7 +368,7 @@ function Topup()
             }
             else if(res[0] == 6)
             {
-                toastr["error"]('เกิดข้อผิดพลาดคุณยังไม่ได้เข้าสู่ระบบ !');
+                toastr["error"]('กรุณาเข้าสู่ระบบก่อนเติมเงิน !');
             }
             else if(res[0] == 7)
             {
@@ -433,6 +433,7 @@ function LoginBackend()
                 $("#alert_login").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('เข้าสู่ระบบเรียบร้อยแล้ว !');
 
+                document.getElementById("login_btn").disabled = true;
                 setTimeout(function(){location.href = submit[2]},3000);
             }
             else if(data == 2)
@@ -488,6 +489,176 @@ function LogoutBackend(path)
             }
 
             $("#logout_btn").html('<i class="fa fa-sign-out"></i> ออกจากระบบ');
+        }
+    })
+}
+
+function BuyShop(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=getDetailShop",
+        data: "item_id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถโหลดข้อมูลสินค้าได้ในขณะนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่พบสินค้านี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                var detailItem = data.split("|");
+                swal(
+                {
+                    title: "ซื้อไอเทม",
+                    text: "ยืนยันการซื้อ " + detailItem[1] + " ราคา " + detailItem[2] + " พ้อยท์",
+                    icon: "warning",
+                    buttons: {
+                        cancel: "ยกเลิก",
+                        true: "ยืนยันการซื้อ " + detailItem[1]
+                    },
+                    dangerMode: true,
+                })
+                .then((confirm) =>
+                {
+                    if(confirm)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "application/Controller/member.php?func=buyItemShop",
+                            beforeSend: function() {
+                                toastr["info"]('กรุณารอสักครู่...');
+                            },
+                            data: "item_id=" + id,
+                            success: function(data)
+                            {
+                                toastr.clear();
+
+                                if(data == 0)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถซื้อสินค้าได้ขณะนี้ กรุณาลองใหม่ภายหลัง",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 1)
+                                {
+                                    swal(
+                                    {
+                                        title: "สำเร็จ !",
+                                        text: "คุณได้ทำการซื้อ " + detailItem[1] + " เรียบร้อยแล้ว",
+                                        icon: "success",
+                                        button: true,
+                                    })
+                                    .then((ok_success_buy) =>
+                                    {
+                                        if(ok_success_buy)
+                                        {
+                                            location.reload();
+                                        }
+                                    });
+                                }
+                                else if(data == 2)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่พบสินค้านี้",
+                                        icon: "error",
+                                        button: true,
+                                    })
+                                    .then((ok_success_buy) =>
+                                    {
+                                        if(ok_success_buy)
+                                        {
+                                            location.reload();
+                                        }
+                                    });
+                                }
+                                else if(data == 3)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถเชื่อมต่อ Server ได้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 4)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถอัพเดทพ้อยท์ของ Player ได้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 5)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถเก็บประวัติการซื้อสินค้าได้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 6)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถซื้อได้เนื่องจากพ้อยท์ไม่เพียงพอ",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 500)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "กรุณาเข้าสู่ระบบก่อนซื้อสินค้า",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่ทราบสาเหตุ",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                            }
+                        })
+                    }
+                });
+            }
         }
     })
 }
