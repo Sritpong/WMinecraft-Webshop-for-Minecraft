@@ -662,3 +662,210 @@ function BuyShop(id)
         }
     })
 }
+
+function EditWalletAccount()
+{
+    var email = $('#email_wallet').val();
+    var password = $('#password_wallet').val();
+
+    if(email == "" || email == "undefined")
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก Email ก่อนบันทึก",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+    else if(password == "" || password == "undefined")
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก Password ก่อนบันทึก",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=EditWalletSetting",
+        data: "email=" + email + "&password=" + password,
+        beforeSend: function() {
+            document.getElementById("walletSetting_btn").disabled = true;
+            $("#walletSetting_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ตั้งค่าบัญชี Wallet สำเร็จ",
+                    icon: "success",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถบันทึกข้อมูลได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอก Email หรือ Password",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอก Email ให้ถูกต้อง",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "คุณไม่ได้รับสิทธิ์ในการใช้งาน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("walletSetting_btn").disabled = false;
+            $("#walletSetting_btn").html('<i class="fa fa-check"></i> บันทึก');
+        }
+    })
+}
+
+function getOTPAccessToken()
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=getOTPAccessToken",
+        beforeSend: function()
+        {
+            document.getElementById("getAccessToken_btn").disabled = true;
+            $("#getAccessToken_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(res)
+        {
+            console.log(res);
+            var data = res.split("|");
+
+            if(data[0] == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "คุณไม่ได้รับสิทธิ์ในการใช้งาน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data[0] == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถรับ OTP ได้ขณะนี้",
+                    icon: "error",
+                    button: true,
+                });    
+            }
+            else if(data[0] == 1)
+            {
+                swal("OTP ถูกส่งไปที่เบอร์ "+ data[1] +" (Ref: "+ data[2] +")",
+                {
+                    content: "input",
+                })
+                .then((value) =>
+                {
+                    if(`${value}` != null)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "../application/Controller/backend.php?func=submitOTP",
+                            data: "ref=" + data[2] + "&phone=" + data[1] + "&otp=" + `${value}`,
+                            success: function(data)
+                            {
+                                if(data == 1)
+                                {
+                                    swal(
+                                    {
+                                        title: "สำเร็จ !",
+                                        text: "รับ Access Token เรียบร้อยแล้ว",
+                                        icon: "success",
+                                        button: true,
+                                    })
+                                    .then((ok_otp_wallet) =>
+                                    {
+                                        if(ok_otp_wallet)
+                                        {
+                                            location.reload();
+                                        }
+                                    });
+                                }
+                                else if(data == 2)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "OTP ผิด หรือ ไม่สามารถรับ Access Token ได้ขณะนี้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 0)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถอัพเดท Access Token ลงฐานข้อมูลขณะนี้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(data == 500)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "คุณไม่ได้รับสิทธิ์ในการใช้งาน",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                            }
+                        })
+                    }
+                });  
+            }
+
+            document.getElementById("getAccessToken_btn").disabled = false;
+            $("#getAccessToken_btn").html('<i class="fa fa-cloud"></i> รับ Access Token');
+        }
+    })
+}

@@ -163,3 +163,13 @@ h1 { margin-bottom: 20px; }
   padding: 2.5px 8px;
   color: white !important;
 }
+.item-image-new {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: auto;
+  height: auto;
+  background: rgb(230,0,0);
+  padding: 2.5px 8px;
+  color: white !important;
+}

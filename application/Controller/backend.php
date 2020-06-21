@@ -126,6 +126,120 @@
 				echo '0';
 			}
 		}
+		elseif($g == 'EditWalletSetting')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+				{
+					echo '3';
+				}
+				elseif(!empty($_POST['email']) && !empty($_POST['password']))
+				{
+					$sql_updateWalletAcc = "UPDATE wallet_account SET email = :email, password = :password WHERE id = 1";
+					$query_updateWalletAcc = query($sql_updateWalletAcc, array(
+						':email' => $_POST['email'],
+						':password' => $_POST['password']
+					));
+
+					if($query_updateWalletAcc)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'getOTPAccessToken')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_wallet = 'SELECT email,password,access_token FROM wallet_account WHERE id = 1';
+			    $query_wallet = query($sql_wallet);
+
+			    if($query_wallet->rowcount() == 1)
+			    {
+			    	$f_wallet = $query_wallet->fetch();
+			    	$wallet_email = $f_wallet['email'];
+			    	$wallet_password = $f_wallet['password'];
+			    	$wallet_access_token = $f_wallet['access_token'];
+			    }
+
+			    require_once(__DIR__ . '/../Wallet/_loginTW.php');
+				$tw_getstatus = new TrueWallet($wallet_email, $wallet_password);
+				$requestOTP = $tw_getstatus->RequestLoginOTP();
+
+				if($requestOTP['code'] == "MAS-200")
+				{
+					$phone_number = $requestOTP['data']['mobile_number'];
+					$otp_ref = $requestOTP['data']['otp_reference'];
+					echo '1|'.$phone_number."|".$otp_ref;
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'submitOTP')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_wallet = 'SELECT email,password FROM wallet_account WHERE id = 1';
+			    $query_wallet = query($sql_wallet);
+
+			    if($query_wallet->rowcount() == 1)
+			    {
+			    	$f_wallet = $query_wallet->fetch();
+			    	$wallet_email = $f_wallet['email'];
+			    	$wallet_password = $f_wallet['password'];
+			    }
+
+			    require_once(__DIR__ . '/../Wallet/_loginTW.php');
+				$tw_getstatus = new TrueWallet($wallet_email, $wallet_password);
+				$submitOTP = $tw_getstatus->SubmitLoginOTP($_POST['otp'],$_POST['phone'],$_POST['ref']);
+
+				if($submitOTP['code'] == "MAS-200")
+				{
+					$sql_updateAccessToken = "UPDATE wallet_account SET access_token = :access_token WHERE id = 1";
+					$query_updateAccessToken = query($sql_updateAccessToken, array(
+						':access_token' => $submitOTP['data']['access_token']
+					));
+
+					if($query_updateAccessToken)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '0';
+					}
+				}
+				else
+				{
+					echo '2';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

@@ -25,6 +25,11 @@
 						$title = "Dashboard";
 						$file = "template/member/dashboard";
 					}
+					elseif($p == 'settingWallet')
+					{
+						$title = "Wallet Setting";
+						$file = "template/member/settingWallet";
+					}
 					else
 					{
 						$title = "Dashboard";

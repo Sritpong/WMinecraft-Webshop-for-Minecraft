@@ -74,6 +74,12 @@
                         <div class="item mb-2" style="border-radius: 5px 5px 5px 5px;">
                             <div class="item-image">
                                 <a class="item-image-price"><?php echo number_format($product['shop_price'], 2); ?> พ้อยท์</a>
+                                <?php
+                                  if($product['shop_recommended'] == 1)
+                                  {
+                                    echo '<a class="item-image-new">สินค้าแนะนำ</a>';
+                                  }
+                                ?>
                                 <center>
                                     <img src="<?php echo $product['shop_img']; ?>">
                                 </center>
