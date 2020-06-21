@@ -711,6 +711,13 @@ function EditWalletAccount()
                     text: "ตั้งค่าบัญชี Wallet สำเร็จ",
                     icon: "success",
                     button: true,
+                })
+                .then((ok_otp_wallet) =>
+                {
+                    if(ok_otp_wallet)
+                    {
+                        location.reload();
+                    }
                 });
             }
             else if(data == 2)
@@ -729,16 +736,6 @@ function EditWalletAccount()
                 {
                     title: "เกิดข้อผิดพลาด !",
                     text: "กรุณากรอก Email หรือ Password",
-                    icon: "error",
-                    button: true,
-                });
-            }
-            else if(data == 3)
-            {
-                swal(
-                {
-                    title: "เกิดข้อผิดพลาด !",
-                    text: "กรุณากรอก Email ให้ถูกต้อง",
                     icon: "error",
                     button: true,
                 });

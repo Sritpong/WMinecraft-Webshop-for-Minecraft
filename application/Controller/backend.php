@@ -130,11 +130,7 @@
 		{
 			if(isset($_SESSION['backend_uid']))
 			{
-				if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-				{
-					echo '3';
-				}
-				elseif(!empty($_POST['email']) && !empty($_POST['password']))
+				if(!empty($_POST['email']) && !empty($_POST['password']))
 				{
 					$sql_updateWalletAcc = "UPDATE wallet_account SET email = :email, password = :password WHERE id = 1";
 					$query_updateWalletAcc = query($sql_updateWalletAcc, array(

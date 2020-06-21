@@ -12,7 +12,7 @@
       <div class="row">
         <div class="section-field col-6 mb-20">
           <label class="mb-10" for="email_wallet">
-            Email
+            Email/Phone Number
           </label>
           <input name="email_wallet" id="email_wallet" type="text" class="web form-control" placeholder="กรุณากรอก Email" value="<?php echo $detailWallet['email']; ?>">
         </div>
@@ -26,7 +26,7 @@
           <label class="mb-10" for="token_wallet">
             Access Token
           </label>
-          <input name="token_wallet" id="token_wallet" type="text" class="web form-control" value="<?php echo $detailWallet['access_token'] ?>" readonly>
+          <input name="token_wallet" id="token_wallet" type="text" class="web form-control" value="<?php echo substr($detailWallet['access_token'], 0, -10)."**********"; ?>" readonly>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6">
           <button type="submit" name="walletSetting_btn" id="walletSetting_btn" class="button btn-block" onclick="EditWalletAccount()">
