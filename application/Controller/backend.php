@@ -212,8 +212,9 @@
 
 				if($submitOTP['code'] == "MAS-200")
 				{
-					$sql_updateAccessToken = "UPDATE wallet_account SET access_token = :access_token WHERE id = 1";
+					$sql_updateAccessToken = "UPDATE wallet_account SET phone = :phone, access_token = :access_token WHERE id = 1";
 					$query_updateAccessToken = query($sql_updateAccessToken, array(
+						':phone' => $_POST['phone'],
 						':access_token' => $submitOTP['data']['access_token']
 					));
 

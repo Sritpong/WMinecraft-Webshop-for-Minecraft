@@ -1,4 +1,6 @@
 # WMinecraft
 Webshop Minecraft
 
-Developer: ....?
+50%
+
+Developer: Anonymous

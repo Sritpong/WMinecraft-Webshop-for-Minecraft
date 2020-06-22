@@ -12,7 +12,7 @@
       <div class="row">
         <div class="section-field col-6 mb-20">
           <label class="mb-10" for="email_wallet">
-            Email/Phone Number
+            Email/Phone number
           </label>
           <input name="email_wallet" id="email_wallet" type="text" class="web form-control" placeholder="กรุณากรอก Email" value="<?php echo $detailWallet['email']; ?>">
         </div>
@@ -22,7 +22,13 @@
           </label>
           <input name="password_wallet" id="password_wallet" type="password" class="web form-control" placeholder="กรุณากรอก Password" value="<?php echo $detailWallet['password']; ?>">
         </div>
-        <div class="section-field col-12 mb-20">
+        <div class="section-field col-6 mb-20">
+          <label class="mb-10" for="phone_wallet">
+            Phone number
+          </label>
+          <input name="phone_wallet" id="phone_wallet" type="text" class="web form-control" value="<?php echo $detailWallet['phone']; ?>" readonly>
+        </div>
+        <div class="section-field col-6 mb-20">
           <label class="mb-10" for="token_wallet">
             Access Token
           </label>
