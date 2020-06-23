@@ -668,7 +668,7 @@ function EditWalletAccount()
     var email = $('#email_wallet').val();
     var password = $('#password_wallet').val();
 
-    if(email == "" || email == "undefined")
+    if(email == "" || email == undefined)
     {
         swal(
         {
@@ -680,7 +680,7 @@ function EditWalletAccount()
 
         return false;
     }
-    else if(password == "" || password == "undefined")
+    else if(password == "" || password == undefined)
     {
         swal(
         {
@@ -863,6 +863,111 @@ function getOTPAccessToken()
 
             document.getElementById("getAccessToken_btn").disabled = false;
             $("#getAccessToken_btn").html('<i class="fa fa-cloud"></i> รับ Access Token');
+        }
+    })
+}
+
+function redeemCode()
+{
+    var code = $('#input_code').val();
+
+    if(code == "" || code == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "คุณยังไม่ได้กรอก Code",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=redeemcode",
+        data: "code=" + code,
+        beforeSend: function()
+        {
+            document.getElementById("code_btn").disabled = true;
+            $("#code_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "คุณได้ทำการเติมโค้ด "+ code +" เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "Code ถูกใช้งานไปแล้ว",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเก็บข้อมูลการเติม Code ได้ขณะนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 4)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเชื่อมต่อ Server ได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 5)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่พบ Code ที่คุณกรอก",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดการเติม Code ไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("code_btn").disabled = false;
+            $("#code_btn").html('<i class="fa fa-check"></i><br>ดำเนินการต่อ');
         }
     })
 }

@@ -427,6 +427,196 @@
 				}
 			}
 		}
+		elseif($g == 'redeemcode')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				$sql_check_c = "SELECT\n".
+				"	code.*,\n".
+				"	server.server_ip,\n".
+				"	server.server_port,\n".
+				"	server.server_password,\n".
+				"	COUNT(code_logs.code_logs_id) AS count,\n".
+				"	COUNT(count_redeem.code_logs_id) AS count_redeem\n".
+				"FROM\n".
+				"(\n".
+				"	SELECT * FROM code WHERE BINARY code_value = :code\n".
+				") AS code\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM server\n".
+				") AS server ON (server.server_id = code.server_id)\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM code_logs\n".
+				") AS code_logs ON (code_logs.code_id = code.code_id)\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM code_logs WHERE user_id = :uid\n".
+				") AS count_redeem ON (code_logs.code_id = code.code_id)\n".
+				"LIMIT 1";
+				$check_c_q = query($sql_check_c, array(
+					':code' => $_POST['code'],
+					':uid' => $_SESSION['uid']
+				));
+
+				if($check_c_q->rowcount() != 1)
+				{
+					echo '0';
+				}
+				else
+				{
+					$code = $check_c_q->fetch();
+
+					if($code['code_type'] == 1)
+					{
+						if($code['count'] == 0)
+						{
+							$sql_insertLogsCode = "INSERT INTO code_logs (code_id,user_id) VALUES ".
+							"(:code_id,:uid)";
+							$query_insertLogsCode = query($sql_insertLogsCode, array(
+								':code_id' => $code['code_id'],
+								':uid' => $_SESSION['uid']
+							));
+
+							if($query_insertLogsCode)
+							{
+								$rcon_ip = $code['server_ip'];
+								$rcon_port = $code['server_port'];
+								$rcon_password = $code['server_password'];
+
+								require_once('../_rcon.php');
+								$rcon = new Rcon($rcon_ip, $rcon_port, $rcon_password, '3');
+								if($rcon->connect())
+								{
+									$command = str_replace("<player>", $player['username'], $code['code_command']);
+							        $exp = explode('<and>',$command);
+
+							        foreach($exp as &$val)
+	                                {
+	                                    $rcon->sendCommand($val);
+	                                }
+
+	                                echo '1';
+								}
+								else
+								{
+									echo '4';
+								}
+							}
+							else
+							{
+								echo '3';
+							}
+						}
+						else
+						{
+							echo '2';
+						}
+					}
+					elseif($code['code_type'] == 2)
+					{
+						if($code['count_redeem'] == 0)
+						{
+							$sql_insertLogsCode = "INSERT INTO code_logs (code_id,user_id) VALUES ".
+							"(:code_id,:uid)";
+							$query_insertLogsCode = query($sql_insertLogsCode, array(
+								':code_id' => $code['code_id'],
+								':uid' => $_SESSION['uid']
+							));
+
+							if($query_insertLogsCode)
+							{
+								$rcon_ip = $code['server_ip'];
+								$rcon_port = $code['server_port'];
+								$rcon_password = $code['server_password'];
+
+								require_once('../_rcon.php');
+								$rcon = new Rcon($rcon_ip, $rcon_port, $rcon_password, '3');
+								if($rcon->connect())
+								{
+									$command = str_replace("<player>", $player['username'], $code['code_command']);
+							        $exp = explode('<and>',$command);
+
+							        foreach($exp as &$val)
+	                                {
+	                                    $rcon->sendCommand($val);
+	                                }
+
+	                                echo '1';
+								}
+								else
+								{
+									echo '4';
+								}
+							}
+							else
+							{
+								echo '3';
+							}
+						}
+						else
+						{
+							echo '2';
+						}
+					}
+					elseif($code['code_type'] == 3)
+					{
+						if($code['count'] < $code['code_redeem_amount'] && $code['count_redeem'] == 0)
+						{
+							$sql_insertLogsCode = "INSERT INTO code_logs (code_id,user_id) VALUES ".
+							"(:code_id,:uid)";
+							$query_insertLogsCode = query($sql_insertLogsCode, array(
+								':code_id' => $code['code_id'],
+								':uid' => $_SESSION['uid']
+							));
+
+							if($query_insertLogsCode)
+							{
+								$rcon_ip = $code['server_ip'];
+								$rcon_port = $code['server_port'];
+								$rcon_password = $code['server_password'];
+
+								require_once('../_rcon.php');
+								$rcon = new Rcon($rcon_ip, $rcon_port, $rcon_password, '3');
+								if($rcon->connect())
+								{
+									$command = str_replace("<player>", $player['username'], $code['code_command']);
+							        $exp = explode('<and>',$command);
+
+							        foreach($exp as &$val)
+	                                {
+	                                    $rcon->sendCommand($val);
+	                                }
+
+	                                echo '1';
+								}
+								else
+								{
+									echo '4';
+								}
+							}
+							else
+							{
+								echo '3';
+							}
+						}
+						else
+						{
+							echo '2';
+						}
+					}
+					else
+					{
+						echo '5';
+					}
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{
