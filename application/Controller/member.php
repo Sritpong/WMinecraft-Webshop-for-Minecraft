@@ -617,6 +617,84 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'receiveDiary')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				$sql_diary = "SELECT\n".
+				"	diary.*,\n".
+				"	server.server_name,\n".
+				"	server.server_ip,\n".
+				"	server.server_port,\n".
+				"	server.server_password,\n".
+				"	COUNT(diary.diary_id) AS count,\n".
+				"	COUNT(diary_logs.diary_logs_id) AS count_logs\n".
+				"FROM\n".
+				"(\n".
+				"	SELECT * FROM diary WHERE diary_date = :today\n".
+				") AS diary\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM server\n".
+				") AS server ON (server.server_id = diary.server_id)\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM diary_logs WHERE user_id = :uid\n".
+				") AS diary_logs ON (diary_logs.diary_id = diary.diary_id)";
+				$query_diary = query($sql_diary, array(
+					':today' => date("Y-m-d"),
+					':uid' => $_SESSION['uid']
+	            ));
+	            $diary = $query_diary->fetch();
+
+	            if($diary['count'] <= 0)
+	            {
+	            	echo "0";
+	            }
+	            elseif($diary['count_logs'] > 0)
+	            {
+	            	echo "2";
+	            }
+	            else
+	            {
+	            	$sql_insertLogsDiary = "INSERT INTO diary_logs (diary_id,user_id) VALUES (:diary_id,:uid)";
+	            	$query_insertLogsDiary = query($sql_insertLogsDiary, array(
+	            		':diary_id' => $diary['diary_id'],
+	            		':uid' => $_SESSION['uid']
+	            	));
+
+	            	if($query_insertLogsDiary)
+	            	{
+	            		$sql_insertBackpack = "INSERT INTO backpack (backpack_name,backpack_command,backpack_img,".
+	            		"user_id,server_id) VALUES (:backpack_name,:backpack_command,:backpack_img,:uid,:server_id)";
+	            		$query_insertBackpack = query($sql_insertBackpack, array(
+	            			':backpack_name' => $diary['diary_name'],
+	            			':backpack_command' => $diary['diary_command'],
+	            			':backpack_img' => $diary['diary_img'],
+	            			':uid' => $_SESSION['uid'],
+	            			':server_id' => $diary['server_id']
+	            		));
+
+	            		if($query_insertBackpack)
+	            		{
+	            			echo '1';
+	            		}
+	            		else
+	            		{
+	            			echo '4';
+	            		}
+	            	}
+	            	else
+	            	{
+	            		echo '3';
+	            	}
+	            }
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

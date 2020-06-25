@@ -971,3 +971,100 @@ function redeemCode()
         }
     })
 }
+
+function receiveDiary()
+{
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=receiveDiary",
+        beforeSend: function()
+        {
+            document.getElementById("diary_btn").disabled = true;
+            $("#diary_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            console.log(data);
+            if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เช็คชื่อรับของประจำวันเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_receiveDiary) =>
+                {
+                    if(ok_receiveDiary)
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "คุณได้ทำการเช็คชื่อรับของประจำวันไปแล้ว",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเพิ่มประวัติการเช็คชื่อรับของประจำวันได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 4)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเพิ่มของไปยังกระเป๋าบน Webshop ได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "วันนี้ไม่มีเช็คชื่อรับของประจำวัน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("diary_btn").disabled = false;
+            $("#diary_btn").html('เช็คชื่อ !');
+        }
+    })
+}

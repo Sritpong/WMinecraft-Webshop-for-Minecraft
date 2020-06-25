@@ -2,6 +2,7 @@
 	require_once("application/_config.php");
 	require_once("application/_pdo.php");
 	require_once("application/_getPlayer.php");	
+	require_once("application/_getSettings.php");
 	require_once("application/_getInfoServer.php");
 ?>
 <html>
@@ -32,6 +33,8 @@
 								</div>
 								<div class="col-md-8 col-xs-12">
 									<?php
+										include_once("template/boardcast.php");
+
 										if(isset($_GET['page']))
 										{
 											$p = $_GET['page'];
@@ -55,6 +58,10 @@
 											elseif($p == 'code')
 											{
 												include_once('template/member/code.php');
+											}
+											elseif($p == 'diary')
+											{
+												include_once('template/member/diary.php');
 											}
 											else
 											{

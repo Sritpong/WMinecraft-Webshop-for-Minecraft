@@ -90,7 +90,7 @@
                                     <a><?php echo $product['shop_name']; ?></a>
                                     <button id="buy_item_<?php echo $product['shop_id']; ?>" onclick="BuyShop(<?php echo $product['shop_id'] ?>)" class="btn btn-success w-100 mb-1 border-0">
                                         <i class="fa fa-cart-arrow-down"></i> ซื้อ
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>

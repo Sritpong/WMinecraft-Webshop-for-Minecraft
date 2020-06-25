@@ -40,6 +40,15 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=diary">
+            <i class="fa fa-check text-success mt-1"></i>
+            <span class="pull-right">
+              <span id="xnav-upp">&nbsp;&nbsp;<b>เช็คชื่อรายวัน</b></span>
+            </span>
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
