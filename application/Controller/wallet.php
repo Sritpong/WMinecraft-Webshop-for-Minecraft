@@ -99,7 +99,6 @@
 
 			    			$token = $wallet_access_token;
 
-
 			    			/* START GET TRANSACTION */
 			    			$activities = $tw->FetchActivities($token, $today_use_check_s, $today_use_check_e);
 							foreach($activities as $arr)
