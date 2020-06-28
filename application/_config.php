@@ -1,12 +1,12 @@
 <?php
 	session_start();
-	ini_set('display_errors', 1);
+	ini_set('display_errors', 0);
     date_default_timezone_set("Asia/Bangkok");
 	
 	$config = array(
 		'site' => 'http://localhost/WMinecraft',
 		'server_name' => 'WMinecraft',
-		'max_reg' => 1
+		'max_reg' => 5
 	);
 
 	#MYSQL Config

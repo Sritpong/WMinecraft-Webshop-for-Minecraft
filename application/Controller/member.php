@@ -566,6 +566,83 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'receiveBackpack')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				$backpack_id = $_POST['backpack_id'];		
+                $sql_backpack = "SELECT\n".
+                " backpack.*,\n".
+                " server.*\n".
+                "FROM\n".
+                "(\n".
+                " SELECT * FROM backpack WHERE user_id = :uid AND backpack_id = :backpack_id\n".
+                ") AS backpack\n".
+                "LEFT JOIN\n".
+                "(\n".
+                " SELECT * FROM server\n".
+                ") AS server ON (server.server_id = backpack.server_id)";
+                $query_backpack = query($sql_backpack, array(
+                  ':uid' => $_SESSION['uid'],
+                  ':backpack_id' => $backpack_id
+                ));
+
+    			if($query_backpack->rowcount() <= 0)
+    			{
+    				echo '0';
+    			}
+    			else
+    			{
+    				$backpack = $query_backpack->fetch();
+    				
+    				if($backpack['backpack_status'] == 1)
+    				{
+    					echo '2';
+    				}
+    				else
+    				{
+    					$rcon_ip = $backpack['server_ip'];
+						$rcon_port = $backpack['server_port'];
+						$rcon_password = $backpack['server_password'];
+
+						require_once('../_rcon.php');
+						$rcon = new Rcon($rcon_ip, $rcon_port, $rcon_password, '3');
+						if($rcon->connect())
+						{
+							$sql_updateStatusBackpack = "UPDATE backpack SET backpack_status = 1 WHERE backpack_id = :backpack_id";
+	    					$query_updateStatusBackpack = query($sql_updateStatusBackpack, array(
+	    						':backpack_id' => $backpack_id
+	    					));
+
+	    					if($query_updateStatusBackpack)
+	    					{
+	    						$command = str_replace("<player>", $player['username'], $backpack['backpack_command']);
+						        $exp = explode('<and>',$command);
+
+						        foreach($exp as &$val)
+	                            {
+	                                $rcon->sendCommand($val);
+	                            }
+
+	                            echo '1';
+	    					}
+	    					else
+	    					{
+	    						echo '3';
+	    					}
+						}
+						else
+						{
+							echo '4';
+						}
+    				}
+    			}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

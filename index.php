@@ -63,6 +63,10 @@
 											{
 												include_once('template/member/diary.php');
 											}
+											elseif($p == 'backpack')
+											{
+												include_once('template/member/backpack.php');
+											}
 											else
 											{
 												include_once('template/member/shop.php');

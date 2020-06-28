@@ -318,33 +318,46 @@ function Topup()
             if(res[0] == 2)
             {
                 document.getElementById("transaction_wallet").value = "";
-                var divplayerPoints = $('#player_points')[0].textContent.split(' ');
-                var points = parseFloat(divplayerPoints[1].replace(',','')) + parseFloat(res[1]);
-                $('#player_points').html("Points: <b>" + points.toFixed(2) + "</b>");
+                // var divplayerPoints = $('#player_points')[0].textContent.split(' ');
+                // var points = parseFloat(divplayerPoints[1].replace(',','')) + parseFloat(res[1]);
+                // $('#player_points').html("Points: <b>" + points.toFixed(2) + "</b>");
 
-                var today = new Date();
-                var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
-                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                // var today = new Date();
+                // var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+                // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-                var htmlTbody = "";
-                htmlTbody += "<td>";
-                htmlTbody += "New..";
-                htmlTbody += "</td>";
-                htmlTbody += "<td>";
-                htmlTbody += "TrueWallet";
-                htmlTbody += "</td>";
-                htmlTbody += "<td>";
-                htmlTbody += wallet_transaction;
-                htmlTbody += "</td>";
-                htmlTbody += "<td>";
-                htmlTbody += date;
-                htmlTbody += "</td>";
-                htmlTbody += "<td>";
-                htmlTbody += time;
-                htmlTbody += "</td>";
-                $("#tbody_history_topup").append("<tr>" + htmlTbody + "</tr>");
+                // var htmlTbody = "";
+                // htmlTbody += "<td>";
+                // htmlTbody += "New..";
+                // htmlTbody += "</td>";
+                // htmlTbody += "<td>";
+                // htmlTbody += "TrueWallet";
+                // htmlTbody += "</td>";
+                // htmlTbody += "<td>";
+                // htmlTbody += wallet_transaction;
+                // htmlTbody += "</td>";
+                // htmlTbody += "<td>";
+                // htmlTbody += date;
+                // htmlTbody += "</td>";
+                // htmlTbody += "<td>";
+                // htmlTbody += time;
+                // htmlTbody += "</td>";
+                // $("#tbody_history_topup").append("<tr>" + htmlTbody + "</tr>");
 
-                toastr["success"]('คุณได้ทำการเติมเงิน ' + res[1] + ' บาท');
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "คุณได้ทำการเติมเงิน " + res[1] + " บาท",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_topupWallet) =>
+                {
+                    if(ok_topupWallet)
+                    {
+                        location.reload();
+                    }
+                });
             }
             else if(res[0] == 0)
             {
@@ -984,7 +997,6 @@ function receiveDiary()
         },
         success: function(data)
         {
-            console.log(data);
             if(data == 1)
             {
                 swal(
@@ -1065,6 +1077,108 @@ function receiveDiary()
 
             document.getElementById("diary_btn").disabled = false;
             $("#diary_btn").html('เช็คชื่อ !');
+        }
+    })
+}
+
+function receiveBackpack(id)
+{
+    if(id == "" || id == undefined)
+    {
+        return false;
+    }
+
+     $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=receiveBackpack",
+        data: "backpack_id=" + id,
+        beforeSend: function()
+        {
+            document.getElementById("receiveBackpack_" + id).disabled = true;
+            $("#receiveBackpack_" + id).html('<i class="fa fa-spinner fa-spin fa-lg"></i>');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ของได้ถูกส่งเข้าเกมแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_receiveDiary) =>
+                {
+                    if(ok_receiveDiary)
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ของชิ้นนี้คุณรับไปแล้ว",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถอัพเดทสถานะของได้ กรุณาลองใหม่ภายหลัง",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 4)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเชื่อมต่อ Server ได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "วันนี้ไม่มีเช็คชื่อรับของประจำวัน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("receiveBackpack_" + id).disabled = false;
+            $("#receiveBackpack_" + id).html('รับ..');
         }
     })
 }
