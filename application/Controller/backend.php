@@ -237,6 +237,41 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addItemRandombox')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!is_numeric($_POST['percent']))
+				{
+					echo '0';
+				}
+				else
+				{
+					$ran_itemID = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"),0,6);
+				    $sql_add_itemRandombox = 'INSERT INTO randombox_item (randombox_item_name,randombox_item_img,'.
+				    'randombox_item_command,randombox_item_code,randombox_id,server_id) VALUES ('.
+				    ':name,:img,:command,:code,:randombox_id,:server_id)';
+
+				    for($i = 0; $i < $_POST['percent']; $i++)
+				    {
+				      query($sql_add_itemRandombox, array(
+				      	':name' => $_POST['name'],
+				      	':img' => $_POST['img'],
+				      	':command' => $_POST['command'],
+				      	':code' => $ran_itemID,
+				      	':randombox_id' => $_POST['randombox_id'],
+				      	':server_id' => $_POST['server']
+				      ));
+				    }
+
+				    echo '1';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

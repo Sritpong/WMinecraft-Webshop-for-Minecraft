@@ -47,7 +47,4 @@
       </div>
     </form>
   </div>
-  <div class="col-xl-6 col-lg-12 col-md-12">
-    
-  </div>
 </div>

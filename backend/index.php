@@ -30,6 +30,16 @@
 						$title = "Wallet Setting";
 						$file = "template/member/settingWallet";
 					}
+					elseif($p == 'randombox')
+					{
+						$title = "Random Box";
+						$file = "template/member/randombox";
+					}
+					elseif($p == 'additemRandombox')
+					{
+						$title = "Add Item Random Box";
+						$file = "template/member/additemRandombox";
+					}
 					else
 					{
 						$title = "Dashboard";

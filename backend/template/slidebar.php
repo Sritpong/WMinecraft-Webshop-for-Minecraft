@@ -7,7 +7,7 @@
         </a>  
       </li>
       <!-- menu title -->
-      <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">การใช้งาน Webshop </li>
+      <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">การใช้งาน Webshop</li>
       <!-- menu item Elements-->
       <li>
         <a href="javascript:void(0);" data-toggle="collapse" data-target="#history">
@@ -33,11 +33,19 @@
         </ul>
       </li>
       <!-- menu title -->
+      <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">จัดการ Webshop</li>
+      <!-- menu item Elements-->
+      <li> 
+        <a href="?page=randombox">
+          <i class="fa fa-sliders"></i><span class="right-nav-text">ตั้งค่ากล่องสุ่ม</span>
+        </a>  
+      </li>
+      <!-- menu title -->
       <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">ตั้งค่า Webshop</li>
       <!-- menu item Elements-->
       <li> 
         <a href="?page=settingWallet">
-          <i class="fa fa-sliders"></i><span class="right-nav-text">ตั้งค่าบัญชี Wallet </span>
+          <i class="fa fa-sliders"></i><span class="right-nav-text">ตั้งค่าบัญชี Wallet</span>
         </a>  
       </li>
     </ul>

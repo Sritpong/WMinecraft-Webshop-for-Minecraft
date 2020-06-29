@@ -9,7 +9,10 @@
       <div class="card">
         <div class="card-body">
             <h6>
-                กระเป๋าผู้เล่น
+                <i class="fa fa-gift"></i> กระเป๋าผู้เล่น
+                <div class="pull-right">
+                  <span class="badge badge-pill badge-danger">กรุณาออนไลน์ใน Server ก่อนจะกดรับด้วย</span>
+                </div>
             </h6>
             <hr/>
               <?php

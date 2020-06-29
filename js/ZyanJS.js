@@ -63,7 +63,7 @@ function Login()
             
             $("#login_btn").html('<i class="fa fa-sign-in"></i> เข้าสู่ระบบ');
         }
-    })
+    });
 }
 
 function chkRegister()
@@ -259,7 +259,7 @@ function Register()
 
             $("#button_chkregister").html('<i class="fa fa-user-plus"></i> สมัครสมาชิก');
         }
-    })
+    });
 }
 
 function Logout(path)
@@ -286,7 +286,7 @@ function Logout(path)
 
             $("#logout_btn").html('<i class="fa fa-sign-out"></i> ออกจากระบบ');
         }
-    })
+    });
 }
 
 function Topup()
@@ -399,7 +399,7 @@ function Topup()
             document.getElementById("btn_topup").disabled = false;
             $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
         }
-    })
+    });
 }
 
 function LoginBackend()
@@ -476,7 +476,7 @@ function LoginBackend()
 
             $("#login_btn").html('<i class="fa fa-sign-in"></i> เข้าสู่ระบบ');
         }
-    })
+    });
 }
 
 function LogoutBackend(path)
@@ -503,7 +503,7 @@ function LogoutBackend(path)
 
             $("#logout_btn").html('<i class="fa fa-sign-out"></i> ออกจากระบบ');
         }
-    })
+    });
 }
 
 function BuyShop(id)
@@ -673,7 +673,7 @@ function BuyShop(id)
                 });
             }
         }
-    })
+    });
 }
 
 function EditWalletAccount()
@@ -767,7 +767,7 @@ function EditWalletAccount()
             document.getElementById("walletSetting_btn").disabled = false;
             $("#walletSetting_btn").html('<i class="fa fa-check"></i> บันทึก');
         }
-    })
+    });
 }
 
 function getOTPAccessToken()
@@ -877,7 +877,7 @@ function getOTPAccessToken()
             document.getElementById("getAccessToken_btn").disabled = false;
             $("#getAccessToken_btn").html('<i class="fa fa-cloud"></i> รับ Access Token');
         }
-    })
+    });
 }
 
 function redeemCode()
@@ -982,7 +982,7 @@ function redeemCode()
             document.getElementById("code_btn").disabled = false;
             $("#code_btn").html('<i class="fa fa-check"></i><br>ดำเนินการต่อ');
         }
-    })
+    });
 }
 
 function receiveDiary()
@@ -1078,7 +1078,7 @@ function receiveDiary()
             document.getElementById("diary_btn").disabled = false;
             $("#diary_btn").html('เช็คชื่อ !');
         }
-    })
+    });
 }
 
 function receiveBackpack(id)
@@ -1180,5 +1180,220 @@ function receiveBackpack(id)
             document.getElementById("receiveBackpack_" + id).disabled = false;
             $("#receiveBackpack_" + id).html('รับ..');
         }
-    })
+    });
+}
+
+function addItemRandombox(id)
+{
+    var name = $("#item_name").val();
+    var percent = $("#item_percent").val();
+    var img = $("#item_img").val();
+    var command = $("#item_command").val();
+    var server = $("#for_sv").val();
+    
+    if(name == "" || name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อไอเทม",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    if(percent == "" || percent == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก %",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    if(img == "" || img == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก URL รูปภาพ",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    if(command == "" || command == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกคำสั่ง",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    if(server == "" || server == "0" || server == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือก Server",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addItemRandombox",
+        data: "randombox_id=" + id + "&name=" + name + "&percent=" + percent +
+        "&img=" + img + "&command=" + command + "&server=" + server,
+        beforeSend: function() {
+            document.getElementById("addItemRandombox_btn").disabled = true;
+            $("#addItemRandombox_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มไอเทมลงกล่องสุ่มเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_addItemRandombox) =>
+                {
+                    if(ok_addItemRandombox)
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            else if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอก Percent ให้เป็นตัวเลขเท่านั้น !",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("addItemRandombox_btn").disabled = false;
+            $("#addItemRandombox_btn").html('เพิ่มไอเทม');
+        }
+    });
+}
+
+function randombox(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=getDetailRandomBox",
+        data: "randombox_id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่มีกล่องสุ่มนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่มีไอเทมในกล่องสุ่มนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กล่องสุ่มนี้ไม่ได้เปิดใช้งาน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                var detail = data.split("|");
+                swal(
+                {
+                    title: "สุ่มไอเทม",
+                    text: "ยืนยันการสุ่มกล่อง " + detail[1] + " ราคา " + detail[2] + " พ้อยท์",
+                    icon: "warning",
+                    buttons: {
+                        cancel: "ยกเลิก",
+                        true: "ยืนยันการสุ่ม " + detail[1]
+                    },
+                    dangerMode: true,
+                })
+                .then((confirm) =>
+                {
+                    if(confirm)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "application/Controller/member.php?func=RandomBox",
+                            data: "randombox_id=" + id,
+                            success: function(res)
+                            {
+                                console.log(res);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
 }

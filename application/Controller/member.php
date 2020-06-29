@@ -643,6 +643,126 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'getDetailRandomBox')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				$sql_getRandomboxSelect = "SELECT\n".
+			    " randombox.*,\n".
+			    " COUNT(randombox.randombox_id) AS count_randombox,\n".
+			    " COUNT(randombox_item.randombox_item_id) AS count\n".
+			    "FROM\n".
+			    "(\n".
+			    " SELECT * FROM randombox WHERE randombox_id = :id\n".
+			    ") AS randombox\n".
+			    "LEFT JOIN\n".
+			    "(\n".
+			    " SELECT * FROM randombox_item GROUP BY randombox_item_code\n".
+			    ") AS randombox_item ON (randombox_item.randombox_id = randombox.randombox_id)";
+			    $query_getRandomboxSelect = query($sql_getRandomboxSelect, array(
+			      ':id' => $_POST['randombox_id']
+			    ));
+			    $randomboxSelect = $query_getRandomboxSelect->fetch();
+
+			    if($randomboxSelect['count_randombox'] <= 0)
+			    {
+			    	echo '0';
+			    }
+			    elseif($randomboxSelect['count'] <= 0)
+			    {
+			    	echo '1';
+			    }
+			    elseif($randomboxSelect['randombox_status'] == 0)
+			    {
+			    	echo '2';
+			    }
+			    else
+			    {
+			    	echo $randomboxSelect['randombox_id']."|".$randomboxSelect['randombox_name']."|".
+			    	$randomboxSelect['randombox_price'];
+			    }
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'RandomBox')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				$sql_randombox = "SELECT\n".
+				"	COUNT(randombox.randombox_id) AS count_randombox,\n".
+				"	COUNT(randombox_item.randombox_item_id) AS count,\n".
+				"	randombox.randombox_price,\n".
+				"	randombox_item.*\n".
+				"FROM\n".
+				"(\n".
+				"	SELECT * FROM randombox WHERE randombox_id = :id\n".
+				") AS randombox\n".
+				"LEFT JOIN\n".
+				"(\n".
+				"	SELECT * FROM randombox_item ORDER BY RAND() LIMIT 1\n".
+				") AS randombox_item ON (randombox_item.randombox_id = randombox.randombox_id)";
+				$query_randombox = query($sql_randombox, array(
+			      ':id' => $_POST['randombox_id']
+			    ));
+			    $randombox = $query_randombox->fetch();
+
+			    if($randombox['count_randombox'] <= 0)
+			    {
+			    	echo '0';
+			    }
+			    elseif($randombox['count'] <= 0)
+			    {
+			    	echo '1';
+			    }
+			    else
+			    {
+			    	if($player['points'] >= $randombox['randombox_price'])
+			    	{
+			    		$sql_updatePointsPlayer = "UPDATE authme SET points = points-'".$randombox['randombox_price']."' WHERE id = :uid";
+						$query_updatePointsPlayer = query($sql_updatePointsPlayer, array(
+							':uid' => $_SESSION['uid']
+						));
+
+						if($query_updatePointsPlayer)
+						{
+							$sql_insertBackpack = "INSERT INTO backpack (backpack_name,backpack_command,backpack_img,".
+		            		"user_id,server_id) VALUES (:backpack_name,:backpack_command,:backpack_img,:uid,:server_id)";
+		            		$query_insertBackpack = query($sql_insertBackpack, array(
+		            			':backpack_name' => $randombox['randombox_item_name'],
+		            			':backpack_command' => $randombox['randombox_item_command'],
+		            			':backpack_img' => $randombox['randombox_item_img'],
+		            			':uid' => $_SESSION['uid'],
+		            			':server_id' => $randombox['server_id']
+		            		));
+
+		            		if($query_insertBackpack)
+		            		{
+		            			echo '2';
+		            		}
+		            		else
+		            		{
+		            			echo '3';
+		            		}
+						}
+						else
+						{
+							echo '4';
+						}
+			    	}
+			    	else
+			    	{
+			    		echo '5';
+			    	}
+			    }
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

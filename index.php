@@ -67,6 +67,10 @@
 											{
 												include_once('template/member/backpack.php');
 											}
+											elseif($p == 'randombox')
+											{
+												include_once('template/member/randombox.php');
+											}
 											else
 											{
 												include_once('template/member/shop.php');

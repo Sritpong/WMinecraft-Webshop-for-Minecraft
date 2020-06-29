@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=code"><img src="menu/redeem.png" style="width:20px;height:20px;">
+          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=code"><i class="fa fa-barcode text-info mt-1"></i>
             <span class="pull-right">
               <span id="xnav-upp">&nbsp;&nbsp;<b>เติมโค้ด</b></span>
             </span>
