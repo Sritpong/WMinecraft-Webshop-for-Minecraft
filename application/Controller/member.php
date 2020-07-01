@@ -298,6 +298,98 @@
 				}
 			}
 		}
+		elseif($g == 'buyItemShopInventory')
+		{
+			if(!isset($_SESSION['uid']))
+			{
+				echo '500';
+			}
+			else
+			{
+				if(isset($_POST['item_id']))
+				{
+					$sql_getDetailShop = "SELECT\n".
+					"	shop.shop_id,\n".
+					"	shop.shop_name,\n".
+					"	shop.shop_img,\n".
+					"	shop.shop_price,\n".
+					"	shop.shop_command,\n".
+					"	shop.server_id\n".
+					"FROM\n".
+					"(\n".
+					"	SELECT * FROM `shop` WHERE shop_id = :shop_id\n".
+					") AS shop";
+					$query_getDetailShop = query($sql_getDetailShop, array(
+						':shop_id' => $_POST['item_id']
+					));
+
+					if($query_getDetailShop->rowcount() > 0)
+					{
+						$shop = $query_getDetailShop->fetch();
+
+						if($player['points'] >= $shop['shop_price'])
+						{
+							$sql_updatePointsPlayer = "UPDATE authme SET points = points-'".$shop['shop_price']."' WHERE id = :uid";
+							$query_updatePointsPlayer = query($sql_updatePointsPlayer, array(
+								':uid' => $_SESSION['uid']
+							));
+
+							if($query_updatePointsPlayer)
+							{
+								$sql_insertShopLogs = "INSERT INTO shop_logs (shop_id,user_id) VALUES (".
+								":shop_id,:uid".
+								")";
+								$query_insertShopLogs = query($sql_insertShopLogs, array(
+									':shop_id' => $shop['shop_id'],
+									':uid' => $_SESSION['uid']
+								));
+
+								if($query_insertShopLogs)
+								{
+									$sql_insertItemToInventory = "INSERT INTO backpack (backpack_name,backpack_command,backpack_img,".
+				            		"user_id,server_id) VALUES (:backpack_name,:backpack_command,:backpack_img,:uid,:server_id)";
+				            		$query_insertItemToInventory = query($sql_insertItemToInventory, array(
+				            			':backpack_name' => $shop['shop_name'],
+				            			':backpack_command' => $shop['shop_command'],
+				            			':backpack_img' => $shop['shop_img'],
+				            			':uid' => $_SESSION['uid'],
+				            			':server_id' => $shop['server_id']
+				            		));
+									if($query_insertItemToInventory)
+									{
+										echo '1';
+									}
+									else
+									{
+										echo '4';
+									}
+								}
+								else
+								{
+									echo '6';
+								}
+							}
+							else
+							{
+								echo '5';
+							}
+						}
+						else
+						{
+							echo '3';
+						}
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+		}
 		elseif($g == 'redeemcode')
 		{
 			if(isset($_SESSION['uid']))

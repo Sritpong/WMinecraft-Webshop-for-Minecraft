@@ -506,7 +506,7 @@ function LogoutBackend(path)
     });
 }
 
-function BuyShop(id)
+function BuyShop(id,type)
 {
     $.ajax({
         type: "POST",
@@ -537,10 +537,21 @@ function BuyShop(id)
             else
             {
                 var detailItem = data.split("|");
+                var textShow = "";
+
+                if(type == 1)
+                {
+                    textShow = "ยืนยันการซื้อ " + detailItem[1] + " ราคา " + detailItem[2] + " พ้อยท์";
+                }
+                else if(type == 2)
+                {
+                    textShow = "ยืนยันการซื้อ " + detailItem[1] + " ราคา " + detailItem[2] + " พ้อยท์ (เก็บเข้าคลัง)";
+                }
+
                 swal(
                 {
                     title: "ซื้อไอเทม",
-                    text: "ยืนยันการซื้อ " + detailItem[1] + " ราคา " + detailItem[2] + " พ้อยท์",
+                    text: textShow,
                     icon: "warning",
                     buttons: {
                         cancel: "ยกเลิก",
@@ -552,123 +563,246 @@ function BuyShop(id)
                 {
                     if(confirm)
                     {
-                        $.ajax({
-                            type: "POST",
-                            url: "application/Controller/member.php?func=buyItemShop",
-                            beforeSend: function() {
-                                toastr["info"]('กรุณารอสักครู่...');
-                            },
-                            data: "item_id=" + id,
-                            success: function(data)
-                            {
-                                toastr.clear();
+                        if(type == 1)
+                        {
+                            $.ajax({
+                                type: "POST",
+                                url: "application/Controller/member.php?func=buyItemShop",
+                                beforeSend: function() {
+                                    toastr["info"]('กรุณารอสักครู่...');
+                                },
+                                data: "item_id=" + id,
+                                success: function(data)
+                                {
+                                    toastr.clear();
 
-                                if(data == 0)
-                                {
-                                    swal(
+                                    if(data == 0)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่สามารถซื้อสินค้าได้ขณะนี้ กรุณาลองใหม่ภายหลัง",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else if(data == 1)
-                                {
-                                    swal(
-                                    {
-                                        title: "สำเร็จ !",
-                                        text: "คุณได้ทำการซื้อ " + detailItem[1] + " เรียบร้อยแล้ว",
-                                        icon: "success",
-                                        button: true,
-                                    })
-                                    .then((ok_success_buy) =>
-                                    {
-                                        if(ok_success_buy)
+                                        swal(
                                         {
-                                            location.reload();
-                                        }
-                                    });
-                                }
-                                else if(data == 2)
-                                {
-                                    swal(
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถซื้อสินค้าได้ขณะนี้ กรุณาลองใหม่ภายหลัง",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 1)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่พบสินค้านี้",
-                                        icon: "error",
-                                        button: true,
-                                    })
-                                    .then((ok_success_buy) =>
-                                    {
-                                        if(ok_success_buy)
+                                        swal(
                                         {
-                                            location.reload();
-                                        }
-                                    });
-                                }
-                                else if(data == 3)
-                                {
-                                    swal(
+                                            title: "สำเร็จ !",
+                                            text: "คุณได้ทำการซื้อ " + detailItem[1] + " เรียบร้อยแล้ว",
+                                            icon: "success",
+                                            button: true,
+                                        })
+                                        .then((ok_success_buy) =>
+                                        {
+                                            if(ok_success_buy)
+                                            {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                    else if(data == 2)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่สามารถเชื่อมต่อ Server ได้",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else if(data == 4)
-                                {
-                                    swal(
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่พบสินค้านี้",
+                                            icon: "error",
+                                            button: true,
+                                        })
+                                        .then((ok_success_buy) =>
+                                        {
+                                            if(ok_success_buy)
+                                            {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                    else if(data == 3)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่สามารถอัพเดทพ้อยท์ของ Player ได้",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else if(data == 5)
-                                {
-                                    swal(
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถเชื่อมต่อ Server ได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 4)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่สามารถเก็บประวัติการซื้อสินค้าได้",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else if(data == 6)
-                                {
-                                    swal(
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถอัพเดทพ้อยท์ของ Player ได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 5)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่สามารถซื้อได้เนื่องจากพ้อยท์ไม่เพียงพอ",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else if(data == 500)
-                                {
-                                    swal(
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถเก็บประวัติการซื้อสินค้าได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 6)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "กรุณาเข้าสู่ระบบก่อนซื้อสินค้า",
-                                        icon: "error",
-                                        button: true,
-                                    });
-                                }
-                                else
-                                {
-                                    swal(
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถซื้อได้เนื่องจากพ้อยท์ไม่เพียงพอ",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 500)
                                     {
-                                        title: "เกิดข้อผิดพลาด !",
-                                        text: "ไม่ทราบสาเหตุ",
-                                        icon: "error",
-                                        button: true,
-                                    });
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "กรุณาเข้าสู่ระบบก่อนซื้อสินค้า",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่ทราบสาเหตุ",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
+                        else if(type == 2)
+                        {
+                            $.ajax({
+                                type: "POST",
+                                url: "application/Controller/member.php?func=buyItemShopInventory",
+                                beforeSend: function() {
+                                    toastr["info"]('กรุณารอสักครู่...');
+                                },
+                                data: "item_id=" + id,
+                                success: function(data)
+                                {
+                                    toastr.clear();
+
+                                    if(data == 0)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถซื้อสินค้าได้ขณะนี้ กรุณาลองใหม่ภายหลัง",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 1)
+                                    {
+                                        swal(
+                                        {
+                                            title: "สำเร็จ !",
+                                            text: "คุณได้ทำการซื้อ " + detailItem[1] + " เรียบร้อยแล้ว",
+                                            icon: "success",
+                                            button: true,
+                                        })
+                                        .then((ok_success_buy) =>
+                                        {
+                                            if(ok_success_buy)
+                                            {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                    else if(data == 2)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่พบสินค้านี้",
+                                            icon: "error",
+                                            button: true,
+                                        })
+                                        .then((ok_success_buy) =>
+                                        {
+                                            if(ok_success_buy)
+                                            {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                    else if(data == 3)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถซื้อได้เนื่องจากพ้อยท์ไม่เพียงพอ",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 4)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถเพิ่มสินค้าเข้ากระเป๋าผู้เล่นได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 5)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถอัพเดทพ้อยท์ของ Player ได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 6)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่สามารถเก็บประวัติการซื้อสินค้าได้",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else if(data == 500)
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "กรุณาเข้าสู่ระบบก่อนซื้อสินค้า",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                    else
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "ไม่ทราบสาเหตุ",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                }
+                            })
+                        }
                     }
                 });
             }

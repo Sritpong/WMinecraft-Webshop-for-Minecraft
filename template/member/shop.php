@@ -20,17 +20,19 @@
         <hr/>
         <div class="row">
             <?php
+              $sql_product = "SELECT * FROM (\n";
+
               if(isset($_GET['page']) && $_GET['page'] != 'shop')
               {
-                $sql_product = 'SELECT * FROM shop ORDER BY shop_id DESC';
+                $sql_product .= 'SELECT * FROM shop ORDER BY shop_id DESC';
               }
               elseif(!isset($_GET['page']))
               {
-                $sql_product = 'SELECT * FROM shop ORDER BY shop_id DESC';
+                $sql_product .= 'SELECT * FROM shop ORDER BY shop_id DESC';
               }
               else
               {
-                $sql_product = 'SELECT * FROM shop ';
+                $sql_product .= 'SELECT * FROM shop ';
               }
 
               if(isset($_GET['server']) && is_numeric($_GET['server']))
@@ -58,6 +60,11 @@
               {
                 $sql_product .= ' LIMIT 6';
               }
+
+              $sql_product .= "\n) AS shop\n".
+              "LEFT JOIN(\n".
+              " SELECT server_id,server_name FROM server".
+              ") AS server ON (server.server_id = shop.server_id)";
 
               $query_product = query($sql_product);
 
@@ -88,8 +95,17 @@
                             <div class="item-info">
                                 <div class="item-text">
                                     <a><?php echo $product['shop_name']; ?></a>
-                                    <button id="buy_item_<?php echo $product['shop_id']; ?>" onclick="BuyShop(<?php echo $product['shop_id'] ?>)" class="btn btn-success w-100 mb-1 border-0">
+                                    <br/>
+                                    <small>
+                                      <a>
+                                        Server: <?php echo $product['server_name']; ?>
+                                      </a>
+                                    </small>
+                                    <button id="buy_item_<?php echo $product['shop_id']; ?>" onclick="BuyShop(<?php echo $product['shop_id'] ?>,'1')" class="btn btn-success w-100 mb-1 border-0">
                                         <i class="fa fa-cart-arrow-down"></i> ซื้อ
+                                    </button>
+                                    <button id="inventory_item_<?php echo $product['shop_id']; ?>" class="btn btn-secondary btn-sm" onclick="BuyShop(<?php echo $product['shop_id'] ?>,'2')">
+                                      <small>เก็บเข้ากระเป๋าผู้เล่น</small>
                                     </button>
                                 </div>
                             </div>
