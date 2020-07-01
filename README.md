@@ -1,6 +1,6 @@
 # WMinecraft
 Webshop Minecraft
 
-50%
+75%
 
 Developer: Anonymous
