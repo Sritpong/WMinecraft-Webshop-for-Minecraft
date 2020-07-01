@@ -1104,7 +1104,7 @@ function receiveBackpack(id)
                 swal(
                 {
                     title: "สำเร็จ !",
-                    text: "ของได้ถูกส่งเข้าเกมแล้ว",
+                    text: "ระบบได้ทำการส่งเข้าไปใน Server เรียบร้อยแล้ว",
                     icon: "success",
                     button: true,
                 })
@@ -1388,7 +1388,87 @@ function randombox(id)
                             data: "randombox_id=" + id,
                             success: function(res)
                             {
-                                console.log(res);
+                                if(res == 0)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่มีกล่องสุ่มนี้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(res == 1)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่มีไอเทมในกล่องสุ่มนี้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(res == 3)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถเพิ่มของที่สุ่มได้เข้ากระเป๋าผู้เล่นได้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(res == 4)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "ไม่สามารถหักพ้อยท์ได้ขณะนี้ กรุณาสุ่มใหม่ภายหลัง",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else if(res == 5)
+                                {
+                                    swal(
+                                    {
+                                        title: "เกิดข้อผิดพลาด !",
+                                        text: "พ้อยท์ของคุณไม่เพียงพอต่อการสุ่มกล่องนี้",
+                                        icon: "error",
+                                        button: true,
+                                    });
+                                }
+                                else
+                                {
+                                    var split_result = res.split("|");
+                                    if(split_result[0] == '2')
+                                    {
+                                        swal(
+                                        {
+                                            title: "สำเร็จ !",
+                                            text: "คุณสุ่มได้ " + split_result[1] + " ของจะส่งเข้ากระเป๋าผู้เล่น",
+                                            icon: "success",
+                                            button: true,
+                                        })
+                                        .then((ok_receiveRandombox) =>
+                                        {
+                                            if(ok_receiveRandombox)
+                                            {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        swal(
+                                        {
+                                            title: "เกิดข้อผิดพลาด !",
+                                            text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                                            icon: "error",
+                                            button: true,
+                                        });
+                                    }
+                                }
                             }
                         });
                     }

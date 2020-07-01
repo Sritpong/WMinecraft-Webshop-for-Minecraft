@@ -97,5 +97,11 @@
 		<?php
 			include_once("template/footer.php");
 		?>
+		<script type="text/javascript">
+			$(function()
+			{
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
 	</body>
 </html>

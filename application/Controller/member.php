@@ -740,7 +740,7 @@
 
 		            		if($query_insertBackpack)
 		            		{
-		            			echo '2';
+		            			echo '2|'.$randombox['randombox_item_name'];
 		            		}
 		            		else
 		            		{
