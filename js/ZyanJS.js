@@ -42,7 +42,7 @@ function Login()
                 $("#alert_login").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('เข้าสู่ระบบเรียบร้อยแล้ว !');
 
-                setTimeout(function(){location.href = submit[2]},3000);
+                setTimeout(function(){location.href = document.getElementById("path").value},3000);
             }
             else if(data == 2)
             {
@@ -174,7 +174,7 @@ function Register()
                 $("#alert_register").html('<div class="alert alert-success" role="alert"><i class="fa fa-check"></i> สมัครสมาชิกเรียบร้อยแล้ว กรุณารอสักครู่...</div>');
                 toastr["success"]('สมัครสมาชิกเรียบร้อยแล้ว !');
 
-                setTimeout(function(){location.href = submit[4] + '/?page=login'}, 3000);
+                setTimeout(function(){location.href = document.getElementById("path").value + '/?page=login'}, 3000);
             }
             else if(data == 0)
             {
@@ -1607,6 +1607,101 @@ function randombox(id)
                         });
                     }
                 });
+            }
+        }
+    });
+}
+
+function searchPlayer()
+{
+    var elements_form = document.getElementById("player_search").elements;
+    var submit = [];
+
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var player_search = submit[0];
+
+    if(player_search == '')
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อผู้เล่นที่จะค้นหา",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=searchPlayer",
+        beforeSend: function(){
+            document.getElementById("button_search_player").disabled = true;
+            $("#button_search_player").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        data: "search_username=" + player_search,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาด",
+                    icon: "error",
+                    button: true,
+                });
+
+                document.getElementById("button_search_player").disabled = false;
+                $("#button_search_player").html('<i class="fa fa-search"></i> ค้นหา');
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ชื่อผู้เล่นห้ามว่าง",
+                    icon: "error",
+                    button: true,
+                });
+
+                document.getElementById("button_search_player").disabled = false;
+                $("#button_search_player").html('<i class="fa fa-search"></i> ค้นหา');
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่พบชื่อผู้เล่นนี้",
+                    icon: "error",
+                    button: true,
+                });
+
+                document.getElementById("button_search_player").disabled = false;
+                $("#button_search_player").html('<i class="fa fa-search"></i> ค้นหา');
+            }
+            else if(data == 3)
+            {
+                setTimeout(function(){location.href = document.getElementById("path").value + "/?page=player"},3000);
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาด ไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+
+                document.getElementById("button_search_player").disabled = false;
+                $("#button_search_player").html('<i class="fa fa-search"></i> ค้นหา');
             }
         }
     });

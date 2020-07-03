@@ -42,4 +42,44 @@
 	{
 		$status_chk = false;
 	}
+
+	if(isset($_GET['page']) == 'player')
+	{
+		if(isset($_SESSION['search_Player']))
+		{
+			try
+			{
+				$MCQuery->Connect("127.0.0.1", "25565", 3, false);
+				$status_server = $MCQuery->GetInfo();
+
+				if(isset($_SESSION['uid']))
+				{
+					if($MCQuery->GetPlayers() != null)
+					{
+						foreach ($MCQuery->GetPlayers() as $key)
+						{
+							if($key == $_SESSION['search_Player'])
+							{
+								$status_chkOnlineSearch = true;
+								break;
+							}
+						}
+					}
+
+					if(isset($status_chkOnlineSearch) && $status_chkOnlineSearch == true)
+					{
+						$chkPlayerOnlineSearch = true;
+					}
+					else
+					{
+						$chkPlayerOnlineSearch = false;
+					}
+				}
+			}
+			catch(MinecraftQueryException $e)
+			{
+				$chkPlayerOnlineSearch = false;
+			}
+		}
+	}
 ?>

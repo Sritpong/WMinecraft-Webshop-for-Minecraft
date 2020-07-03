@@ -27,7 +27,6 @@
 							<input name="password_input" id="password_input" type="password" class="form-control" placeholder="รหัสผ่านในเกม"/>
 						</div>
 						<hr/>
-						<input name="path" id="path" type="hidden" value="<?php echo $config['site']; ?>"/>
 						<button type="submit" name="login_btn" id="login_btn" class="btn btn-outline-primary btn-block" onclick="Login()"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</button>
 					</form>
 				</div>

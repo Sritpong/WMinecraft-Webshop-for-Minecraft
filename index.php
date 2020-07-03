@@ -10,6 +10,7 @@
 		<?php include_once 'template/taghead.php'; ?>
 	</head>
 	<body>
+		<input name="path" id="path" type="hidden" value="<?php echo $config['site']; ?>"/>
 		<div class="container" style="margin-top: 50px;">
 			<div class="row">
 				<div class="col-12">
@@ -29,6 +30,7 @@
 									<?php
 										include_once('template/member.php');
 										include_once('template/status_server.php');
+										include_once('template/player_search.php');
 									?>
 								</div>
 								<div class="col-md-8 col-xs-12">
@@ -70,6 +72,10 @@
 											elseif($p == 'randombox')
 											{
 												include_once('template/member/randombox.php');
+											}
+											elseif($p == 'player')
+											{
+												include_once('template/player.php');
 											}
 											else
 											{

@@ -43,7 +43,6 @@
 							<input name="email_input" id="email_input" type="email" class="form-control" placeholder="ที่อยู่อีเมลล์ : [Example: somchai@gmail.com]" autocomplete="off" />
 						</div>
 						<hr/>
-						<input name="path" id="path" type="hidden" value="<?php echo $config['site']; ?>"/>
 						<button type="submit" id="button_chkregister" class="btn btn-outline-primary btn-block" onclick="chkRegister()"><i class="fa fa-user-plus"></i> สมัครสมาชิก</button>
 					</form>
 				</div>

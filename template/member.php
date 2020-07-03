@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-body">
 		<h6>
-			<i class="fa fa-user"></i> User
+			<i class="fa fa-user"></i> Player
 		</h6>
 		<hr/>
 		<?php

@@ -1,4 +1,4 @@
-<div class="card mt-3">
+<div class="card my-3">
 	<div class="card-body">
 		<h6>
 			<i class="fa fa-signal"></i> Server Status

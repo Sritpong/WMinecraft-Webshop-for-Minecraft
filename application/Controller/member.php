@@ -855,6 +855,36 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'searchPlayer')
+		{
+			if(!isset($_POST['search_username']))
+			{
+				echo '0';
+			}
+			elseif($_POST['search_username'] == "")
+			{
+				echo '1';
+			}
+			else
+			{
+				$sql_searchPlayer = "SELECT * FROM authme WHERE username = :username";
+				$query_searchPlayer = query($sql_searchPlayer, array(
+					':username' => $_POST['search_username']
+				));
+
+				if($query_searchPlayer->rowcount() <= 0)
+				{
+					echo '2';
+				}
+				else
+				{
+					$searchPlayer = $query_searchPlayer->fetch();
+					$_SESSION['search_Player'] = $searchPlayer['realname'];
+
+					echo '3';
+				}
+			}
+		}
 	}
 	else
 	{
