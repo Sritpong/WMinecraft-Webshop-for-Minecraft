@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="<?php echo $config['site']; ?>/build/toastr.css">
 <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900">
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" href="<?php echo $config['site']; ?>/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo $config['site']; ?>/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo $config['site']; ?>/css/responsive.bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 <style type="text/css">
     @import url('https://fonts.googleapis.com/css?family=Kanit');

@@ -16,17 +16,17 @@
         </a>
         <ul id="history" class="collapse" data-parent="#sidebarnav">
           <li>
-            <a href="#">
+            <a href="?page=loginLogs">
               ประวัติการเข้าสู่ระบบ
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="?page=shopLogs">
               ประวัติการซื้อของ
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="?page=refillLogs">
               ประวัติการเติมเงิน
             </a>
           </li>

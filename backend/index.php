@@ -40,6 +40,21 @@
 						$title = "Add Item Random Box";
 						$file = "template/member/additemRandombox";
 					}
+					elseif($p == 'loginLogs')
+					{
+						$title = "Login Logs";
+						$file = "template/member/login_logs";
+					}
+					elseif($p == 'shopLogs')
+					{
+						$title = "Shop Logs";
+						$file = "template/member/shop_logs";
+					}
+					elseif($p == 'refillLogs')
+					{
+						$title = "Refill Logs";
+						$file = "template/member/refill_logs";
+					}
 					else
 					{
 						$title = "Dashboard";
