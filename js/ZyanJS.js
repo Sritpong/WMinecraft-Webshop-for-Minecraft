@@ -305,7 +305,7 @@ function Topup()
 
     $.ajax({
         type: "POST",
-        url: "application/Controller/member.php?func=topup",
+        url: "application/Controller/wallet.php?func=topup",
         data: "transaction_wallet="+ wallet_transaction,
         beforeSend: function() {
             document.getElementById("btn_topup").disabled = true;
@@ -314,35 +314,10 @@ function Topup()
         success: function(data)
         {
             var res = data.split("|");
-            
+
             if(res[0] == 2)
             {
                 document.getElementById("transaction_wallet").value = "";
-                // var divplayerPoints = $('#player_points')[0].textContent.split(' ');
-                // var points = parseFloat(divplayerPoints[1].replace(',','')) + parseFloat(res[1]);
-                // $('#player_points').html("Points: <b>" + points.toFixed(2) + "</b>");
-
-                // var today = new Date();
-                // var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
-                // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-                // var htmlTbody = "";
-                // htmlTbody += "<td>";
-                // htmlTbody += "New..";
-                // htmlTbody += "</td>";
-                // htmlTbody += "<td>";
-                // htmlTbody += "TrueWallet";
-                // htmlTbody += "</td>";
-                // htmlTbody += "<td>";
-                // htmlTbody += wallet_transaction;
-                // htmlTbody += "</td>";
-                // htmlTbody += "<td>";
-                // htmlTbody += date;
-                // htmlTbody += "</td>";
-                // htmlTbody += "<td>";
-                // htmlTbody += time;
-                // htmlTbody += "</td>";
-                // $("#tbody_history_topup").append("<tr>" + htmlTbody + "</tr>");
 
                 swal(
                 {

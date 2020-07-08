@@ -80,7 +80,7 @@
 						$tw_getstatus = new TrueWallet($wallet_email, $wallet_password);
 						$tw_getstatus->setAccessToken($wallet_access_token);
 						$data_getstatus = $tw_getstatus->GetProfile();
-
+						
 						if($data_getstatus["code"] == 'UPC-200')
 						{
 							require_once(__DIR__ . '/../Wallet/_truewallet.php');
