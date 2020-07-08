@@ -1706,3 +1706,98 @@ function searchPlayer()
         }
     });
 }
+
+function report()
+{
+    var elements_form = document.getElementById("report_frm").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var descr = submit[0];
+    var img = submit[1];
+
+    if(descr == "" || descr == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกรายละเอียด",
+            icon: "error",
+            button: true,
+        });
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/member.php?func=reportPlayer",
+        beforeSend: function(){
+            document.getElementById("report_btn").disabled = true;
+            $("#report_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        data: "descr=" + descr + "&img=" + img + "&uid=" + $('#uid_person').val(),
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "แจ้งรายงานเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_sendReport) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถแจ้งรายงานได้ขณะนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถแจ้งรายงานตัวเองได้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            document.getElementById("report_btn").disabled = false;
+            $("#report_btn").html('แจ้งรายงาน');
+        }
+    });
+}

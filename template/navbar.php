@@ -58,6 +58,15 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo $config['site']; ?>/?page=randombox">
+            <i class="fa fa-gift text-warning mt-1"></i>
+            <span class="pull-right">
+              <span id="xnav-upp">&nbsp;&nbsp;<b>สุ่มกล่อง</b></span>
+            </span>
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

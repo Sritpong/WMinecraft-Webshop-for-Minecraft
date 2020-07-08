@@ -885,6 +885,45 @@
 				}
 			}
 		}
+		elseif($g == 'reportPlayer')
+		{
+			if(isset($_SESSION['uid']))
+			{
+				if(!isset($_POST['descr']) || !isset($_POST['img']) || $_POST['descr'] == "" || empty($_POST['descr']) || !isset($_POST['uid']) || $_POST['uid'] == "" || empty($_POST['uid']))
+				{
+					echo '0';
+				}
+				else
+				{
+					if($_POST['uid'] == $_SESSION['uid'])
+					{
+						exit('3');
+					}
+					
+					$sql_sendReport = "INSERT INTO report (report_uid_reporter,report_uid_person,report_descr,report_img) VALUES (".
+					":uid_reporter,:uid_person,:report_descr,:report_img)";
+					$query_sendReport = query($sql_sendReport, array(
+						':uid_reporter' => $_SESSION['uid'],
+						':uid_person' => $_POST['uid'],
+						':report_descr' => $_POST['descr'],
+						':report_img' => $_POST['img']
+					));
+
+					if($query_sendReport)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{
