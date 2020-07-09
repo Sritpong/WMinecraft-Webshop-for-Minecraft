@@ -35,9 +35,14 @@
       <!-- menu title -->
       <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">จัดการ Webshop</li>
       <!-- menu item Elements-->
+      <li>
+        <a href="?page=manageShop">
+          <i class="fa fa-sliders"></i><span class="right-nav-text">จัดการสินค้า</span>
+        </a>
+      </li>
       <li> 
         <a href="?page=randombox">
-          <i class="fa fa-sliders"></i><span class="right-nav-text">ตั้งค่ากล่องสุ่ม</span>
+          <i class="fa fa-sliders"></i><span class="right-nav-text">จัดการกล่องสุ่ม</span>
         </a>  
       </li>
       <!-- menu title -->
