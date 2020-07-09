@@ -1776,3 +1776,69 @@ function report()
         }
     });
 }
+
+function delRandomboxItem(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delRandomboxItem",
+        data: "randomboxItemID="+ id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบไอเทมในกล่องสุ่มเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_sendReport) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดในการลบไอเทม",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}

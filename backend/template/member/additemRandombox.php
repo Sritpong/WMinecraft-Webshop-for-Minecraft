@@ -60,11 +60,56 @@
                   ?>
                 </select>
               </div>
-              <button id="addItemRandombox_btn" type="button" class="btn btn-success btn-block" onclick="addItemRandombox(<?php echo $randomboxSelect['randombox_id']; ?>)">เพิ่มไอเทม</button>
+              <button id="addItemRandombox_btn" type="button" class="btn btn-outline-success btn-block" onclick="addItemRandombox(<?php echo $randomboxSelect['randombox_id']; ?>)">เพิ่มไอเทม</button>
             </div>
           </form>
         <?php
       }
     ?>
+    <hr/>
+    <div class="card my-3">
+      <div class="card-header bg-success text-white">ไอเทม <small>[คลิกที่รูปไอเทมเพื่อลบ]</small></div>
+      <div class="card-body">
+        <div class="row">
+        <?php
+          $sql_item = "SELECT\n".
+          " *\n".
+          "FROM\n".
+          "(\n".
+          " SELECT * FROM randombox_item WHERE randombox_id = :randombox_id\n".
+          " GROUP BY randombox_item_code ORDER BY randombox_item_id DESC\n".
+          ") AS randombox_item\n".
+          "LEFT JOIN\n".
+          "(\n".
+          " SELECT\n".
+          "   randombox_item_id,\n".
+          "   randombox_item_code,\n".
+          "   COUNT(randombox_item_code) AS percent\n".
+          " FROM randombox_item GROUP BY randombox_item_code\n".
+          ") AS percent ON (randombox_item.randombox_item_id = percent.randombox_item_id)";
+          $query_item = query($sql_item, array(
+            ':randombox_id' => $_GET['id']
+          ));
+            if($query_item->rowCount() > 0)
+            {
+              while($item = $query_item->fetch())
+              {
+                ?>
+                    <div class="col-md-3">
+                      <a onclick="delRandomboxItem('<?php echo $item['randombox_item_code']; ?>')">
+                        <img src="<?php echo $item['randombox_item_img']; ?>" class="img-thumbnail rounded mx-auto d-block" alt="<?php echo $item['randombox_item_name']; ?>" data-toggle="tooltip" data-html="true" data-placement="top" title="<?php echo $item['randombox_item_name']."<br/>โอกาศที่จะได้รับ: ".$item['percent']."%<br/><b><small>คลิกที่รูปเพื่อลบออก</small></b>"; ?>">
+                      </a>
+                    </div>
+                <?php
+              }
+            }
+            else
+            {
+              echo "<div class='col-12 text-center'><b>ไม่มีไอเทมในกล่องสุ่มนี้</b></div>";
+            }
+          ?>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

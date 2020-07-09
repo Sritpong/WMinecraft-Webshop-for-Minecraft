@@ -272,6 +272,34 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'delRandomboxItem')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!isset($_POST['randomboxItemID']) || empty($_POST['randomboxItemID']) || $_POST['randomboxItemID'] == "")
+				{
+					exit('2');
+				}
+
+				$sql_del = "DELETE FROM randombox_item WHERE randombox_item_code = :randombox_item_code";
+				$query_del = query($sql_del, array(
+					':randombox_item_code' => $_POST['randomboxItemID']
+				));
+
+				if($query_del)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{
