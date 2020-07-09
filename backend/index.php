@@ -55,6 +55,11 @@
 						$title = "Refill Logs";
 						$file = "template/member/refill_logs";
 					}
+					elseif($p == 'manageShop')
+					{
+						$title = "Manage Shop";
+						$file = "template/member/shop";
+					}
 					else
 					{
 						$title = "Dashboard";

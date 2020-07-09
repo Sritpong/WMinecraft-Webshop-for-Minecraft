@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="<?php echo $config['site']; ?>/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="<?php echo $config['site']; ?>/css/fixedHeader.bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo $config['site']; ?>/css/responsive.bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo $config['site']; ?>/css/lt.css">
 <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 <style type="text/css">
     @import url('https://fonts.googleapis.com/css?family=Kanit');

@@ -300,6 +300,51 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addShopItem')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if($_POST['item_name'] == "" || !isset($_POST['item_name']) || empty($_POST['item_name']) || 
+				$_POST['item_img'] == "" || !isset($_POST['item_img']) || empty($_POST['item_img']) || 
+				$_POST['item_command'] == "" || !isset($_POST['item_command']) || empty($_POST['item_command']) || 
+				$_POST['item_price'] == "" || !isset($_POST['item_price']) || empty($_POST['item_price']) || 
+				$_POST['item_recommend'] == "" || !isset($_POST['item_recommend']) ||
+				$_POST['category_id'] == "" || !isset($_POST['category_id']) || empty($_POST['category_id']) || 
+				$_POST['server_id'] == "" || !isset($_POST['server_id']) || empty($_POST['server_id']) || 
+				!is_numeric($_POST['item_price']) || !is_numeric($_POST['category_id']) || !is_numeric($_POST['server_id']))
+				{
+					echo '0';
+				}
+				else
+				{
+					$sql_insertShopItem = "INSERT INTO shop (shop_name,shop_img,shop_command,shop_price,shop_recommended,".
+					"category_id,server_id) VALUES (:shop_name,:shop_img,:shop_command,:shop_price,:shop_recommended,".
+					":category_id,:server_id)";
+					$query_insertShopItem = query($sql_insertShopItem, array(
+						':shop_name' => $_POST['item_name'],
+						':shop_img' => $_POST['item_img'],
+						':shop_command' => $_POST['item_command'],
+						':shop_price' => $_POST['item_price'],
+						':shop_recommended' => $_POST['item_recommend'],
+						':category_id' => $_POST['category_id'],
+						':server_id' => $_POST['server_id']
+					));
+
+					if($query_insertShopItem)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

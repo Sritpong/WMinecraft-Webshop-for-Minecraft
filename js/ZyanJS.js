@@ -1842,3 +1842,182 @@ function delRandomboxItem(id)
         }
     });
 }
+
+function addShopItem()
+{
+    var item_name = $('#item_name').val();
+    var item_img = $('#item_img').val();
+    var item_command = $('#item_command').val();
+    var item_price = $('#item_price').val();
+    var item_recommend = $('#item_recommend').val();
+    var category_id = $('#category_id').val();
+    var server_id = $('#for_sv').val();
+
+    if(item_name == "" || item_name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อสินค้า",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(item_img == "" || item_img == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก URL รูปภาพของสินค้า",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(item_command == "" || item_command == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกคำสั่ง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(item_price == "" || item_price == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกราคาของสินค้า",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(item_recommend == "" || item_recommend == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกสินค้าแนะนำให้ถูกต้อง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(category_id == "" || category_id == "0" || category_id == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกหมวดหมู่",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(server_id == "" || server_id == "0" || server_id == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกเซิฟเวอร์",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addShopItem",
+        data: "item_name=" + item_name + "&item_img=" + item_img + "&item_command=" + item_command +
+        "&item_price=" + item_price + "&item_recommend=" + item_recommend + "&category_id=" + category_id +
+        "&server_id=" + server_id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอกข้อมูลให้ถูกต้อง",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มสินค้าเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_addShopItem) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่สามารถเพิ่มข้อมูลเข้าฐานข้อมูลได้ขณะนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function showFrmAddItem()
+{
+    document.getElementById("btn_addItem").style.display = "none";
+    document.getElementById("frm_addItem").style.display = "block";
+}
+
+function HideFrmAddItem()
+{
+    document.getElementById("btn_addItem").style.display = "block";
+    document.getElementById("frm_addItem").style.display = "none";
+}
