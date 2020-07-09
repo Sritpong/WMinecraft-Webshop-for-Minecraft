@@ -22,22 +22,25 @@
 <script type="text/javascript" src="<?php echo $config['site']; ?>/js/ZyanJS.js"></script>
 
 <?php
-	if($_GET['page'] == 'loginLogs')
+	if(isset($_GET['page']))
 	{
-		?>
-			<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
-		<?php
-	}
-	elseif($_GET['page'] == 'shopLogs')
-	{
-		?>
-			<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
-		<?php
-	}
-	elseif($_GET['page'] == 'refillLogs')
-	{
-		?>
-			<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
-		<?php
+		if($_GET['page'] == 'loginLogs')
+		{
+			?>
+				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
+			<?php
+		}
+		elseif($_GET['page'] == 'shopLogs')
+		{
+			?>
+				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
+			<?php
+		}
+		elseif($_GET['page'] == 'refillLogs')
+		{
+			?>
+				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
+			<?php
+		}
 	}
 ?>
