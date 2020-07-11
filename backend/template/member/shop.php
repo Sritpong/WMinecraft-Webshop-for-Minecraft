@@ -67,12 +67,85 @@
             ?>
           </select>
         </div>
-        <button id="btn_addShopItem" type="button" class="btn btn-outline-success btn-block" onclick="addShopItem()">เพิ่มสินค้า</button>
+        <div class="col-12">
+          <button id="btn_addShopItem" type="button" class="btn btn-outline-success btn-block" onclick="addShopItem()">เพิ่มสินค้า</button>
+        </div>
       </div>
     </form>
   </div>
 </div>
 <hr/>
+<div class="row" id="frm_editItem" style="display: none;">
+  <div class="col-12">
+    <button class="btn btn-outline-primary btn-block mb-3" onclick="HideFrmEditItem()">
+      ซ่อน Form แก้ไขสินค้า
+    </button>
+    <hr/>
+    <form name="add_ShopItem" method="POST">
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="edit_item_name">ชื่อสินค้า</label>
+          <input type="text" class="form-control" required id="edit_item_name" name="edit_item_name">
+        </div>
+        <div class="form-group col-6">
+          <label for="edit_item_img">รูป [URL]</label>
+          <input type="text" class="form-control" required id="edit_item_img" name="edit_item_img">
+        </div>
+        <div class="form-group col-6">
+          <label for="edit_item_command">คำสั่ง</label>
+          <input type="text" class="form-control" required id="edit_item_command" name="edit_item_command">
+        </div>
+        <div class="form-group col-6">
+          <label for="edit_item_price">ราคา</label>
+          <input type="text" class="form-control" required id="edit_item_price" name="edit_item_price">
+        </div>
+        <div class="form-group col-6">
+          <label for="edit_item_recommend">สินค้าแนะนำ</label>
+          <select name="edit_item_recommend" id="edit_item_recommend" class="form-control">
+            <option value="0">ปิด</option>
+            <option value="1">เปิด</option>
+          </select>
+        </div>
+        <div class="form-group col-6">
+          <label for="edit_category_id">หมวดหมู่</label>
+          <select name="edit_category_id" id="edit_category_id" class="form-control">
+            <option value="0">-- กรุณาเลือก หมวดหมู่ --</option>
+            <?php
+              $c_q = query("SELECT * FROM category");
+              while($c = $c_q->fetch())
+              {
+                ?>
+                  <option value="<?php echo $c['category_id']; ?>"><?php echo $c['category_name']; ?></option>
+                <?php
+              }
+            ?>
+          </select>
+        </div>
+        <div class="form-group col-12">
+          <label for="edit_for_sv">เซิฟเวอร์</label>
+          <select name="edit_for_sv" id="edit_for_sv" class="form-control">
+            <option value="0">-- กรุณาเลือก Server --</option>
+            <?php
+              $sv_q = query("SELECT * FROM server");
+              while($sv = $sv_q->fetch())
+              {
+                ?>
+                  <option value="<?php echo $sv['server_id']; ?>"><?php echo $sv['server_name']; ?></option>
+                <?php
+              }
+            ?>
+          </select>
+        </div>
+        <div class="col-12">
+          <button id="btn_editShopItem" type="button" class="btn btn-outline-success btn-block" onclick="editShopItem()">แก้ไขสินค้า</button>
+        </div>
+      </div>
+    </form>
+    <div class="col-12">
+      <hr/>
+    </div>
+  </div>
+</div>
 <div class="row">
   <?php
     $sql_product = "SELECT * FROM (\n";
@@ -132,7 +205,7 @@
       while($product = $query_product->fetch())
       {
         ?>
-          <div class="col-lg-3 col-md-3 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-xs-12" id="item_id_<?php echo $product['shop_id']; ?>">
               <div class="item mb-2" style="border-radius: 5px 5px 5px 5px;">
                   <div class="item-image">
                       <a class="item-image-price"><?php echo number_format($product['shop_price'], 2); ?> พ้อยท์</a>
@@ -156,10 +229,10 @@
                               Server: <?php echo $product['server_name']; ?>
                             </a>
                           </small>
-                          <a id="edit_item_<?php echo $product['shop_id']; ?>" href="#" class="btn btn-success w-100 mb-1 border-0">
+                          <button id="edit_item_<?php echo $product['shop_id']; ?>" class="btn btn-success w-100 mb-1 border-0" onclick="btn_editShopItem(<?php echo $product['shop_id']; ?>)">
                               <i class="fa fa-cart-arrow-down"></i> แก้ไข
-                          </a>
-                          <button id="del_item_<?php echo $product['shop_id']; ?>" class="btn btn-danger btn-sm" onclick="DelShopItem(<?php echo $product['shop_id'] ?>)">
+                          </button>
+                          <button id="del_item_<?php echo $product['shop_id']; ?>" class="btn btn-danger btn-sm" onclick="DelShopItem(<?php echo $product['shop_id']; ?>)">
                             <small>ลบ</small>
                           </button>
                       </div>

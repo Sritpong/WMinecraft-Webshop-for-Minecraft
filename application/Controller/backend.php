@@ -212,10 +212,11 @@
 
 				if($submitOTP['code'] == "MAS-200")
 				{
-					$sql_updateAccessToken = "UPDATE wallet_account SET phone = :phone, access_token = :access_token WHERE id = 1";
+					$sql_updateAccessToken = "UPDATE wallet_account SET phone = :phone, access_token = :access_token, name = :full_name WHERE id = 1";
 					$query_updateAccessToken = query($sql_updateAccessToken, array(
 						':phone' => $_POST['phone'],
-						':access_token' => $submitOTP['data']['access_token']
+						':access_token' => $submitOTP['data']['access_token'],
+						':full_name' => $submitOTP['data']['full_name']
 					));
 
 					if($query_updateAccessToken)
@@ -337,6 +338,68 @@
 					else
 					{
 						echo '2';
+					}
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'delShopItem')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!isset($_POST['shopId']) || empty($_POST['shopId']) || $_POST['shopId'] == "")
+				{
+					echo '0';
+				}
+				else
+				{
+					$sql_delShopItem = "DELETE FROM shop WHERE shop_id = :shopId";
+					$query_delShopItem = query($sql_delShopItem, array(
+						':shopId' => $_POST['shopId']
+					));
+
+					if($query_delShopItem)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '2';
+					}
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'getDetailShopItem')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!isset($_POST['shopId']) || empty($_POST['shopId']) || $_POST['shopId'] == "")
+				{
+					echo '0';
+				}
+				else
+				{
+					$sql_getDetail = "SELECT * FROM shop WHERE shop_id = :shopId";
+					$query_getDetail = query($sql_getDetail, array(
+						':shopId' => $_POST['shopId']
+					));
+
+					if($query_getDetail->rowcount() <= 0)
+					{
+						echo '1';
+					}
+					else
+					{
+						$detail = $query_getDetail->fetch();
+
+						echo $detail['shop_name']."|".$detail['shop_img']."|".$detail['shop_command']."|".$detail['shop_price'];
 					}
 				}
 			}

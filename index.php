@@ -35,7 +35,7 @@
 								</div>
 								<div class="col-md-8 col-xs-12">
 									<?php
-										include_once("template/boardcast.php");
+										// include_once("template/boardcast.php");
 
 										if(isset($_GET['page']))
 										{
@@ -96,7 +96,7 @@
 			<div class="row my-3">
 				<div class="col-12 text-center">
 					<b><small>Copyright &copy; <?php echo date('Y'); ?> WMinecraft All Rights Reserved.</small></b><br/>
-					Design & System by WMinecraft | <a href="<?php echo $config['site']."/Backend"; ?>">Backend</a>
+					Design & System by <a href="https://fb.com/101997991594334/" target="_blank">WMinecraft</a> | <a href="<?php echo $config['site']."/Backend"; ?>">Backend</a>
 				</div>
 			</div>
 		</div>

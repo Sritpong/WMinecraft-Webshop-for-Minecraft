@@ -30,6 +30,12 @@
         </div>
         <div class="section-field col-6 mb-20">
           <label class="mb-10" for="token_wallet">
+            Name
+          </label>
+          <input name="name_wallet" id="name_wallet" type="text" class="web form-control" value="<?php echo $detailWallet['name']; ?>" readonly>
+        </div>
+        <div class="section-field col-12 mb-20">
+          <label class="mb-10" for="token_wallet">
             Access Token
           </label>
           <input name="token_wallet" id="token_wallet" type="text" class="web form-control" value="<?php echo substr($detailWallet['access_token'], 0, -10)."**********"; ?>" readonly>

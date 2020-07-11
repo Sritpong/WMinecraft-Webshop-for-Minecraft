@@ -6,7 +6,7 @@
 	$config = array(
 		'site' => 'http://localhost/WMinecraft',
 		'server_name' => 'WMinecraft',
-		'max_reg' => 5
+		'max_reg' => 1
 	);
 
 	#MYSQL Config

@@ -891,7 +891,6 @@ function getOTPAccessToken()
         },
         success: function(res)
         {
-            console.log(res);
             var data = res.split("|");
 
             if(data[0] == 500)
@@ -2020,4 +2019,84 @@ function HideFrmAddItem()
 {
     document.getElementById("btn_addItem").style.display = "block";
     document.getElementById("frm_addItem").style.display = "none";
+}
+
+function HideFrmEditItem()
+{
+    document.getElementById("frm_editItem").style.display = "none";
+}
+
+function DelShopItem(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delShopItem",
+        data: "shopId=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบสินค้าเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                });
+
+                $("#item_id_" + id).html("");
+                document.getElementById("item_id_" + id).style.display = "none";
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "ไม่ทราบลบไอเทมได้ในขณะนี้",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function btn_editShopItem(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=getDetailShopItem",
+        data: "shopId=" + id,
+        success: function(data)
+        {
+            var res = data.split("|");
+
+            document.getElementById("edit_item_name").value = res[0];
+            document.getElementById("edit_item_img").value = res[1];
+            document.getElementById("edit_item_command").value = res[2];
+            document.getElementById("edit_item_price").value = res[3];
+
+            document.getElementById("frm_editItem").style.display = "block";
+        }
+    });
 }
