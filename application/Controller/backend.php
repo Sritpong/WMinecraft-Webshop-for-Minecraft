@@ -477,6 +477,33 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addServer')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_addServer = "INSERT INTO server (server_name,server_ip,server_port,server_password) VALUES (".
+				":name,:ip,:port,:password)";
+				$query_addServer = query($sql_addServer, array(
+					':name' => $_POST['name'],
+					':ip' => $_POST['ip'],
+					':port' => $_POST['port'],
+					':password' => $_POST['password']
+				));
+
+				if($query_addServer)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

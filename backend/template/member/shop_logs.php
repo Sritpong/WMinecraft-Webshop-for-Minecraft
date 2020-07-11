@@ -45,7 +45,7 @@
           {
             ?>
               <tr>
-                <td colspan="5">
+                <td colspan="5" class="text-center">
                   ยังไม่มีประวัติการซื้อสินค้า
                 </td>
               </tr>

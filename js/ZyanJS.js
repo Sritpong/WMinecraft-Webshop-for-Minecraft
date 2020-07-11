@@ -2243,6 +2243,137 @@ function delItemRandombox(id)
                     location.href = document.getElementById("path").value + "/backend/?page=randombox";
                 });
             }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function addServer()
+{
+    var elements_form = document.getElementById("frm_addServer").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var server_name = submit[0];
+    var server_ip = submit[1];
+    var server_port = submit[2];
+    var server_password = submit[3];
+
+    if(server_name == "" || server_name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อเซิฟเวอร์",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(server_ip == "" || server_ip == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกไอพีเซิฟเวอร์",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(server_port == "" || server_port == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกพอร์ต Rcon",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(server_password == "" || server_password == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกรหัสผ่าน Rcon",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addServer",
+        data: "name=" + server_name + "&ip=" + server_ip + "&port=" + server_port + "&password=" + server_password,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่ม Server เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_addServer) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
             else
             {
                 swal(

@@ -39,6 +39,7 @@
           </div>
         </div>
       </form>
+      <hr/>
     </div>
     <?php
       if($query_getRandombox->rowCount() > 0)
@@ -79,6 +80,10 @@
             </div>
           </div>
         <?php
+      }
+      else
+      {
+        echo "<h5 class='col-md-12 text-center'>ยังไม่มีกล่องสุ่ม</h5>";
       }
     ?>
   </div>

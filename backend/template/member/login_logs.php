@@ -34,7 +34,7 @@
           {
             ?>
               <tr>
-                <td colspan="4">
+                <td colspan="4" class="text-center">
                   ยังไม่มีประวัติการเข้าสู่ระบบ
                 </td>
               </tr>

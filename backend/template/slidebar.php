@@ -37,12 +37,17 @@
       <!-- menu item Elements-->
       <li>
         <a href="?page=manageShop">
-          <i class="fa fa-sliders"></i><span class="right-nav-text">จัดการสินค้า</span>
+          <i class="fa fa-shopping-cart"></i><span class="right-nav-text">จัดการสินค้า</span>
         </a>
       </li>
       <li> 
         <a href="?page=randombox">
-          <i class="fa fa-sliders"></i><span class="right-nav-text">จัดการกล่องสุ่ม</span>
+          <i class="fa fa-gift"></i><span class="right-nav-text">จัดการกล่องสุ่ม</span>
+        </a>  
+      </li>
+      <li> 
+        <a href="?page=server">
+          <i class="fa fa-hdd-o"></i><span class="right-nav-text">จัดการเซิฟเวอร์</span>
         </a>  
       </li>
       <!-- menu title -->

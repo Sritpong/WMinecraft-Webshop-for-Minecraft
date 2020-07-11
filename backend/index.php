@@ -61,6 +61,11 @@
 						$title = "Manage Shop";
 						$file = "template/member/shop";
 					}
+					elseif($p == 'server')
+					{
+						$title = "Manage Server";
+						$file = "template/member/server";
+					}
 					else
 					{
 						$title = "Dashboard";
