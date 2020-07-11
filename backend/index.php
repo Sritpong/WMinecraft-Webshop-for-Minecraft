@@ -9,6 +9,7 @@
 		<?php include_once 'template/taghead.php'; ?>
 	</head>
 	<body>
+		<input name="path" id="path" type="hidden" value="<?php echo $config['site']; ?>"/>
 		<?php
 			if(!isset($_SESSION['backend_uid']))
 			{

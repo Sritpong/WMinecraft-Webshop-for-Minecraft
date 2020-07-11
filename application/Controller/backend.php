@@ -408,6 +408,75 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addRandombox')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!isset($_POST['name']) || empty($_POST['name']) || $_POST['name'] == "")
+				{
+					exit('0');
+				}
+
+				if(!isset($_POST['price']) || empty($_POST['price']) || $_POST['price'] == "")
+				{
+					exit('0');
+				}
+
+				if(!isset($_POST['img']) || empty($_POST['img']) || $_POST['img'] == "")
+				{
+					exit('0');
+				}
+
+				$sql_addRandombox = "INSERT INTO randombox (randombox_name,randombox_img,randombox_price) VALUES (".
+				":name,:img,:price)";
+				$query_addRandombox = query($sql_addRandombox, array(
+					':name' => $_POST['name'],
+					':img' => $_POST['img'],
+					':price' => $_POST['price']
+				));
+
+				if($query_addRandombox)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '2';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'delItemRandombox')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(!isset($_POST['id']) || empty($_POST['id']) || $_POST['id'] == "")
+				{
+					exit('0');
+				}
+
+				$sql_delRandombox = "DELETE FROM randombox WHERE randombox_id = :id";
+				$query_delRandombox = query($sql_delRandombox, array(
+					':id' => $_POST['id']
+				));
+
+				if($query_delRandombox)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

@@ -2005,6 +2005,16 @@ function addShopItem()
                     button: true,
                 });
             }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
         }
     });
 }
@@ -2077,6 +2087,16 @@ function DelShopItem(id)
                     button: true,
                 });
             }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
         }
     });
 }
@@ -2097,6 +2117,142 @@ function btn_editShopItem(id)
             document.getElementById("edit_item_price").value = res[3];
 
             document.getElementById("frm_editItem").style.display = "block";
+        }
+    });
+}
+
+function showFrmAddRandombox()
+{
+    document.getElementById("frm_addRandombox").style.display = "block";
+    document.getElementById("btn_addRandomBox").style.display = "none";
+}
+
+function hideFrmAddRandombox()
+{
+    document.getElementById("frm_addRandombox").style.display = "none";
+    document.getElementById("btn_addRandomBox").style.display = "block";
+}
+
+function addRandombox()
+{
+    var elements_form = document.getElementById("add_randombox").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var nameRandombox = submit[0];
+    var priceRandombox = submit[1];
+    var imgRandombox = submit[2];
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addRandombox",
+        data: "name=" + nameRandombox + "&price=" + priceRandombox + "&img=" + imgRandombox,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอกข้อมูลให้ครบทุกช่อง",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มกล่องสุ่มเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_addRandombox) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดในการเพิ่มกล่องสุ่ม",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function delItemRandombox(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delItemRandombox",
+        data: "id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบกล่องสุ่มนี้เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_addRandombox) =>
+                {
+                    location.href = document.getElementById("path").value + "/backend/?page=randombox";
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
         }
     });
 }

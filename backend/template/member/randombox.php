@@ -7,6 +7,39 @@
 </div>
 <div class="row">
   <div class="col-xl-12 col-lg-12 col-md-12 mb-10">
+    <div id="btn_addRandomBox" class="col-12" style="display: block;">
+      <button class="btn btn-outline-primary btn-block" onclick="showFrmAddRandombox()">
+        เพิ่มกล่องสุ่ม
+      </button>
+      <hr/>
+    </div>
+    <div id="frm_addRandombox" class="col-12" style="display: none;">
+      <button class="btn btn-outline-primary btn-block mb-3" onclick="hideFrmAddRandombox()">
+        ซ่อน Form เพิ่มกล่องสุ่ม
+      </button>
+      <hr/>
+      <form id="add_randombox" name="add_randombox" method="POST">
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="randombox_name">ชื่อกล่องสุ่ม</label>
+            <input type="text" class="form-control" required id="randombox_name" name="randombox_name">
+          </div>
+          <div class="form-group col-6">
+            <label for="randombox_price">สุ่มครั้งละ (พ้อยท์)</label>
+            <input type="text" class="form-control" required id="randombox_price" name="randombox_price">
+          </div>
+          <div class="form-group col-12">
+            <label for="randombox_img">รูป [URL]</label>
+            <input type="text" class="form-control" required id="randombox_img" name="randombox_img">
+          </div>
+          <div class="col-12">
+            <button id="btn_addRandomBox" type="button" class="btn btn-outline-success btn-block" onclick="addRandombox()">
+              เพิ่มกล่องสุ่ม
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
     <?php
       if($query_getRandombox->rowCount() > 0)
       {

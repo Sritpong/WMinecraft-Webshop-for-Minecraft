@@ -23,6 +23,10 @@
 </div>
 <div class="row">
   <div class="col-xl-12 col-lg-12 col-md-12 mb-10">
+    <button id="delItemRandombox_btn" type="button" class="btn btn-outline-danger btn-block" onclick="delItemRandombox(<?php echo $randomboxSelect['randombox_id']; ?>)">
+      ลบกล่องสุ่มนี้
+    </button>
+    <hr/>
     <?php
       if(isset($_GET['id']))
       {
