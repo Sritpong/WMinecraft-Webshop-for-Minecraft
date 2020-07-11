@@ -88,6 +88,10 @@
                       </div>
                     <?php
                   }
+                  else
+                  {
+                    echo "<h5 class='col-md-12 text-center'>ยังไม่มีกล่องสุ่ม</h5>";
+                  }
                 ?>
               </div>
             </div>
