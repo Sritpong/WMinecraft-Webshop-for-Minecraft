@@ -77,7 +77,7 @@
           	          <?php echo $server['server_password']; ?>
           	        </td>
           	        <td>
-          	        	<button class="btn btn-outline-danger">
+          	        	<button class="btn btn-outline-danger" onclick="delServer(<?php echo $server['server_id']; ?>)">
           	        		ลบ Server #<?php echo $server['server_id']; ?>
           	        	</button>
           	      </tr>

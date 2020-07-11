@@ -504,6 +504,29 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'delServer')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_delServer = "DELETE FROM server WHERE server_id = :server_id";
+				$query_delServer = query($sql_delServer, array(
+					':server_id' => $_POST['id']
+				));
+
+				if($query_delServer)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

@@ -2238,7 +2238,7 @@ function delItemRandombox(id)
                     icon: "success",
                     button: true,
                 })
-                .then((okay_addRandombox) =>
+                .then((okay_delRandombox) =>
                 {
                     location.href = document.getElementById("path").value + "/backend/?page=randombox";
                 });
@@ -2360,6 +2360,62 @@ function addServer()
                     button: true,
                 })
                 .then((okay_addServer) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function delServer(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delServer",
+        data: "id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบ Server เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_delServer) =>
                 {
                     location.reload();
                 });
