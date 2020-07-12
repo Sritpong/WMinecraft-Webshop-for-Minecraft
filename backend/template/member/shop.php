@@ -1,5 +1,5 @@
 <div class="card-title">
-  ตั้งค่าสินค้า
+  สินค้า
 </div>
 <div class="row">
   <div id="btn_addItem" class="col-12" style="display: block;">
