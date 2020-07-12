@@ -527,6 +527,52 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addCategory')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_addCategory = "INSERT INTO category (category_name) VALUES (:category_name)";
+				$query_addCategory = query($sql_addCategory, array(
+					':category_name' => $_POST['category_name']
+				));
+
+				if($query_addCategory)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'delCategory')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_delCategory = "DELETE FROM category WHERE category_id = :category_id";
+				$query_delCategory = query($sql_delCategory, array(
+					':category_id' => $_POST['id']
+				));
+
+				if($query_delCategory)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

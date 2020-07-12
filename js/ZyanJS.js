@@ -2443,3 +2443,138 @@ function delServer(id)
         }
     });
 }
+
+function addCategory()
+{
+    var elements_form = document.getElementById("frm_addCategory").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var category_name = submit[0];
+
+    if(category_name == "" || category_name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อหมวดหมู่",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addCategory",
+        data: "category_name=" + category_name,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มหมวดหมู่เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_addCategory) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function delCategory(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delCategory",
+        data: "id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบหมวดหมู่เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_delCategory) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}

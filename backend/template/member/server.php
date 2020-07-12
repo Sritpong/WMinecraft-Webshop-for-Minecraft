@@ -29,7 +29,7 @@
         </div>
 	</form>
 	<hr/>
-  	<table id="shopLogs_Table" class="table table-striped nowrap table-sm" style="width:100%;">
+  	<table id="server_table" class="table table-striped nowrap table-sm" style="width:100%;">
       <thead>
         <tr>
             <th>ลำดับ</th>

@@ -42,5 +42,17 @@
 				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
 			<?php
 		}
+		elseif($_GET['page'] == 'server')
+		{
+			?>
+				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
+			<?php
+		}
+		elseif($_GET['page'] == 'category')
+		{
+			?>
+				<script type="text/javascript" src="<?php echo $config['site']; ?>/js/DataTable.js"></script>
+			<?php
+		}
 	}
 ?>

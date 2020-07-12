@@ -66,6 +66,11 @@
 						$title = "Manage Server";
 						$file = "template/member/server";
 					}
+					elseif($p == 'category')
+					{
+						$title = "Manage Category";
+						$file = "template/member/category";
+					}
 					else
 					{
 						$title = "Dashboard";

@@ -50,6 +50,11 @@
           <i class="fa fa-hdd-o"></i><span class="right-nav-text">จัดการเซิฟเวอร์</span>
         </a>  
       </li>
+      <li> 
+        <a href="?page=category">
+          <i class="fa fa-tags"></i><span class="right-nav-text">จัดการหมวดหมู่</span>
+        </a>  
+      </li>
       <!-- menu title -->
       <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">ตั้งค่า Webshop</li>
       <!-- menu item Elements-->
