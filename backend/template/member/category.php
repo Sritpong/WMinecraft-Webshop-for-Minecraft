@@ -54,7 +54,7 @@
           	        </td>
           	        <td>
           	        	<button class="btn btn-outline-danger" onclick="delCategory(<?php echo $category['category_id']; ?>)">
-          	        		ลบ Server #<?php echo $category['category_id']; ?>
+          	        		ลบหมวดหมู่ #<?php echo $category['category_id']; ?>
           	        	</button>
           	      </tr>
           	    <?php
