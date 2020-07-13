@@ -69,6 +69,11 @@
       <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">ตั้งค่า Webshop</li>
       <!-- menu item Elements-->
       <li> 
+        <a href="?page=settingSite">
+          <i class="fa fa-cogs"></i><span class="right-nav-text">ตั้งค่า Webshop</span>
+        </a>  
+      </li>
+      <li> 
         <a href="?page=settingWallet">
           <i class="fa fa-sliders"></i><span class="right-nav-text">ตั้งค่าบัญชี Wallet</span>
         </a>  

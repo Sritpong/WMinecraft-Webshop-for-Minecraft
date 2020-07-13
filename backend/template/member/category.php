@@ -15,8 +15,8 @@
             </button>
           </div>
         </div>
-	</form>
-	<hr/>
+    </form>
+    <hr/>
   	<table id="category_table" class="table table-striped nowrap table-sm" style="width:100%;">
       <thead>
         <tr>

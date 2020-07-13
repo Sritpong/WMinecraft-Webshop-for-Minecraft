@@ -22,7 +22,7 @@
 					<div class="card shadow">
 						<div class="card-body">
 							<h5>
-								Webshop : <?php echo $config['server_name']; ?>
+								Webshop : <?php echo $settings['settings_shop_name']; ?>
 							</h5>
 							<hr/>
 							<div class="row">
@@ -35,7 +35,7 @@
 								</div>
 								<div class="col-md-8 col-xs-12">
 									<?php
-										// include_once("template/boardcast.php");
+										include_once("template/boardcast.php");
 
 										if(isset($_GET['page']))
 										{

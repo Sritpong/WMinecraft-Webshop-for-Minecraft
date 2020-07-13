@@ -81,6 +81,11 @@
 						$title = "Manage Code";
 						$file = "template/member/code";
 					}
+					elseif($p == 'settingSite')
+					{
+						$title = "Manage Site";
+						$file = "template/member/settingSite";
+					}
 					else
 					{
 						$title = "Dashboard";
