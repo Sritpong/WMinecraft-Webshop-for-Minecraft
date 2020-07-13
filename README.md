@@ -1,6 +1,6 @@
 # WMinecraft
 Webshop Minecraft
 
-95%
+99%
 
 Developer: WZyan Dev
