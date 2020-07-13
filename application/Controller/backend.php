@@ -601,6 +601,78 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addCode')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if($_POST['code_type'] == 3 && is_numeric($_POST['code_type']) && is_numeric($_POST['code_limit']))
+				{
+					$code_limit = $_POST['code_limit'];
+				}
+				else
+				{
+					$code_limit = 1;
+				}
+
+				$sql_checkCode = "SELECT * FROM code WHERE code_value = :code_value";
+				$query_checkCode = query($sql_checkCode, array(
+					':code_value' => $_POST['code_value']
+				));
+
+				if($query_checkCode->rowcount() <= 0)
+				{
+					$sql_addCode = "INSERT INTO code (code_value,code_command,code_type,code_redeem_amount,server_id)".
+					"VALUES (:code_value,:code_command,:code_type,:code_limit,:server_id)";
+					$query_addCode = query($sql_addCode, array(
+						':code_value' => $_POST['code_value'],
+						':code_command' => $_POST['code_command'],
+						':code_type' => $_POST['code_type'],
+						':code_limit' => $code_limit,
+						':server_id' => $_POST['server_id']
+					));
+
+					if($query_addCode)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '0';
+					}
+				}
+				else
+				{
+					echo '2';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'delCode')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_delCode = "DELETE FROM code WHERE code_id = :code_id";
+				$query_delCode = query($sql_delCode, array(
+					':code_id' => $_POST['id']
+				));
+
+				if($query_delCode)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

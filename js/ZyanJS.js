@@ -2714,3 +2714,205 @@ function addDiary()
         }
     });
 }
+
+function addCode()
+{
+    var elements_form = document.getElementById("frm_addCode").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var code_value = submit[0];
+    var code_command = submit[1];
+    var code_type = submit[2];
+    var code_limit = submit[3];
+    var server_id = submit[4];
+
+    if(code_value == "" || code_value == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกโค้ด",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(code_command == "" || code_command == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกคำสั่ง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(code_type == "" || code_type == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกชนิดของโค้ด",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(code_type == "3" && code_limit == "" || code_type == "3" && code_limit == "0" || code_type == "3" && code_limit == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกจำกัดจำนวนคนให้ถูกต้อง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(server_id == "0" || server_id == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกเซิฟเวอร์",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addCode",
+        data: "code_value=" + code_value + "&code_command=" + code_command +
+        "&code_type=" + code_type + "&code_limit=" + code_limit + "&server_id=" + server_id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มโค้ด " + code_value + " เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_addCode) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "มีโค้ด " + code_value + " ในระบบแล้ว",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}
+
+function delCode(id)
+{
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=delCode",
+        data: "id=" + id,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ลบโค้ดเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_delCode) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}

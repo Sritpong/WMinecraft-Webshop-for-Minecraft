@@ -76,6 +76,11 @@
 						$title = "Manage Diary";
 						$file = "template/member/diary";
 					}
+					elseif($p == 'code')
+					{
+						$title = "Manage Code";
+						$file = "template/member/code";
+					}
 					else
 					{
 						$title = "Dashboard";
