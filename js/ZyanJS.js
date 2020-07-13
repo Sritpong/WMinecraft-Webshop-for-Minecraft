@@ -2578,3 +2578,139 @@ function delCategory(id)
         }
     });
 }
+
+function addDiary()
+{
+    var elements_form = document.getElementById("frm_addDiary").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var diary_name = submit[0];
+    var diary_command = submit[1];
+    var diary_img = submit[2];
+    var diary_server = submit[3];
+    var diary_date = submit[4];
+
+    if(diary_name == "" || diary_name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อไอเทม/สินค้า",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(diary_command == "" || diary_command == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกคำสั่ง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(diary_img == "" || diary_img == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก URL รูปภาพ",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(diary_server == "0" || diary_server == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกเซิฟเวอร์",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(diary_date == "" || diary_date == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณาเลือกวันที่",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=addDiary",
+        data: "diary_name=" + diary_name + "&diary_command=" + diary_command +
+        "&diary_img=" + diary_img + "&diary_server=" + diary_server + "&diary_date=" + diary_date,
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "เพิ่มเช็คชื่อรายวันเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_addDiary) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+        }
+    });
+}

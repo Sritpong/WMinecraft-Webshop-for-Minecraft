@@ -18,6 +18,7 @@
                   "FROM\n".
                   "(\n".
                   " SELECT * FROM diary WHERE diary_date = :today\n".
+                  " ORDER BY diary_id DESC LIMIT 1\n".
                   ") AS diary\n".
                   "LEFT JOIN\n".
                   "(\n".

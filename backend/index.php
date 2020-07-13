@@ -71,6 +71,11 @@
 						$title = "Manage Category";
 						$file = "template/member/category";
 					}
+					elseif($p == 'diary')
+					{
+						$title = "Manage Diary";
+						$file = "template/member/diary";
+					}
 					else
 					{
 						$title = "Dashboard";

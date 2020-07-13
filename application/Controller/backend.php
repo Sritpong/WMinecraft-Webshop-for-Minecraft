@@ -573,6 +573,34 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'addDiary')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_addDiary = "INSERT INTO diary (diary_name,diary_command,diary_img,diary_date,server_id) ".
+				"VALUES (:diary_name,:diary_command,:diary_img,:diary_date,:server_id)";
+				$query_addDiary = query($sql_addDiary, array(
+					':diary_name' => $_POST['diary_name'],
+					':diary_command' => $_POST['diary_command'],
+					':diary_img' => $_POST['diary_img'],
+					':diary_date' => date_format(date_create(str_replace('/', '-', $_POST['diary_date'])), 'Y-m-d'),
+					':server_id' => $_POST['diary_server']
+				));
+
+				if($query_addDiary)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

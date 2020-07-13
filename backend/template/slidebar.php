@@ -55,6 +55,11 @@
           <i class="fa fa-tags"></i><span class="right-nav-text">จัดการหมวดหมู่</span>
         </a>  
       </li>
+      <li> 
+        <a href="?page=diary">
+          <i class="fa fa-calendar"></i><span class="right-nav-text">จัดการเช็คชื่อรายวัน</span>
+        </a>  
+      </li>
       <!-- menu title -->
       <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">ตั้งค่า Webshop</li>
       <!-- menu item Elements-->

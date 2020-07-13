@@ -56,3 +56,9 @@
 		}
 	}
 ?>
+
+<script type="text/javascript">
+	$('#diary_datepicker').datepicker({
+	    startDate: '-0d'
+	});
+</script>
