@@ -3108,3 +3108,110 @@ function delCode(id)
         }
     });
 }
+
+function editSettings()
+{
+    var elements_form = document.getElementById("frm_settingSite").elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var shop_name = submit[0];
+    var boardcast_message = submit[1];
+    var max_reg = submit[2];
+
+    if(shop_name == "" || shop_name == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกชื่อ Webshop",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(boardcast_message == "" || boardcast_message == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกข้อความที่จะประกาศ",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(max_reg == "0" || max_reg == "" || max_reg == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณา จำกัด IP/Account [สมัครสมาชิก] ให้ถูกต้อง",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=updateSettings",
+        data: "shop_name=" + shop_name + "&boardcast=" + boardcast_message + "&max_reg=" + max_reg,
+        success: function(data)
+        {
+           if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "ตั้งค่า Webshop เรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((okay_updateSettings) =>
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            } 
+        }
+    });
+}

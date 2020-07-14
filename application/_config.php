@@ -4,9 +4,7 @@
     date_default_timezone_set("Asia/Bangkok");
 	
 	$config = array(
-		'site' => 'http://localhost/WMinecraft',
-		'server_name' => 'WMinecraft',
-		'max_reg' => 1
+		'site' => 'http://localhost/WMinecraft'
 	);
 
 	#MYSQL Config

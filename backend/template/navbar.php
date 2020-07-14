@@ -15,7 +15,7 @@
     <li class="nav-item fullscreen">
       <a id="btnFullscreen" href="#" class="nav-link" ><i class="ti-fullscreen"></i></a>
     </li>
-    <li class="nav-item dropdown ">
+    <!-- <li class="nav-item dropdown ">
       <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="ti-bell"></i>
         <span class="badge badge-danger notification-status"> </span>
@@ -28,7 +28,7 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item">New registered user <small class="float-right text-muted time">Just now</small> </a>
       </div>
-    </li>
+    </li> -->
     <li class="nav-item dropdown mr-30">
       <a class="nav-link nav-pill user-avatar" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <img src="https://minotar.net/avatar/<?php echo $_SESSION['backend_realname']; ?>" alt="avatar">

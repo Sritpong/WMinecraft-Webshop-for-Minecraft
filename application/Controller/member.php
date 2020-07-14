@@ -1,7 +1,8 @@
 <?php
 	require_once("../_config.php");
 	require_once("../_pdo.php");
-	require_once("../_getPlayer.php");	
+	require_once("../_getPlayer.php");
+	require_once("../_getSettings.php");
 	require_once("../_getDetailDevice.php");
 
 	if(isset($_GET['func']))
@@ -111,7 +112,7 @@
 
 				$check_ip = query("SELECT * FROM authme WHERE ip = :ip",array(':ip' => $_SERVER['REMOTE_ADDR']));
 				$numrow_ip = $check_ip->rowcount();
-				if($numrow_ip > $config['max_reg'])
+				if($numrow_ip > $settings['settings_max_reg'])
 				{
 					echo '4';
 				}
