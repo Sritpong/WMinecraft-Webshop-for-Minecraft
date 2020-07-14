@@ -161,6 +161,118 @@
 			    }
     		}
 		}
+		elseif($g == 'topupTMN')
+		{
+    		if(!isset($_SESSION['uid']))
+    		{
+    			echo '6';
+    		}
+    		elseif(!is_numeric($_POST['truemoney_password']))
+    		{
+    			echo '7';
+    		}
+    		else
+    		{
+    			$sql_wallet = 'SELECT email,password,access_token FROM wallet_account WHERE id = 1';
+			    $query_wallet = query($sql_wallet);
+
+			    if($query_wallet->rowcount() == 1)
+			    {
+			    	$f_wallet = $query_wallet->fetch();
+			    	$wallet_email = $f_wallet['email'];
+			    	$wallet_password = $f_wallet['password'];
+			    	$wallet_access_token = $f_wallet['access_token'];
+			    }
+
+			    if($wallet_access_token == null || empty($wallet_access_token) || $wallet_access_token == "")
+			    {
+			    	echo '0';
+			    }
+			    elseif($_POST['truemoney_password'] == '' || empty($_POST['truemoney_password']) || $_POST['truemoney_password'] == null)
+			    {
+			    	echo '2';
+			    }
+			    else
+			    {
+		    		require_once(__DIR__ . '/../Wallet/_loginTW.php');
+					$tw_getstatus = new TrueWallet($wallet_email, $wallet_password);
+					$tw_getstatus->setAccessToken($wallet_access_token);
+					$data_getstatus = $tw_getstatus->GetProfile();
+					@$tw_card = $_POST['truemoney_password'];
+
+					if($data_getstatus["code"] == 'UPC-200')
+					{
+						require_once(__DIR__ . '/../Wallet/_truewallet.php');
+						$tw = new WalletAPI();
+						$token = $wallet_access_token;
+						$objtw = $tw->CashcardTopup($token, $tw_card);
+
+						if(isset($objtw['amount']))
+						{
+							$objtw_amount = $objtw['amount']; // จำนวนเงิน
+							$objtw_transactionId = $objtw['transactionId']; // หมายเลขอ้างอิง
+							$objtw_serverFee = $objtw['serviceFee']; // ภาษีที่โดนหัก
+							$objtw_cashcardPin = $objtw['cashcardPin']; // รหัสบัตรเงินสดทรูมันนี่
+							$objtw_createDate = $objtw['createDate']; // วันเวลาที่เติมเข้าสู่ระบบ
+
+							$sql_search = 'SELECT * FROM truemoney WHERE amount = "'.$objtw_amount.'"';
+		            		$query_search = query($sql_search);
+
+		            		if($query_search->num_rows != 0)
+		            		{
+		            			$fetch_search = $query_search->fetch_assoc();
+		            			$update_amount = $fetch_search['points'];
+		            		}
+		            		else
+		            		{
+		            			$update_amount = 0;
+		            		}
+
+		            		$sql_insertLogs = 'INSERT INTO refill_logs (refill_logs_transaction,refill_logs_amount,refill_type_id,user_id) VALUES (:refill_transaction,:refill_amount,:refill_type_id,:uid)';
+							$query_insertLogs = query($sql_insertLogs,array(
+								':refill_transaction' => $tw_card,
+								':refill_amount' => $objtw_amount,
+								':refill_type_id' => 2,
+								':uid' => $_SESSION['uid']
+							));
+							
+							if($query_insertLogs)
+							{
+								$sql_updatepoints = 'UPDATE authme SET points = points+:updatepoints WHERE id = :uid LIMIT 1';
+			            		$query_updatePoints = query($sql_updatepoints, array(
+			            			':updatepoints' => $objtw_amount
+			            		));
+
+			            		if($query_updatePoints)
+			            		{
+			            			echo '1'.'|'.$objtw_amount;
+			            		}
+			            		else
+			            		{
+			            			echo '3';
+			            		}
+							}
+		            		else
+		            		{
+		            			echo '9';
+		            		}
+						}
+						elseif($objtw['code'] == '-1')
+						{
+							echo '4';
+						}
+						else
+						{
+							echo '8';
+						}
+					}
+					else
+					{
+						echo '5|'.$data_getstatus["code"];
+					}
+			    }
+    		}
+		}
 	}
 	else
 	{

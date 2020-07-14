@@ -3215,3 +3215,91 @@ function editSettings()
         }
     });
 }
+
+function topupTMN()
+{
+    var tmn_password = $('#truemoney_password').val();
+    if(tmn_password == '')
+    {
+        toastr["error"]('กรุณากรอกรหัสบัตรทรูมันนี่ !');
+        return false;
+    }
+    else if(tmn_password.length <= 13)
+    {
+        toastr["error"]('กรุณากรอกรหัสบัตรทรูมันนี่ให้ถูกต้อง !');
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "application/Controller/wallet.php?func=topupTMN",
+        data: "truemoney_password=" + tmn_password,
+        beforeSend: function() {
+            document.getElementById("btn_topupTMN").disabled = true;
+            $("#btn_topupTMN").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            var res = data.split("|");
+
+            if(res[0] == 1)
+            {
+                document.getElementById("truemoney_password").value = "";
+
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "คุณได้ทำการเติมเงิน " + res[1] + " บาท",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_topupTMN) =>
+                {
+                    if(ok_topupTMN)
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            else if(res[0] == 2)
+            {
+                toastr["error"]('กรุณากรอกหมายเลขอ้างอิงให้ถูกต้อง !');
+            }
+            else if(res[0] == 0)
+            {
+                toastr["error"]('กรุณาตั้งค่าระบบเติมเงิน [Admin]');
+            }
+            else if(res[0] == 3)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดไม่ทราบสาเหตุ !');
+            }
+            else if(res[0] == 4)
+            {
+                toastr["error"]('เกิดข้อผิดพลาด รหัสบัตรเงินสดทรูมันนี่ไม่ถูกต้อง !');
+            }
+            else if(res[0] == 5)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการโหลดข้อมูลจาก Wallet !');
+            }
+            else if(res[0] == 6)
+            {
+                toastr["error"]('กรุณาเข้าสู่ระบบก่อนเติมเงิน !');
+            }
+            else if(res[0] == 7)
+            {
+                toastr["error"]('กรุณากรอกเฉพาะตัวเลขเท่านั้น !');
+            }
+            else if(res[0] == 8)
+            {
+                toastr["error"]('รหัสบัตรทรูมันนี่ถูกใช้งานแล้ว หรือ รหัสบัตรทรูมันนี่ผิด !');
+            }
+            else if(res[0] == 9)
+            {
+                toastr["error"]('เกิดข้อผิดพลาดในการบันทึกประวัติการเติมเงิน !');
+            }
+
+            document.getElementById("btn_topupTMN").disabled = false;
+            $("#btn_topupTMN").html('<i class="fa fa-slack"></i> เติมเงิน');
+        }
+    });
+}
