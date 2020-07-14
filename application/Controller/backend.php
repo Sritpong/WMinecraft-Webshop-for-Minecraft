@@ -399,7 +399,7 @@
 					{
 						$detail = $query_getDetail->fetch();
 
-						echo $detail['shop_name']."|".$detail['shop_img']."|".$detail['shop_command']."|".$detail['shop_price'];
+						echo $detail['shop_name']."|".$detail['shop_img']."|".$detail['shop_command']."|".$detail['shop_price']."|".$detail['shop_id'];
 					}
 				}
 			}
@@ -666,6 +666,53 @@
 				else
 				{
 					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'editShopItem')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if($_POST['item_id'] == "" || !isset($_POST['item_id']) || empty($_POST['item_id']) ||
+				$_POST['item_name'] == "" || !isset($_POST['item_name']) || empty($_POST['item_name']) || 
+				$_POST['item_img'] == "" || !isset($_POST['item_img']) || empty($_POST['item_img']) || 
+				$_POST['item_command'] == "" || !isset($_POST['item_command']) || empty($_POST['item_command']) || 
+				$_POST['item_price'] == "" || !isset($_POST['item_price']) || empty($_POST['item_price']) || 
+				$_POST['item_recommend'] == "" || !isset($_POST['item_recommend']) ||
+				$_POST['category_id'] == "" || !isset($_POST['category_id']) || empty($_POST['category_id']) || 
+				$_POST['server_id'] == "" || !isset($_POST['server_id']) || empty($_POST['server_id']) || 
+				!is_numeric($_POST['item_price']) || !is_numeric($_POST['category_id']) || !is_numeric($_POST['server_id']))
+				{
+					echo '0';
+				}
+				else
+				{
+					$sql_updateShopItem = "UPDATE shop SET shop_name = :shop_name, shop_img = :shop_img, ".
+					"shop_command = :shop_command, shop_price = :shop_price, shop_recommended = :shop_recommended, ".
+					"category_id = :category_id, server_id = :server_id WHERE shop_id = :shop_id";
+					$query_updateShopItem = query($sql_updateShopItem, array(
+						':shop_name' => $_POST['item_name'],
+						':shop_img' => $_POST['item_img'],
+						':shop_command' => $_POST['item_command'],
+						':shop_price' => $_POST['item_price'],
+						':shop_recommended' => $_POST['item_recommend'],
+						':category_id' => $_POST['category_id'],
+						':server_id' => $_POST['server_id'],
+						':shop_id' => $_POST['item_id']
+					));
+
+					if($query_updateShopItem)
+					{
+						echo '1';
+					}
+					else
+					{
+						echo '2';
+					}
 				}
 			}
 			else

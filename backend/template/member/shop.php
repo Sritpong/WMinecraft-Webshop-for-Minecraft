@@ -136,6 +136,7 @@
             ?>
           </select>
         </div>
+        <input id="edit_item_id" name="edit_item_id" type="hidden">
         <div class="col-12">
           <button id="btn_editShopItem" type="button" class="btn btn-outline-success btn-block" onclick="editShopItem()">แก้ไขสินค้า</button>
         </div>
