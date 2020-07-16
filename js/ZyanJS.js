@@ -368,7 +368,7 @@ function Topup()
             }
             else if(res[0] == 9)
             {
-                toastr["error"]('หมาบเลขอ้างอิงนี้ถูกใช้งานไปแล้ว !');
+                toastr["error"]('หมายเลขอ้างอิงนี้ถูกใช้งานไปแล้ว !');
             }
 
             document.getElementById("btn_topup").disabled = false;
