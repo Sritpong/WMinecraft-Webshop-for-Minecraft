@@ -783,6 +783,71 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'delWalletRP')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				$sql_delWalletRP = "DELETE FROM wallet_rp WHERE wallet_rp_id = :wallet_rp_id";
+				$query_delWalletRP = query($sql_delWalletRP, array(
+					':wallet_rp_id' => $_POST['id']
+				));
+
+				if($query_delWalletRP)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '0';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
+		elseif($g == 'addWalletRP')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(empty($_POST['points']) || $_POST['points'] == "" || 
+				empty($_POST['rp']) || $_POST['rp'] == "" || 
+				!is_numeric($_POST['points']) || !is_numeric($_POST['rp']))
+				{
+					exit('0');
+				}
+
+				$sql_checkWalletRP = "SELECT * FROM wallet_rp WHERE wallet_rp_topup = :wallet_rp_topup LIMIT 1";
+				$query_checkWalletRP = query($sql_checkWalletRP, array(
+					':wallet_rp_topup' => str_replace(',', '', number_format($_POST['points'], 2))
+				));
+
+				if($query_checkWalletRP->rowcount() > 0)
+				{
+					exit('3');
+				}
+
+				$sql_addWalletRP = "INSERT INTO wallet_rp (wallet_rp_topup,wallet_rp_reward) VALUES ".
+				"(:wallet_rp_topup,:wallet_rp_reward)";
+				$query_addWalletRP = query($sql_addWalletRP, array(
+					':wallet_rp_topup' => $_POST['points'],
+					':wallet_rp_reward' => $_POST['rp']
+				));
+
+				if($query_addWalletRP)
+				{
+					echo '1';
+				}
+				else
+				{
+					echo '2';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

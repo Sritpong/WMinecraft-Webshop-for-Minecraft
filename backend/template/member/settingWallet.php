@@ -106,7 +106,7 @@
               while($walletRP = $query_walletRP->fetch())
               {
                 ?>
-                  <tr>
+                  <tr id="walletRP_tr_<?php echo $walletRP['wallet_rp_id']; ?>">
                     <td>
                       <?php echo $walletRP['wallet_rp_id']; ?>
                     </td>
@@ -117,7 +117,7 @@
                       <?php echo $walletRP['wallet_rp_reward']; ?>
                     </td>
                     <td>
-                      <button class="btn btn-outline-danger" onclick="delServer(<?php echo $walletRP['wallet_rp_id']; ?>)">
+                      <button class="btn btn-outline-danger" onclick="delWaleltRP(<?php echo $walletRP['wallet_rp_id']; ?>)">
                         ลบ #<?php echo $walletRP['wallet_rp_id']; ?>
                       </button>
                   </tr>
