@@ -11,7 +11,7 @@
  Target Server Version : 100411
  File Encoding         : 65001
 
- Date: 11/07/2020 20:42:56
+ Date: 17/07/2020 01:55:23
 */
 
 SET NAMES utf8mb4;
@@ -40,6 +40,7 @@ CREATE TABLE `authme`  (
   `yaw` float NULL DEFAULT NULL,
   `pitch` float NULL DEFAULT NULL,
   `points` decimal(64, 2) NOT NULL DEFAULT 0,
+  `rp` decimal(64, 2) NOT NULL DEFAULT 0,
   `wm_rank_id` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
@@ -67,7 +68,7 @@ CREATE TABLE `backend_login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `backend_login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `backend_login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of backend_login_logs
@@ -93,7 +94,7 @@ CREATE TABLE `backpack`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `backpack_ibfk_1` FOREIGN KEY (`server_id`) REFERENCES `server` (`server_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `backpack_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of backpack
@@ -108,7 +109,7 @@ CREATE TABLE `category`  (
   `category_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of category
@@ -130,7 +131,7 @@ CREATE TABLE `code`  (
   PRIMARY KEY (`code_id`) USING BTREE,
   INDEX `server_id`(`server_id`) USING BTREE,
   CONSTRAINT `code_ibfk_1` FOREIGN KEY (`server_id`) REFERENCES `server` (`server_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of code
@@ -150,7 +151,7 @@ CREATE TABLE `code_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `code_logs_ibfk_1` FOREIGN KEY (`code_id`) REFERENCES `code` (`code_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `code_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of code_logs
@@ -171,7 +172,7 @@ CREATE TABLE `diary`  (
   PRIMARY KEY (`diary_id`) USING BTREE,
   INDEX `server_id`(`server_id`) USING BTREE,
   CONSTRAINT `diary_ibfk_1` FOREIGN KEY (`server_id`) REFERENCES `server` (`server_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of diary
@@ -191,7 +192,7 @@ CREATE TABLE `diary_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `diary_logs_ibfk_1` FOREIGN KEY (`diary_id`) REFERENCES `diary` (`diary_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `diary_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of diary_logs
@@ -213,7 +214,7 @@ CREATE TABLE `login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of login_logs
@@ -227,7 +228,7 @@ CREATE TABLE `login_logs_status`  (
   `login_logs_status_id` int NOT NULL AUTO_INCREMENT,
   `login_logs_status_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`login_logs_status_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of login_logs_status
@@ -248,7 +249,7 @@ CREATE TABLE `randombox`  (
   `randombox_status` int NULL DEFAULT 1 COMMENT '0 = ปิดใช้งาน , 1 = เปิดใช้งาน',
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`randombox_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of randombox
@@ -272,7 +273,7 @@ CREATE TABLE `randombox_item`  (
   INDEX `server_id`(`server_id`) USING BTREE,
   CONSTRAINT `randombox_item_ibfk_1` FOREIGN KEY (`randombox_id`) REFERENCES `randombox` (`randombox_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `randombox_item_ibfk_2` FOREIGN KEY (`server_id`) REFERENCES `server` (`server_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of randombox_item
@@ -286,6 +287,8 @@ CREATE TABLE `refill_logs`  (
   `refill_logs_id` int NOT NULL AUTO_INCREMENT,
   `refill_logs_transaction` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `refill_logs_amount` decimal(64, 2) NOT NULL,
+  `refill_logs_receive` decimal(64, 2) NOT NULL,
+  `refill_logs_rp` decimal(64, 2) NOT NULL DEFAULT 0,
   `refill_type_id` int NOT NULL,
   `user_id` int NOT NULL,
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
@@ -294,7 +297,7 @@ CREATE TABLE `refill_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `refill_logs_ibfk_1` FOREIGN KEY (`refill_type_id`) REFERENCES `refill_type` (`refill_type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `refill_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of refill_logs
@@ -309,7 +312,7 @@ CREATE TABLE `refill_type`  (
   `refill_type_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`refill_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of refill_type
@@ -336,7 +339,7 @@ CREATE TABLE `report`  (
   INDEX `report_uid_person`(`report_uid_person`) USING BTREE,
   CONSTRAINT `report_ibfk_1` FOREIGN KEY (`report_uid_reporter`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `report_ibfk_2` FOREIGN KEY (`report_uid_person`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of report
@@ -354,7 +357,7 @@ CREATE TABLE `server`  (
   `server_password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`server_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of server
@@ -372,12 +375,12 @@ CREATE TABLE `settings`  (
   `settings_boardcast_status` int NOT NULL DEFAULT 1 COMMENT '1 = เปิด, 0 = ปิด',
   `settings_max_reg_status` int NOT NULL DEFAULT 1 COMMENT '1 = เปิด, 0 = ปิด',
   PRIMARY KEY (`settings_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of settings
 -- ----------------------------
-INSERT INTO `settings` VALUES (1, 'WMinecraft', 'ประกาศนะครับ', 1, 1, 1);
+INSERT INTO `settings` VALUES (1, 'WMinecraft', 'WMinecraft ระบบ 100%', 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for shop
@@ -398,7 +401,7 @@ CREATE TABLE `shop`  (
   INDEX `server_id`(`server_id`) USING BTREE,
   CONSTRAINT `shop_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `shop_ibfk_2` FOREIGN KEY (`server_id`) REFERENCES `server` (`server_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop
@@ -418,11 +421,34 @@ CREATE TABLE `shop_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `shop_logs_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `shop_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_logs
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for truemoney
+-- ----------------------------
+DROP TABLE IF EXISTS `truemoney`;
+CREATE TABLE `truemoney`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `amount` int NOT NULL,
+  `points` decimal(64, 2) NOT NULL,
+  `rp` decimal(64, 2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of truemoney
+-- ----------------------------
+INSERT INTO `truemoney` VALUES (1, 20, 20.00, 0.00);
+INSERT INTO `truemoney` VALUES (2, 50, 50.00, 0.00);
+INSERT INTO `truemoney` VALUES (3, 90, 90.00, 0.00);
+INSERT INTO `truemoney` VALUES (4, 150, 150.00, 0.00);
+INSERT INTO `truemoney` VALUES (5, 300, 300.00, 0.00);
+INSERT INTO `truemoney` VALUES (6, 500, 500.00, 0.00);
+INSERT INTO `truemoney` VALUES (7, 1000, 1000.00, 0.00);
 
 -- ----------------------------
 -- Table structure for wallet_account
@@ -435,13 +461,30 @@ CREATE TABLE `wallet_account`  (
   `phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `access_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mutiple` decimal(64, 1) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of wallet_account
 -- ----------------------------
-INSERT INTO `wallet_account` VALUES (1, 'example@domain.com', 'P@ssword', '', '', '');
+INSERT INTO `wallet_account` VALUES (1, 'example@domain.com', 'P@ssw0rd', '', '', '', 1.0);
+
+-- ----------------------------
+-- Table structure for wallet_rp
+-- ----------------------------
+DROP TABLE IF EXISTS `wallet_rp`;
+CREATE TABLE `wallet_rp`  (
+  `wallet_rp_id` int NOT NULL AUTO_INCREMENT,
+  `wallet_rp_topup` decimal(64, 2) NOT NULL,
+  `wallet_rp_reward` decimal(64, 2) NOT NULL,
+  `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
+  PRIMARY KEY (`wallet_rp_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wallet_rp
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for wm_rank
@@ -452,7 +495,7 @@ CREATE TABLE `wm_rank`  (
   `wm_rank_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`wm_rank_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wm_rank
