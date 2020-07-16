@@ -46,7 +46,7 @@
     		}
     		else
     		{
-    			$sql_wallet = 'SELECT email,password,access_token FROM wallet_account WHERE id = 1';
+    			$sql_wallet = 'SELECT email,password,access_token,mutiple FROM wallet_account WHERE id = 1';
 			    $query_wallet = query($sql_wallet);
 
 			    if($query_wallet->rowcount() == 1)
@@ -55,6 +55,7 @@
 			    	$wallet_email = $f_wallet['email'];
 			    	$wallet_password = $f_wallet['password'];
 			    	$wallet_access_token = $f_wallet['access_token'];
+			    	$wallet_mutiple = $f_wallet['mutiple'];
 			    }
 
 			    if($wallet_access_token == null || empty($wallet_access_token) || $wallet_access_token == "")
@@ -128,12 +129,42 @@
 
 							if(isset($fti_u) && $fti_u == $_POST['transaction_wallet'])
 							{
-								$sql_insertLogs = 'INSERT INTO refill_logs (refill_logs_transaction,refill_logs_amount,refill_type_id,user_id) VALUES (:refill_transaction,:refill_amount,:refill_type_id,:uid)';
-								$query_insertLogs = query($sql_insertLogs,array(':refill_transaction' => $fti_u,':refill_amount' => $ftam_u, ':refill_type_id' => 1, ':uid' => $_SESSION['uid']));
+								$points_receive = $ftam_u*$wallet_mutiple;
+
+								$sql_searchRP = "SELECT * FROM wallet_rp WHERE wallet_rp_topup = :wallet_topup LIMIT 1";
+								$query_searchRP = query($sql_searchRP, array(
+									':wallet_topup' => number_format($ftam_u, 2)
+								));
+
+								if($query_searchRP->rowcount() > 0)
+								{
+									$searchRP = $query_searchRP->fetch();
+									$updateRP = $searchRP['wallet_rp_reward'];
+								}
+								else
+								{
+									$updateRP = 0;
+								}
+
+								$sql_insertLogs = 'INSERT INTO refill_logs (refill_logs_transaction,refill_logs_amount,refill_logs_receive,refill_logs_rp,refill_type_id,user_id) VALUES (:refill_transaction,:refill_amount,:refill_logs_receive,:refill_logs_rp,:refill_type_id,:uid)';
+								$query_insertLogs = query($sql_insertLogs,array(
+									':refill_transaction' => $fti_u,
+									':refill_amount' => $ftam_u,
+									':refill_logs_receive' => $points_receive,
+									':refill_logs_rp' => $updateRP,
+									':refill_type_id' => 1,
+									':uid' => $_SESSION['uid']
+								));
+
 								if($query_insertLogs)
 								{
-									$sql_updatePoints = 'UPDATE authme SET points = points+:updatepoints WHERE id = :uid LIMIT 1';
-									$query_updatePoints = query($sql_updatePoints,array(':updatepoints' => $ftam_u, ':uid' => $_SESSION['uid']));
+									$sql_updatePoints = 'UPDATE authme SET points = points+:updatepoints, rp = rp+:updateRP WHERE id = :uid LIMIT 1';
+									$query_updatePoints = query($sql_updatePoints,array(
+										':updatepoints' => $points_receive,
+										':updateRP' => $updateRP,
+										':uid' => $_SESSION['uid']
+									));
+
 									if($query_updatePoints)
 									{
 										echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
@@ -222,16 +253,22 @@
 		            		{
 		            			$fetch_search = $query_search->fetch_assoc();
 		            			$update_amount = $fetch_search['points'];
+		            			$updateRpTMN = $fetch_search['rp'];
 		            		}
 		            		else
 		            		{
 		            			$update_amount = 0;
+		            			$updateRpTMN = 0;
 		            		}
 
-		            		$sql_insertLogs = 'INSERT INTO refill_logs (refill_logs_transaction,refill_logs_amount,refill_type_id,user_id) VALUES (:refill_transaction,:refill_amount,:refill_type_id,:uid)';
+		            		$sql_insertLogs = 'INSERT INTO refill_logs (refill_logs_transaction,refill_logs_amount,'.
+		            		'refill_logs_receive,refill_logs_rp,refill_type_id,user_id) '.
+		            		'VALUES (:refill_transaction,:refill_amount,:refill_receive,:refill_rp,:refill_type_id,:uid)';
 							$query_insertLogs = query($sql_insertLogs,array(
 								':refill_transaction' => $tw_card,
 								':refill_amount' => $objtw_amount,
+								':refill_receive' => $update_amount,
+								':refill_rp' => $updateRpTMN,
 								':refill_type_id' => 2,
 								':uid' => $_SESSION['uid']
 							));
@@ -240,12 +277,12 @@
 							{
 								$sql_updatepoints = 'UPDATE authme SET points = points+:updatepoints WHERE id = :uid LIMIT 1';
 			            		$query_updatePoints = query($sql_updatepoints, array(
-			            			':updatepoints' => $objtw_amount
+			            			':updatepoints' => $update_amount
 			            		));
 
 			            		if($query_updatePoints)
 			            		{
-			            			echo '1'.'|'.$objtw_amount;
+			            			echo '1'.'|'.number_format($objtw_amount, 2);
 			            		}
 			            		else
 			            		{

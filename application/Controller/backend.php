@@ -122,12 +122,14 @@
 		{
 			if(isset($_SESSION['backend_uid']))
 			{
-				if(!empty($_POST['email']) && !empty($_POST['password']))
+				if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['mutiple']))
 				{
-					$sql_updateWalletAcc = "UPDATE wallet_account SET email = :email, password = :password WHERE id = 1";
+					$sql_updateWalletAcc = "UPDATE wallet_account SET email = :email, password = :password, ".
+					"mutiple = :mutiple WHERE id = 1";
 					$query_updateWalletAcc = query($sql_updateWalletAcc, array(
 						':email' => $_POST['email'],
-						':password' => $_POST['password']
+						':password' => $_POST['password'],
+						':mutiple' => $_POST['mutiple']
 					));
 
 					if($query_updateWalletAcc)

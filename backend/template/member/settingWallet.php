@@ -22,14 +22,20 @@
           </label>
           <input name="password_wallet" id="password_wallet" type="password" class="web form-control" placeholder="กรุณากรอก Password" value="<?php echo $detailWallet['password']; ?>">
         </div>
-        <div class="section-field col-6 mb-20">
+        <div class="section-field col-2 mb-20">
+          <label class="mb-10" for="mutiple_wallet">
+            Mutiple
+          </label>
+          <input name="mutiple_wallet" id="mutiple_wallet" type="text" class="web form-control" placeholder="กรุณากรอกจำนวนการคูณ" value="<?php echo $detailWallet['mutiple']; ?>">
+        </div>
+        <div class="section-field col-4 mb-20">
           <label class="mb-10" for="phone_wallet">
             Phone number
           </label>
           <input name="phone_wallet" id="phone_wallet" type="text" class="web form-control" value="<?php echo $detailWallet['phone']; ?>" readonly>
         </div>
         <div class="section-field col-6 mb-20">
-          <label class="mb-10" for="token_wallet">
+          <label class="mb-10" for="name_wallet">
             Name
           </label>
           <input name="name_wallet" id="name_wallet" type="text" class="web form-control" value="<?php echo $detailWallet['name']; ?>" readonly>

@@ -789,6 +789,7 @@ function EditWalletAccount()
 {
     var email = $('#email_wallet').val();
     var password = $('#password_wallet').val();
+    var mutiple = $('#mutiple_wallet').val();
 
     if(email == "" || email == undefined)
     {
@@ -802,7 +803,8 @@ function EditWalletAccount()
 
         return false;
     }
-    else if(password == "" || password == undefined)
+
+    if(password == "" || password == undefined)
     {
         swal(
         {
@@ -815,10 +817,28 @@ function EditWalletAccount()
         return false;
     }
 
+    if(mutiple == "" || mutiple == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกช่อง Mutiple (จำนวนการคูณเวลาเติมเงิน)",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+    if(mutiple == "0")
+    {
+        mutiple = "1";
+    }
+
+
     $.ajax({
         type: "POST",
         url: "../application/Controller/backend.php?func=EditWalletSetting",
-        data: "email=" + email + "&password=" + password,
+        data: "email=" + email + "&password=" + password + "&mutiple=" + mutiple,
         beforeSend: function() {
             document.getElementById("walletSetting_btn").disabled = true;
             $("#walletSetting_btn").html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
@@ -857,7 +877,7 @@ function EditWalletAccount()
                 swal(
                 {
                     title: "เกิดข้อผิดพลาด !",
-                    text: "กรุณากรอก Email หรือ Password",
+                    text: "กรุณากรอก Email, Password หรือ จำนวนการคูณเวลาเติมเงิน",
                     icon: "error",
                     button: true,
                 });

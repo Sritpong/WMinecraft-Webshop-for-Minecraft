@@ -3,6 +3,8 @@
   " refill_logs.refill_logs_id,\n".
   " refill_logs.refill_logs_transaction,\n".
   " refill_logs.refill_logs_amount,\n".
+  " refill_logs.refill_logs_receive,\n".
+  " refill_logs.refill_logs_rp,\n".
   " refill_logs.time_reg,\n".
   " authme.realname,\n".
   " refill_type.refill_type_name\n".
@@ -35,6 +37,8 @@
             <th>ระบบ</th>
             <th>หมายเลขอ้างอิง</th>
             <th>จำนวน (บาท)</th>
+            <th>จำนวนที่ได้รับ (Points)</th>
+            <th>RP ที่ได้รับ</th>
             <th>วันเวลา</th>
         </tr>
       </thead>
@@ -44,7 +48,7 @@
           {
             ?>
               <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="8" class="text-center">
                   ยังไม่มีประวัติการเติมเงิน
                 </td>
               </tr>
@@ -52,27 +56,33 @@
           }
           else
           {
-            while($reillLogs = $query_refillLogs->fetch())
+            while($refillLogs = $query_refillLogs->fetch())
             {
               ?>
                 <tr>
                   <td>
-                    <?php echo $reillLogs['refill_logs_id']; ?>
+                    <?php echo $refillLogs['refill_logs_id']; ?>
                   </td>
                   <td>
-                    <?php echo $reillLogs['realname']; ?>
+                    <?php echo $refillLogs['realname']; ?>
                   </td>
                   <td>
-                    <?php echo $reillLogs['refill_type_name']; ?>
+                    <?php echo $refillLogs['refill_type_name']; ?>
                   </td>
                   <td>
-                    <?php echo $reillLogs['refill_logs_transaction']; ?>
+                    <?php echo $refillLogs['refill_logs_transaction']; ?>
                   </td>
                   <td>
-                    <?php echo $reillLogs['refill_logs_amount']; ?>
+                    <?php echo $refillLogs['refill_logs_amount']; ?>
                   </td>
                   <td>
-                    <?php echo $reillLogs['time_reg']; ?>
+                    <?php echo $refillLogs['refill_logs_receive']; ?>
+                  </td>
+                  <td>
+                    <?php echo $refillLogs['refill_logs_rp']; ?>
+                  </td>
+                  <td>
+                    <?php echo $refillLogs['time_reg']; ?>
                   </td>
                 </tr>
               <?php
