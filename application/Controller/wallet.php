@@ -133,7 +133,7 @@
 
 								$sql_searchRP = "SELECT * FROM wallet_rp WHERE wallet_rp_topup = :wallet_topup LIMIT 1";
 								$query_searchRP = query($sql_searchRP, array(
-									':wallet_topup' => number_format($ftam_u, 2)
+									':wallet_topup' => str_replace(',', '', number_format($ftam_u, 2))
 								));
 
 								if($query_searchRP->rowcount() > 0)

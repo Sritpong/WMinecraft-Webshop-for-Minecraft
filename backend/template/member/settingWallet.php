@@ -58,5 +58,132 @@
         </div>
       </div>
     </form>
+    <h3 class="mt-3">Wallet Reward Points</h3>
+    <hr/>
+    <form id="frm_addWalletRP" name="frm_addWalletRP" method="POST">
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="wallet_rp_topup">เมื่อเติม (บาท)</label>
+          <input type="text" class="form-control" required id="wallet_rp_topup" name="wallet_rp_topup">
+        </div>
+        <div class="form-group col-6">
+          <label for="wallet_rp_receive">ได้รับ (RP)</label>
+          <input type="text" class="form-control" required id="wallet_rp_receive" name="wallet_rp_receive">
+        </div>
+        <div class="col-12">
+          <button id="btn_addServer" type="button" class="btn btn-outline-success btn-block" onclick="addWalletRP()">
+            เพิ่ม
+          </button>
+        </div>
+      </div>
+    </form>
+    <table id="wallet_rp_table" class="table table-striped nowrap table-sm" style="width:100%;">
+      <thead>
+        <tr>
+            <th>ลำดับ</th>
+            <th>เติม (บาท)</th>
+            <th>ได้รับ (RP)</th>
+            <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          $sql_walletRP = "SELECT * FROM wallet_rp";
+          $query_walletRP = query($sql_walletRP);
+
+            if($query_walletRP->rowcount() <= 0)
+            {
+              ?>
+                <tr>
+                  <td colspan="4" class="text-center">
+                    ยังไม่มียอดที่ได้รับ RP
+                  </td>
+                </tr>
+              <?php
+            }
+            else
+            {
+              while($walletRP = $query_walletRP->fetch())
+              {
+                ?>
+                  <tr>
+                    <td>
+                      <?php echo $walletRP['wallet_rp_id']; ?>
+                    </td>
+                    <td>
+                      <?php echo $walletRP['wallet_rp_topup']; ?>
+                    </td>
+                    <td>
+                      <?php echo $walletRP['wallet_rp_reward']; ?>
+                    </td>
+                    <td>
+                      <button class="btn btn-outline-danger" onclick="delServer(<?php echo $walletRP['wallet_rp_id']; ?>)">
+                        ลบ #<?php echo $walletRP['wallet_rp_id']; ?>
+                      </button>
+                  </tr>
+                <?php
+              }
+            }
+        ?>
+      </tbody>
+    </table>
+    <h3 class="mt-3">TrueMoney Reward Points</h3>
+    <hr/>
+    <table id="truemoney_table" class="table table-striped nowrap table-sm" style="width:100%;">
+      <thead>
+        <tr>
+            <th>ลำดับ</th>
+            <th>เมื่อเติม (บาท)</th>
+            <th>ได้รับ (Points)</th>
+            <th>ได้รับ (RP)</th>
+            <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          $sql_truemoney = "SELECT * FROM truemoney";
+          $query_truemoney = query($sql_truemoney);
+
+            if($query_truemoney->rowcount() <= 0)
+            {
+              ?>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    ยังไม่มียอดของ TrueMoney
+                  </td>
+                </tr>
+              <?php
+            }
+            else
+            {
+              while($truemoney = $query_truemoney->fetch())
+              {
+                ?>
+                  <form name="frm_editTruemoney_<?php echo $truemoney['id']; ?>" id="frm_editTruemoney_<?php echo $truemoney['id']; ?>" method="POST" action="javascript:void(0);" autocomplete="off">
+                    <tr>
+                      <td>
+                        <?php echo $truemoney['id']; ?>
+                      </td>
+                      <td>
+                        <?php echo $truemoney['amount']; ?>
+                      </td>
+                      <td>
+                        <input name="editTruemoney_points_<?php echo $truemoney['id']; ?>" id="editTruemoney_points_<?php echo $truemoney['id']; ?>" type="text" class="web form-control" value="<?php echo $truemoney['points']; ?>">
+                      </td>
+                      <td>
+                        <input name="editTruemoney_rp_<?php echo $truemoney['id']; ?>" id="editTruemoney_rp_<?php echo $truemoney['id']; ?>" type="text" class="web form-control" value="<?php echo $truemoney['rp']; ?>">
+                      </td>
+                      <td>
+                        <button id="btn_editTruemoney_<?php echo $truemoney['id']; ?>" class="btn btn-outline-success" onclick="editTruemoney(<?php echo $truemoney['id']; ?>)">
+                          แก้ไข #<?php echo $truemoney['id']; ?>
+                        </button>
+                    </tr>
+                  </form>
+                <?php
+              }
+            }
+        ?>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -740,6 +740,49 @@
 				echo '500';
 			}
 		}
+		elseif($g == 'editTruemoney')
+		{
+			if(isset($_SESSION['backend_uid']))
+			{
+				if(empty($_POST['id']) || !isset($_POST['id']) || $_POST['id'] == "")
+				{
+					exit('4');
+				}
+
+				if(empty($_POST['points']) || !is_numeric($_POST['points']))
+				{
+					exit('0');
+				}
+
+				if(empty($_POST['rp']) || !is_numeric($_POST['rp']))
+				{
+					exit('1');
+				}
+
+				$points = str_replace(',', '', number_format($_POST['points'], 2));
+				$rp = str_replace(',', '', number_format($_POST['rp'], 2));
+
+				$sql_updateTruemoney = "UPDATE truemoney SET points = :points, rp = :rp WHERE id = :id";
+				$query_updateTruemoney = query($sql_updateTruemoney, array(
+					':points' => $_POST['points'],
+					':rp' => $_POST['rp'],
+					':id' => $_POST['id']
+				));
+
+				if($query_updateTruemoney)
+				{
+					echo '2';
+				}
+				else
+				{
+					echo '3';
+				}
+			}
+			else
+			{
+				echo '500';
+			}
+		}
 	}
 	else
 	{

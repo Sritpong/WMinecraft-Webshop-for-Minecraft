@@ -3323,3 +3323,133 @@ function topupTMN()
         }
     });
 }
+
+function editTruemoney(id)
+{
+    var elements_form = document.getElementById("frm_editTruemoney_" + id).elements;
+    var submit = [];
+    for(var i = 0 ; i < elements_form.length; i++)
+    {
+        var item = elements_form.item(i);
+        submit.push(item.value);
+    }
+
+    var points = submit[0];
+    var rp = submit[1];
+
+    if(points == "" || points == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอกพ้อยท์ที่จะได้รับ",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    if(rp == "" || rp == undefined)
+    {
+        swal(
+        {
+            title: "เกิดข้อผิดพลาด !",
+            text: "กรุณากรอก RP ที่จะได้รับ",
+            icon: "error",
+            button: true,
+        });
+
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../application/Controller/backend.php?func=editTruemoney",
+        data: "id=" + id + "&points=" + points + "&rp=" + rp,
+        beforeSend: function() {
+            document.getElementById("btn_editTruemoney_" + id).disabled = true;
+            $("#btn_editTruemoney_" + id).html('<i class="fa fa-spinner fa-spin fa-lg"></i> กรุณารอสักครู่...');
+        },
+        success: function(data)
+        {
+            if(data == 0)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอกช่องพ้อยท์ที่จะได้รับ หากเป็น 0 ให้กรอก 0.00",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 1)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณากรอกช่อง RP ที่จะได้รับ หากเป็น 0 ให้กรอก 0.00",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 2)
+            {
+                swal(
+                {
+                    title: "สำเร็จ !",
+                    text: "แก้ไขเรียบร้อยแล้ว",
+                    icon: "success",
+                    button: true,
+                })
+                .then((ok_editTruemoney) => 
+                {
+                    location.reload();
+                });
+            }
+            else if(data == 3)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 4)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else if(data == 500)
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "กรุณาเข้าสู่ระบบก่อน",
+                    icon: "error",
+                    button: true,
+                });
+            }
+            else
+            {
+                swal(
+                {
+                    title: "เกิดข้อผิดพลาด !",
+                    text: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
+                    icon: "error",
+                    button: true,
+                });
+            }
+
+            document.getElementById("btn_editTruemoney_" + id).disabled = false;
+            $("#btn_editTruemoney_" + id).html('แก้ไข #' + id);
+        }
+    });
+}
