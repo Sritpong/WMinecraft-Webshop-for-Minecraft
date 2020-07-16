@@ -15,6 +15,7 @@
 						<div class="col-12 col-md-6 col-xs-12 text-center">
 							Player: <b><?php echo $player['realname']; ?></b>
 							<div id="player_points">Points: <b><?php echo number_format($player['points'], 2); ?></b></div>
+							<div id="player_rp">RP: <b><?php echo number_format($player['rp'], 2); ?></b></div>
 							<?php
 								if(isset($chkPlayerOnline) && $chkPlayerOnline == true)
 								{
