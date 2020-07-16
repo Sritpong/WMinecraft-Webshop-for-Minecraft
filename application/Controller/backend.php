@@ -9,14 +9,6 @@
 
 		if($g == 'login')
 		{
-			function slug($str)
-			{
-				//$str = strtolower(trim($str));
-				$str = preg_replace('/[^A-Za-z0-9-]/', '-', $str);
-				$str = preg_replace('/-+/', " ", $str);
-				return $str;
-			}
-
 			$username = $_POST['username'];
 			$sql = "SELECT authme.*, wm_rank.wm_rank_name FROM\n".
 			"(\n".
@@ -26,7 +18,7 @@
 			"(\n".
 			"	SELECT * FROM wm_rank\n".
 			") AS wm_rank ON (wm_rank.wm_rank_id = authme.wm_rank_id)";
-			$a = query($sql,array(':username' => slug($username)));
+			$a = query($sql,array(':username' => $username));
 			$a_num = $a->rowcount();
 			if($a_num == 1)
 			{
@@ -44,8 +36,8 @@
 
 						//* SET SESSION
 						$_SESSION['backend_uid'] = $password_info['id'];
-						$_SESSION['backend_username'] = slug($password_info['username']);
-						$_SESSION['backend_realname'] = slug($password_info['realname']);
+						$_SESSION['backend_username'] = $password_info['username'];
+						$_SESSION['backend_realname'] = $password_info['realname'];
 						$_SESSION['backend_rankname'] = $password_info['wm_rank_name'];
 
 						echo '1';
