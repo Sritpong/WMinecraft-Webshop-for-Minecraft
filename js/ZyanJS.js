@@ -372,7 +372,7 @@ function Topup()
             }
 
             document.getElementById("btn_topup").disabled = false;
-            $("#btn_topup").html('<i class="fa fa-slack"></i> เติมเงิน');
+            $("#btn_topup").html('<i class="fa fa-slack"></i> เติมด้วย TrueWallet');
         }
     });
 }
@@ -3319,7 +3319,7 @@ function topupTMN()
             }
 
             document.getElementById("btn_topupTMN").disabled = false;
-            $("#btn_topupTMN").html('<i class="fa fa-slack"></i> เติมเงิน');
+            $("#btn_topupTMN").html('<i class="fa fa-slack"></i> เติมด้วย TrueMoney');
         }
     });
 }
