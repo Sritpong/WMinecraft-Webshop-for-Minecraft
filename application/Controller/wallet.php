@@ -46,6 +46,9 @@
     		}
     		else
     		{
+    			$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
+				$query_getSettings = query($sql_getSettings);
+
     			$sql_wallet = 'SELECT email,password,access_token,mutiple FROM wallet_account WHERE id = 1';
 			    $query_wallet = query($sql_wallet);
 
@@ -169,9 +172,6 @@
 									{
 										echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
 
-										$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
-										$query_getSettings = query($sql_getSettings);
-
 										if($query_getSettings->rowcount() > 0)
 										{
 											$getSettings = $query_getSettings->fetch();
@@ -248,6 +248,9 @@
 			    }
 			    else
 			    {
+			    	$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
+					$query_getSettings = query($sql_getSettings);
+					
 		    		require_once(__DIR__ . '/../Wallet/_loginTW.php');
 					$tw_getstatus = new TrueWallet($wallet_email, $wallet_password);
 					$tw_getstatus->setAccessToken($wallet_access_token);
@@ -306,9 +309,6 @@
 			            		if($query_updatePoints)
 			            		{
 			            			echo '1'.'|'.number_format($objtw_amount, 2);
-
-			            			$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
-									$query_getSettings = query($sql_getSettings);
 
 									if($query_getSettings->rowcount() > 0)
 									{
