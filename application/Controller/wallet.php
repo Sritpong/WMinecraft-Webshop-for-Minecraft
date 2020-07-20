@@ -1,5 +1,5 @@
 <?php
-	use Maythiwat\WalletAPI;
+	use WMinecraft\WalletAPI;
 	require_once("../_config.php");
 	require_once("../_pdo.php");
 
@@ -168,6 +168,29 @@
 									if($query_updatePoints)
 									{
 										echo '2|'.number_format($ftam_u, 2).'|'.$ftphone_u;
+
+										$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
+										$query_getSettings = query($sql_getSettings);
+
+										if($query_getSettings->rowcount() > 0)
+										{
+											$getSettings = $query_getSettings->fetch();
+
+											if($getSettings['settings_line_token'] != "")
+											{
+												require_once(__DIR__ . "/../_lineModel.php");
+												$line = new Line_Notify();
+												$line->setToken($getSettings['settings_line_token']);
+
+												$line->setMsg('==== '.$getSettings['settings_shop_name'].' ====');
+												$line->addMsg('ผู้เล่น '.$_SESSION['realname'].' ได้ทำการเติมเงิน');
+												$line->addMsg('ด้วยระบบ TrueWallet');
+												$line->addMsg('เลขอ้างอิง: '. $fti_u);
+												$line->addMsg('จำนวน: '. number_format($ftam_u, 2) .' บาท');
+
+												$line->sendNotify();
+											}
+										}
 									}
 									else
 									{
@@ -283,6 +306,29 @@
 			            		if($query_updatePoints)
 			            		{
 			            			echo '1'.'|'.number_format($objtw_amount, 2);
+
+			            			$sql_getSettings = "SELECT settings_id,settings_shop_name,settings_line_token FROM settings WHERE settings_id = 1";
+									$query_getSettings = query($sql_getSettings);
+
+									if($query_getSettings->rowcount() > 0)
+									{
+										$getSettings = $query_getSettings->fetch();
+
+										if($getSettings['settings_line_token'] != "")
+										{
+											require_once(__DIR__ . "/../_lineModel.php");
+											$line = new Line_Notify();
+											$line->setToken($getSettings['settings_line_token']);
+
+											$line->setMsg('==== '.$getSettings['settings_shop_name'].' ====');
+											$line->addMsg('ผู้เล่น '.$_SESSION['realname'].' ได้ทำการเติมเงิน');
+											$line->addMsg('ด้วยระบบ TrueMoney');
+											$line->addMsg('รหัสบัตรทรูมันนี่: '. $tw_card);
+											$line->addMsg('จำนวน: '. number_format($objtw_amount, 2) .' บาท');
+
+											$line->sendNotify();
+										}
+									}
 			            		}
 			            		else
 			            		{
