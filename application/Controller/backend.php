@@ -719,11 +719,12 @@
 			if(isset($_SESSION['backend_uid']))
 			{
 				$sql_updateSettings = "UPDATE settings SET settings_shop_name = :shop_name, settings_boardcast = :boardcast, ".
-				"settings_max_reg = :max_reg WHERE settings_id = 1";
+				"settings_max_reg = :max_reg, settings_line_token = :line_token WHERE settings_id = 1";
 				$query_updateSettings = query($sql_updateSettings, array(
 					':shop_name' => $_POST['shop_name'],
 					':boardcast' => $_POST['boardcast'],
-					':max_reg' => $_POST['max_reg']
+					':max_reg' => $_POST['max_reg'],
+					':line_token' => $_POST['line_token']
 				));
 
 				if($query_updateSettings)

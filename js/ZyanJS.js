@@ -3142,6 +3142,7 @@ function editSettings()
     var shop_name = submit[0];
     var boardcast_message = submit[1];
     var max_reg = submit[2];
+    var line_token = submit[3];
 
     if(shop_name == "" || shop_name == undefined)
     {
@@ -3185,7 +3186,8 @@ function editSettings()
     $.ajax({
         type: "POST",
         url: "../application/Controller/backend.php?func=updateSettings",
-        data: "shop_name=" + shop_name + "&boardcast=" + boardcast_message + "&max_reg=" + max_reg,
+        data: "shop_name=" + shop_name + "&boardcast=" + boardcast_message + "&max_reg=" + max_reg +
+        "&line_token=" + line_token,
         success: function(data)
         {
            if(data == 0)

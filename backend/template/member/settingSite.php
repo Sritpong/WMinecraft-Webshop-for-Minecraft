@@ -22,6 +22,10 @@
             <label for="settings_max_reg">จำกัด IP/Account [สมัครสมาชิก]</label>
             <input type="number" class="form-control" required id="settings_max_reg" name="settings_max_reg" value="<?php echo $getSetting['settings_max_reg']; ?>">
           </div>
+          <div class="form-group col-12">
+            <label for="settings_line_token">Line Notify Token</label>
+            <input type="text" class="form-control" id="settings_line_token" name="settings_line_token" value="<?php echo $getSetting['settings_line_token']; ?>">
+          </div>
           <div class="col-12">
             <button id="btn_editSettings" type="button" class="btn btn-outline-success btn-block" onclick="editSettings()">
               <i class="fa fa-floppy-o"></i> บันทึก
