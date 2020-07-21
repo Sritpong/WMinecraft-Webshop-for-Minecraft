@@ -210,6 +210,22 @@
 						else
 						{
 							echo '5|'.$data_getstatus["code"];
+							if($query_getSettings->rowcount() > 0)
+							{
+								$getSettings = $query_getSettings->fetch();
+
+								if($getSettings['settings_line_token'] != "")
+								{
+									require_once(__DIR__ . "/../_lineModel.php");
+									$line = new Line_Notify();
+									$line->setToken($getSettings['settings_line_token']);
+
+									$line->setMsg('==== '.$getSettings['settings_shop_name'].' ====');
+									$line->addMsg('Access Token เสีย กรุณาเข้าระบบหลังบ้านไปรับ Access Token ใหม่');
+
+									$line->sendNotify();
+								}
+							}
 						}
 			    	}
 			    }
@@ -352,6 +368,22 @@
 					else
 					{
 						echo '5|'.$data_getstatus["code"];
+						if($query_getSettings->rowcount() > 0)
+						{
+							$getSettings = $query_getSettings->fetch();
+
+							if($getSettings['settings_line_token'] != "")
+							{
+								require_once(__DIR__ . "/../_lineModel.php");
+								$line = new Line_Notify();
+								$line->setToken($getSettings['settings_line_token']);
+
+								$line->setMsg('==== '.$getSettings['settings_shop_name'].' ====');
+								$line->addMsg('Access Token เสีย กรุณาเข้าระบบหลังบ้านไปรับ Access Token ใหม่');
+
+								$line->sendNotify();
+							}
+						}
 					}
 			    }
     		}
