@@ -11,7 +11,7 @@
  Target Server Version : 100411
  File Encoding         : 65001
 
- Date: 17/07/2020 01:55:23
+ Date: 23/07/2020 15:05:33
 */
 
 SET NAMES utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `authme`  (
   UNIQUE INDEX `username`(`username`) USING BTREE,
   INDEX `rank_id`(`wm_rank_id`) USING BTREE,
   CONSTRAINT `authme_ibfk_1` FOREIGN KEY (`wm_rank_id`) REFERENCES `wm_rank` (`wm_rank_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of authme
@@ -68,7 +68,7 @@ CREATE TABLE `backend_login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `backend_login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `backend_login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of backend_login_logs
@@ -214,7 +214,7 @@ CREATE TABLE `login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of login_logs
@@ -297,7 +297,7 @@ CREATE TABLE `refill_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `refill_logs_ibfk_1` FOREIGN KEY (`refill_type_id`) REFERENCES `refill_type` (`refill_type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `refill_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of refill_logs
@@ -374,13 +374,14 @@ CREATE TABLE `settings`  (
   `settings_max_reg` int NOT NULL DEFAULT 1,
   `settings_boardcast_status` int NOT NULL DEFAULT 1 COMMENT '1 = เปิด, 0 = ปิด',
   `settings_max_reg_status` int NOT NULL DEFAULT 1 COMMENT '1 = เปิด, 0 = ปิด',
+  `settings_line_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`settings_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of settings
 -- ----------------------------
-INSERT INTO `settings` VALUES (1, 'WMinecraft', 'WMinecraft ระบบ 100%', 1, 1, 1);
+INSERT INTO `settings` VALUES (1, 'WMinecraft', 'WMinecraft ระบบ 100%', 1, 1, 1, '');
 
 -- ----------------------------
 -- Table structure for shop
