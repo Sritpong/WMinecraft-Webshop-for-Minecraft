@@ -46,11 +46,7 @@ CREATE TABLE `authme`  (
   UNIQUE INDEX `username`(`username`) USING BTREE,
   INDEX `rank_id`(`wm_rank_id`) USING BTREE,
   CONSTRAINT `authme_ibfk_1` FOREIGN KEY (`wm_rank_id`) REFERENCES `wm_rank` (`wm_rank_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of authme
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for backend_login_logs
@@ -68,11 +64,7 @@ CREATE TABLE `backend_login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `backend_login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `backend_login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of backend_login_logs
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for backpack
@@ -97,10 +89,6 @@ CREATE TABLE `backpack`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of backpack
--- ----------------------------
-
--- ----------------------------
 -- Table structure for category
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
@@ -110,10 +98,6 @@ CREATE TABLE `category`  (
   `time_reg` timestamp(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`category_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of category
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for code
@@ -134,10 +118,6 @@ CREATE TABLE `code`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of code
--- ----------------------------
-
--- ----------------------------
 -- Table structure for code_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `code_logs`;
@@ -152,10 +132,6 @@ CREATE TABLE `code_logs`  (
   CONSTRAINT `code_logs_ibfk_1` FOREIGN KEY (`code_id`) REFERENCES `code` (`code_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `code_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of code_logs
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for diary
@@ -175,10 +151,6 @@ CREATE TABLE `diary`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of diary
--- ----------------------------
-
--- ----------------------------
 -- Table structure for diary_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `diary_logs`;
@@ -193,10 +165,6 @@ CREATE TABLE `diary_logs`  (
   CONSTRAINT `diary_logs_ibfk_1` FOREIGN KEY (`diary_id`) REFERENCES `diary` (`diary_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `diary_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of diary_logs
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for login_logs
@@ -214,11 +182,7 @@ CREATE TABLE `login_logs`  (
   INDEX `login_logs_status_id`(`login_logs_status_id`) USING BTREE,
   CONSTRAINT `login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `login_logs_ibfk_2` FOREIGN KEY (`login_logs_status_id`) REFERENCES `login_logs_status` (`login_logs_status_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of login_logs
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for login_logs_status
@@ -297,11 +261,7 @@ CREATE TABLE `refill_logs`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `refill_logs_ibfk_1` FOREIGN KEY (`refill_type_id`) REFERENCES `refill_type` (`refill_type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `refill_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of refill_logs
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for refill_type
@@ -405,10 +365,6 @@ CREATE TABLE `shop`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of shop
--- ----------------------------
-
--- ----------------------------
 -- Table structure for shop_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `shop_logs`;
@@ -423,10 +379,6 @@ CREATE TABLE `shop_logs`  (
   CONSTRAINT `shop_logs_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `shop_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `authme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of shop_logs
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for truemoney
