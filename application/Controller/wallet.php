@@ -317,9 +317,10 @@
 							
 							if($query_insertLogs)
 							{
-								$sql_updatepoints = 'UPDATE authme SET points = points+:updatepoints WHERE id = :uid LIMIT 1';
+								$sql_updatepoints = 'UPDATE authme SET points = points+:updatepoints, rp = rp+:updateRP WHERE id = :uid LIMIT 1';
 			            		$query_updatePoints = query($sql_updatepoints, array(
-			            			':updatepoints' => $update_amount
+			            			':updatepoints' => $update_amount,
+			            			':updateRP' => $updateRpTMN
 			            		));
 
 			            		if($query_updatePoints)
