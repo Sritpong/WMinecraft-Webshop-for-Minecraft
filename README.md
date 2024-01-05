@@ -16,5 +16,3 @@ Developer: WZyan Dev
 1.เข้าไปที่ Database ที่เราสร้างขึ้น
 2.ไปที่ Table authme
 3.ตั้ง column: wm_rank_id ให้เป็น 2 ใน user ที่ต้องการให้เข้าสู่ระบบ Backend ได้
-
-#หากมีปัญหา หรือ ต้องการสอบถาม ติดต่อได้ที่เพจ WZyan Dev [ https://www.facebook.com/WZyanDev ]
